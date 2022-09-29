@@ -12,7 +12,7 @@ func welcome(c *fiber.Ctx) error {
 }
 
 func welcomeHome(c *fiber.Ctx) error {
-	return c.SendString("welcome to the home page of the go rest API")
+	return c.SendString("hello mr d hall how is ur day of work")
 }
 
 func setupRoutes(app *fiber.App) {
