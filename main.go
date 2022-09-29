@@ -11,10 +11,14 @@ func welcome(c *fiber.Ctx) error {
 	return c.SendString("start of the API welcome function return")
 }
 
+func welcomeHome(c *fiber.Ctx) error {
+	return c.SendString("welcome to the home page of the go rest API")
+}
+
 func setupRoutes(app *fiber.App) {
 	// welcome endpoint
 	app.Get("/api", welcome)
-	app.Get("/", welcome)
+	app.Get("/", welcomeHome)
 	// same thing for both
 
 	// user endpoints
