@@ -3,6 +3,7 @@ package main
 import (
 	"fiberWebApi/database"
 	"fiberWebApi/routes"
+	"github.com/enescakir/emoji"
 	"github.com/gofiber/fiber/v2"
 	"log"
 )
@@ -12,7 +13,7 @@ func welcome(c *fiber.Ctx) error {
 }
 
 func welcomeHome(c *fiber.Ctx) error {
-	return c.SendString("hello mr d hall how is ur day of work")
+	return c.SendString(string("i love my gf jade, she is the best gf ever " + emoji.GrowingHeart + emoji.GrowingHeart + emoji.GrowingHeart))
 }
 
 func setupRoutes(app *fiber.App) {
