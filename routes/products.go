@@ -15,7 +15,6 @@ type Product struct {
 
 func CreateResponseProduct(productModel models.Product) Product {
 	return Product{ID: productModel.ID, Name: productModel.Name, SerialNumber: productModel.SerialNumber}
-
 }
 
 func CreateProduct(c *fiber.Ctx) error {

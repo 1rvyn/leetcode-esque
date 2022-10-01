@@ -4,6 +4,7 @@ import (
 	"fiberWebApi/database"
 	"fiberWebApi/routes"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"log"
 )
 
@@ -40,11 +41,22 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/orders", routes.GetOrders)
 	app.Get("/api/orders/:id", routes.GetOrder)
 
+	// account system
+	go app.Post("/api/register", routes.CreateAccount)
+	app.Post("/api/login", routes.GetLogin)
+
+	app.Get("/api/account", routes.GetAccount)
+	app.Get("/api/logout", routes.Logout)
+
 }
 
 func main() {
 	database.ConnectDb()
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowCredentials: true,
+	}))
 
 	setupRoutes(app)
 
