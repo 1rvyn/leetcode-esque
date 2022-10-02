@@ -5,6 +5,7 @@ import (
 	"fiberWebApi/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/template/html"
 	"log"
 )
 
@@ -13,7 +14,11 @@ func welcome(c *fiber.Ctx) error {
 }
 
 func welcomeHome(c *fiber.Ctx) error {
-	return c.SendString("this is the home page")
+	// attempt templating here
+
+	return c.Render("index", fiber.Map{
+		"Title": "Hello World!",
+	})
 }
 
 func setupRoutes(app *fiber.App) {
@@ -42,7 +47,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/orders/:id", routes.GetOrder)
 
 	// account system
-	go app.Post("/api/register", routes.CreateAccount)
+	app.Post("/api/register", routes.CreateAccount)
 	app.Post("/api/login", routes.GetLogin)
 
 	app.Get("/api/account", routes.GetAccount)
@@ -52,11 +57,19 @@ func setupRoutes(app *fiber.App) {
 
 func main() {
 	database.ConnectDb()
-	app := fiber.New()
+
+	engine := html.New("./views", ".html")
+
+	app := fiber.New(fiber.Config{
+		Views:       engine,
+		ViewsLayout: "layouts/main",
+	})
 
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
 	}))
+
+	app.Static("/", "/views/public/js")
 
 	setupRoutes(app)
 

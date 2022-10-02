@@ -7,6 +7,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/enescakir/emoji v1.0.0 // indirect
 	github.com/gofiber/fiber/v2 v2.38.1 // indirect
+	github.com/gofiber/template v1.7.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/compress v1.15.0 // indirect
