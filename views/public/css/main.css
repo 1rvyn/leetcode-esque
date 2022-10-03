@@ -1,6 +1,27 @@
 .main-header{
-    text-align: center;
+    text-align: right;
+    padding-top: 10px;
+    outline-style: auto;
+    outline-offset: -2px;
+    background: rosybrown;
 }
+
+.main-footer{
+    text-align: right;
+    padding-top: 10px;
+    padding-right: 55px;
+    outline-style: auto;
+    outline-offset: -2px;
+    background: indianred;
+}
+
+.main-title{
+    text-align: center;
+    outline-style: groove;
+    outline-offset: -4px;
+    position: relative;
+}
+
 h2 {
     size: 200px;
 }

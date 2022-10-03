@@ -1,1 +1,1 @@
-console.log("this is a whole client side script sent from the host");
+console.log("hi")

@@ -3,6 +3,7 @@ package routes
 import (
 	"fiberWebApi/database"
 	"fiberWebApi/models"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -14,7 +15,7 @@ type Account struct {
 	ID       uint   `json:"id"`
 	Name     string `json:"name"`
 	Email    string `json:"email"`
-	Password []byte `json:"-"`
+	Password []byte `json:"-" `
 }
 
 const SecretKey = "secret"
@@ -147,7 +148,7 @@ func GetLogin(c *fiber.Ctx) error {
 	}
 
 	c.Cookie(&cookie)
-
+	fmt.Println("successful login")
 	return c.JSON(fiber.Map{
 		"message": "success",
 	})

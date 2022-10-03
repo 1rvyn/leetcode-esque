@@ -20,9 +20,11 @@ func welcomeHome(c *fiber.Ctx) error {
 	})
 }
 
-func nicePage(c *fiber.Ctx) error {
+func login(c *fiber.Ctx) error {
 	return c.Render("nice", fiber.Map{
-		"User": "irvyn!",
+		"User":   "Irvyn Hall",
+		"Email":  "irvynhall@gmail.com",
+		"Status": "logging-in",
 	})
 }
 
@@ -30,7 +32,7 @@ func setupRoutes(app *fiber.App) {
 	// welcome endpoint
 	app.Get("/api", welcome)
 	app.Get("/", welcomeHome)
-	app.Get("/nice", nicePage)
+	app.Get("/login", login)
 	// same thing for both
 
 	// user endpoints
