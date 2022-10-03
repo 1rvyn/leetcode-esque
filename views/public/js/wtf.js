@@ -1,0 +1,1 @@
+console.log("wtf js loaded")

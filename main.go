@@ -14,10 +14,15 @@ func welcome(c *fiber.Ctx) error {
 }
 
 func welcomeHome(c *fiber.Ctx) error {
-	// attempt templating here
-
+	//  templating here
 	return c.Render("index", fiber.Map{
 		"Title": "Hello World!",
+	})
+}
+
+func nicePage(c *fiber.Ctx) error {
+	return c.Render("nice", fiber.Map{
+		"User": "irvyn!",
 	})
 }
 
@@ -25,6 +30,7 @@ func setupRoutes(app *fiber.App) {
 	// welcome endpoint
 	app.Get("/api", welcome)
 	app.Get("/", welcomeHome)
+	app.Get("/nice", nicePage)
 	// same thing for both
 
 	// user endpoints
@@ -69,7 +75,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	app.Static("/", "/views/public/js")
+	app.Static("/", "./views/public")
 
 	setupRoutes(app)
 
