@@ -37,7 +37,7 @@ $(document).ready(function(){
                 }),
                 headers: { "Content-Type": "application/json" },
             });
-            const data = await res.json();
+            const data = await res;
             console.log(data)
             if (res.status === 400 || res.status === 401) {
                 return (display.textContent = `${data.message}. ${
@@ -48,5 +48,4 @@ $(document).ready(function(){
             console.log(err.message);
         }
     });
-
 })
