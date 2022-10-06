@@ -31,18 +31,22 @@ $(document).ready(function(){
         try {
             const res = await fetch("/api/login", {
                 method: "POST",
+                headers: {"Content-Type": "application/json",
+                            "Accept": "application/json"},
                 body: JSON.stringify({
                     email: email.value,
                     password: password.value,
                 }),
-                headers: { "Content-Type": "application/json" },
             });
-            const data = await res;
-            console.log(data)
+            const content = await res.json();
+            console.log(content);
+            console.log(res.status);
             if (res.status === 400 || res.status === 401) {
-                return (display.textContent = `${data.message}. ${
-                    data.error ? data.error : ""
-                }`);
+                console.log("there was an issue")
+            }
+            else if (res.status === 200){
+                console.log("the login has a success response code good job :)")
+                window.location.href = "/account";
             }
         } catch (err) {
             console.log(err.message);

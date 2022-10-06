@@ -18,25 +18,15 @@ type Account struct {
 	Password []byte `json:"-" `
 }
 
+type Session struct {
+	Browser   string `json:"browser"`
+	UserAgent string `json:"user_agent"`
+	Cookie    string `json:"cookie"`
+}
+
 const SecretKey = "secret"
 
-//func CreateResponseAccount(accountModel models.Account) Account {
-//	return Account{ID: accountModel.ID, Name: accountModel.Name, Email: accountModel.Email, Password: accountModel.Password}
-//}
-
 func CreateAccount(c *fiber.Ctx) error {
-	//var account models.Account
-	//
-	//if err := c.BodyParser(&account); err != nil {
-	//	return c.Status(400).JSON(err.Error())
-	//
-	//}
-	//database.Database.Db.Create(&account)
-	//responseAccount := CreateResponseAccount(account)
-	//
-	//return c.Status(200).JSON(responseAccount)
-
-	// above is using the old method without creating the bcrypt password
 
 	var data map[string]string
 
@@ -110,6 +100,7 @@ func GetLogin(c *fiber.Ctx) error {
 
 	var account models.Account
 
+	//findUser :=
 	database.Database.Db.Where("email = ?", data["email"]).First(&account)
 
 	if account.ID == 0 {
@@ -146,16 +137,20 @@ func GetLogin(c *fiber.Ctx) error {
 		Expires:  time.Now().Add(time.Hour * 24),
 		HTTPOnly: true,
 	}
-
+	//TODO: 'probably' create a sessions table and get some login info ie time, device, browser etc
 	c.Cookie(&cookie)
+
+	fmt.Println("made the cookie: ", &cookie)
+
 	fmt.Println("successful login")
 	return c.JSON(fiber.Map{
 		"message": "success",
+		"cookie":  &cookie,
 	})
-
 }
 
 func GetAccount(c *fiber.Ctx) error {
+	// get request to this handler will just respond with the account last logged into
 	cookie := c.Cookies("jwt")
 
 	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
@@ -175,6 +170,10 @@ func GetAccount(c *fiber.Ctx) error {
 
 	database.Database.Db.Where("id = ?", claims.Issuer).First(&account)
 
+	// TODO: make sure that when returning the account we
+	// keep the account data until log out via the pages
+	fmt.Println("you are logged into the following account: ")
+	fmt.Println(account)
 	return c.JSON(account)
 }
 

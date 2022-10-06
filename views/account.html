@@ -1,0 +1,23 @@
+{{template "partials/header" .}}
+{{.item}}
+<div>
+    <p>
+        Account ID: {{.ID}}
+    </p>
+
+    <p>
+        Email Address: {{.Email}}
+    </p>
+
+    <p>
+        Username: {{.Name}}
+    </p>
+
+    <p>
+        Time of creation: {{.CreatedAt}}
+    </p>
+</div>
+
+
+{{template "partials/account" .}}
+{{template "partials/footer" .}}
