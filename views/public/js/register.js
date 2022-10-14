@@ -1,22 +1,23 @@
+console.log("this should print on the register page")
+
+
 $(document).ready(function(){
-    // Get and set element 'form'
-    const form = document.querySelector(".login-form");
-// Get and set element 'email'
+    const form = document.querySelector(".register-form");
     const email = document.querySelector("#email");
-// Get and set element 'password'
+    const name = document.querySelector("#name");
     const password = document.querySelector("#password");
-// Get and set element 'username' (error display)
 // Add an event listener to the login button and use the api to process login event
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         // display.textContent = "";
-        console.log(password.value + email.value)
+        console.log(password.value + email.value + name.value)
         try {
-            const res = await fetch("/api/login", {
+            const res = await fetch("/api/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
-                            "Accept": "application/json"},
+                    "Accept": "application/json"},
                 body: JSON.stringify({
+                    name: name.value,
                     email: email.value,
                     password: password.value,
                 }),
@@ -29,7 +30,7 @@ $(document).ready(function(){
             }
             else if (res.status === 200){
                 console.log("the login has a success response code good job :)")
-                window.location.href = "/account";
+                window.location.href = "/login";
             }
         } catch (err) {
             console.log(err.message);

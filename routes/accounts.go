@@ -138,14 +138,12 @@ func GetLogin(c *fiber.Ctx) error {
 		HTTPOnly: true,
 	}
 	//TODO: 'probably' create a sessions table and get some login info ie time, device, browser etc
+	// a session table will allow us to create a system with a login-history (like twitter) -
+	// show the device type, possibly location, time of session creation etc
 	c.Cookie(&cookie)
-
-	fmt.Println("made the cookie: ", &cookie)
-
 	fmt.Println("successful login")
 	return c.JSON(fiber.Map{
 		"message": "success",
-		"cookie":  &cookie,
 	})
 }
 

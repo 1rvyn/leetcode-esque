@@ -29,6 +29,8 @@ func welcomeHome(c *fiber.Ctx) error {
 }
 
 func login(c *fiber.Ctx) error {
+	// do some kind of check to see if the user is already logged in
+	//- similar to how we do it with /account
 	return c.Render("nice", fiber.Map{
 		"User":   "Irvyn Hall",
 		"Email":  "irvynhall@gmail.com",
@@ -67,12 +69,18 @@ func account(c *fiber.Ctx) error {
 	})
 }
 
+func register(c *fiber.Ctx) error {
+	return c.Render("register", fiber.Map{
+		"Register": "this is the register page",
+	})
+}
 func setupRoutes(app *fiber.App) {
 	// welcome endpoint
 	app.Get("/api", welcome)
 	app.Get("/", welcomeHome)
 	app.Get("/login", login)
 	app.Get("/account", account)
+	app.Get("/register", register)
 	// same thing for both
 
 	// user endpoints
