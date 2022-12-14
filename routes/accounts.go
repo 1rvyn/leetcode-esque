@@ -176,15 +176,19 @@ func GetAccount(c *fiber.Ctx) error {
 }
 
 func Logout(c *fiber.Ctx) error {
+
+	// set the cookie to expired
 	cookie := fiber.Cookie{
 		Name:     "jwt",
 		Value:    "",
 		Expires:  time.Now().Add(-time.Hour),
 		HTTPOnly: true,
 	}
+
+	// update the current cookie :)
 	c.Cookie(&cookie)
 
-	return c.JSON(fiber.Map{
-		"message": "success",
-	})
+	// return to home page
+
+	return c.Redirect("/")
 }

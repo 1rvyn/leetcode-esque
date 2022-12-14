@@ -22,12 +22,19 @@ type Page struct {
 	URL   string
 }
 
-// array of pages to show in the header
+// array of pages to show in the header if they are logged out
 var pages = []Page{
 	{Title: "Home", URL: "/"},
 	{Title: "Login", URL: "/login"},
 	{Title: "Register", URL: "/register"},
 	{Title: "Account", URL: "/account"},
+}
+
+// array of pages to show in the header if they are logged in
+var pages2 = []Page{
+	{Title: "Home", URL: "/"},
+	{Title: "Account", URL: "/account"},
+	{Title: "Logout", URL: "/api/logout"},
 }
 
 func welcomeHome(c *fiber.Ctx) error {
@@ -47,22 +54,11 @@ func welcomeHome(c *fiber.Ctx) error {
 	} else {
 		return c.Render("index", fiber.Map{
 			"Title":     "Home page WITH cookie",
-			"Pages":     pages,
+			"Pages":     pages2,
 			"ActiveURL": activeURL,
 		})
 	}
 }
-
-//	fmt.Println("cookie: ", cookie)
-//	activeURL := c.Path()
-//
-//	return c.Render("index",
-//		fiber.Map{
-//			"Title":     "Hello World!",
-//			"Pages":     pages,
-//			"ActiveURL": activeURL,
-//		})
-//}
 
 func login(c *fiber.Ctx) error {
 	// do some kind of check to see if the user is already logged in
@@ -90,9 +86,7 @@ func account(c *fiber.Ctx) error {
 	// user isnt logged in
 	if err != nil {
 		c.Status(fiber.StatusUnauthorized)
-		return c.JSON(fiber.Map{
-			"message": "unauthenticated",
-		})
+		return c.Redirect("/login")
 	}
 
 	claims := token.Claims.(*jwt.StandardClaims)
@@ -105,15 +99,26 @@ func account(c *fiber.Ctx) error {
 
 	activeURL := c.Path()
 
-	return c.Render("account", fiber.Map{
-		"Pages":     pages,
-		"ActiveURL": activeURL,
-		"Item":      "this is the 'account' page ;) ",
-		"ID":        account.ID,
-		"Email":     account.Email,
-		"CreatedAt": account.CreatedAt,
-		"Name":      account.Name,
-	})
+	currCookie := c.Cookies("jwt")
+
+	if currCookie != "" {
+
+		// there is a cookie so lets show the header pages for logged in users
+		// & show the current account data :)
+		return c.Render("account", fiber.Map{
+			"Pages":     pages2,
+			"ActiveURL": activeURL,
+			"Item":      "this is the 'account' page ;) ",
+			"ID":        account.ID,
+			"Email":     account.Email,
+			"CreatedAt": account.CreatedAt,
+			"Name":      account.Name,
+		})
+	} else {
+
+		// there is no cookie lets redirect to the login page
+		return c.Redirect("/login")
+	}
 }
 
 func register(c *fiber.Ctx) error {
