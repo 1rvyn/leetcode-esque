@@ -1,16 +1,22 @@
-<head>
+<header>
     <script src="js/test.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/wtf.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css?v=3" type="text/css">
 
-<!--Put any header content here so the CSS can be applied to it put all the css/js/img imports above-->
-    <h2 class="main-header">
-        Header
-        <img src="img/arrow-left-short.svg" alt="image of left arrow" width="32px" height="32px"
-        onclick="window.location='login'">
-<!--        <a href="login">Login</a>-->
-    </h2>
-</head>
+    <nav>
+        <ul id="header-ul">
+            {{ range $page := .Pages }}
+            <li id="header-links">
+                {{ if eq $page.URL $.ActiveURL }}
+                <a href="{{ $page.URL }}" class="active">{{ $page.Title }}</a>
+                {{ else }}
+                <a href="{{ $page.URL }}">{{ $page.Title }}</a>
+                {{ end }}
+            </li>
+            {{ end }}
+        </ul>
+    </nav>
+</header>
 

@@ -4,7 +4,6 @@ import (
 	"fiberWebApi/database"
 	"fiberWebApi/models"
 	"fiberWebApi/routes"
-	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -18,23 +17,65 @@ func welcome(c *fiber.Ctx) error {
 	return c.SendString("start of the API welcome function return")
 }
 
+type Page struct {
+	Title string
+	URL   string
+}
+
+// array of pages to show in the header
+var pages = []Page{
+	{Title: "Home", URL: "/"},
+	{Title: "Login", URL: "/login"},
+	{Title: "Register", URL: "/register"},
+	{Title: "Account", URL: "/account"},
+}
+
 func welcomeHome(c *fiber.Ctx) error {
 	//  templating here
 
-	fmt.Println(c.GetReqHeaders())
+	//fmt.Println(c.GetReqHeaders())
+	cookie := c.Cookies("jwt")
 
-	return c.Render("index", fiber.Map{
-		"Title": "Hello World!",
-	})
+	activeURL := c.Path()
+
+	if cookie == "" {
+		return c.Render("index", fiber.Map{
+			"Title":     "Home page WITHOUT cookie",
+			"Pages":     pages,
+			"ActiveURL": activeURL,
+		})
+	} else {
+		return c.Render("index", fiber.Map{
+			"Title":     "Home page WITH cookie",
+			"Pages":     pages,
+			"ActiveURL": activeURL,
+		})
+	}
 }
+
+//	fmt.Println("cookie: ", cookie)
+//	activeURL := c.Path()
+//
+//	return c.Render("index",
+//		fiber.Map{
+//			"Title":     "Hello World!",
+//			"Pages":     pages,
+//			"ActiveURL": activeURL,
+//		})
+//}
 
 func login(c *fiber.Ctx) error {
 	// do some kind of check to see if the user is already logged in
 	//- similar to how we do it with /account
+
+	activeURL := c.Path()
+
 	return c.Render("nice", fiber.Map{
-		"User":   "Irvyn Hall",
-		"Email":  "irvynhall@gmail.com",
-		"Status": "logging-in",
+		"Pages":     pages,
+		"ActiveURL": activeURL,
+		"User":      "Irvyn Hall",
+		"Email":     "irvynhall@gmail.com",
+		"Status":    "logging-in",
 	})
 }
 
@@ -60,7 +101,13 @@ func account(c *fiber.Ctx) error {
 
 	database.Database.Db.Where("id = ?", claims.Issuer).First(&account)
 
+	//user := c.UserContext()
+
+	activeURL := c.Path()
+
 	return c.Render("account", fiber.Map{
+		"Pages":     pages,
+		"ActiveURL": activeURL,
 		"Item":      "this is the 'account' page ;) ",
 		"ID":        account.ID,
 		"Email":     account.Email,
@@ -70,8 +117,13 @@ func account(c *fiber.Ctx) error {
 }
 
 func register(c *fiber.Ctx) error {
+
+	activeURL := c.Path()
+
 	return c.Render("register", fiber.Map{
-		"Register": "this is the register page",
+		"Pages":     pages,
+		"ActiveURL": activeURL,
+		"Register":  "this is the register page",
 	})
 }
 func setupRoutes(app *fiber.App) {

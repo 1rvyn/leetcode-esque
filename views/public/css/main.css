@@ -25,3 +25,27 @@
 h2 {
     size: 200px;
 }
+
+.active {
+    font-weight: bold;
+    color: #333;
+}
+
+#header-links{
+    /*make these links horizontal and larger*/
+    display: inline-block;
+    font-size: 20px;
+    padding: 10px;
+    margin: 10px;
+
+
+
+
+
+}
+
+#header-ul {
+    text-align: center;
+}
+/*make the links centered*/
+
