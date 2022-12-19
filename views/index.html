@@ -1,6 +1,14 @@
-{{template "partials/header" .}}
-<h1 class="main-title">{{.Title}}</h1>
+{{ template "partials/header" . }}
+<body>
+    <h1>{{ .Title }}</h1>
 
-<!--{{template "layouts/tester" .}}-->
 
-{{template "partials/footer" .}}
+    <p>
+        There might be some content here we don't know yet :)
+    </p>
+
+    {{ template "partials/footer" . }}
+</body>
+
+</html>
+

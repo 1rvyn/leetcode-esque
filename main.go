@@ -102,7 +102,6 @@ func account(c *fiber.Ctx) error {
 	currCookie := c.Cookies("jwt")
 
 	if currCookie != "" {
-
 		// there is a cookie so lets show the header pages for logged in users
 		// & show the current account data :)
 		return c.Render("account", fiber.Map{
@@ -115,7 +114,6 @@ func account(c *fiber.Ctx) error {
 			"Name":      account.Name,
 		})
 	} else {
-
 		// there is no cookie lets redirect to the login page
 		return c.Redirect("/login")
 	}
@@ -174,8 +172,17 @@ func main() {
 	engine := html.New("./views", ".html")
 
 	app := fiber.New(fiber.Config{
-		Views:       engine,
-		ViewsLayout: "layouts/main",
+		Views: engine,
+		//ViewsLayout: "layouts/layout",
+	})
+
+	// prevent the app from using cache / caching my main .css file
+
+	app.Use(func(c *fiber.Ctx) error {
+		c.Set("Cache-Control", "no-cache, no-store, must-revalidate")
+		c.Set("Pragma", "no-cache")
+		c.Set("Expires", "0")
+		return c.Next()
 	})
 
 	app.Use(cors.New(cors.Config{

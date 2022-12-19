@@ -1,0 +1,13 @@
+<!-- layout.tmpl -->
+<html>
+  <head>
+    <title>{{.Title}}</title>
+  </head>
+  <body>
+    {{template "partials/header"}}
+
+    {{.Content}}
+
+    {{template "partials/footer"}}
+  </body>
+</html>

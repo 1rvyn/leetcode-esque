@@ -1,18 +1,14 @@
-.main-header{
-    text-align: right;
-    padding-top: 10px;
-    outline-style: auto;
-    outline-offset: -2px;
-    background: rosybrown;
-}
 
+/* send footer to the bottom but keep the padding*/
 .main-footer{
-    text-align: right;
+    text-align: center;
     padding-top: 10px;
-    padding-right: 55px;
     outline-style: auto;
     outline-offset: -2px;
     background: indianred;
+    position: absolute;
+    bottom: 0;
+    width: 99%;
 }
 
 .main-title{
@@ -37,11 +33,6 @@ h2 {
     font-size: 20px;
     padding: 10px;
     margin: 10px;
-
-
-
-
-
 }
 
 #header-ul {
@@ -49,3 +40,6 @@ h2 {
 }
 /*make the links centered*/
 
+body{
+    text-align: center;
+}
