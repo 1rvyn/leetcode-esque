@@ -19,9 +19,12 @@ type Account struct {
 }
 
 type Session struct {
+	ID        uint   `json:"id"`
 	Browser   string `json:"browser"`
 	UserAgent string `json:"user_agent"`
 	Cookie    string `json:"cookie"`
+	Email     string `json:"email"`
+	IP        string `json:"ip"`
 }
 
 const SecretKey = "secret"
@@ -45,7 +48,6 @@ func CreateAccount(c *fiber.Ctx) error {
 	database.Database.Db.Create(&account)
 
 	return c.JSON(account)
-
 }
 
 //func GetAccounts(c *fiber.Ctx) error {
@@ -137,9 +139,9 @@ func GetLogin(c *fiber.Ctx) error {
 		Expires:  time.Now().Add(time.Hour * 24),
 		HTTPOnly: true,
 	}
-	//TODO: 'probably' create a sessions table and get some login info ie time, device, browser etc
-	// a session table will allow us to create a system with a login-history (like twitter) -
-	// show the device type, possibly location, time of session creation etc
+
+	// TODO: add input validation
+
 	c.Cookie(&cookie)
 	fmt.Println("successful login")
 	return c.JSON(fiber.Map{
@@ -168,8 +170,6 @@ func GetAccount(c *fiber.Ctx) error {
 
 	database.Database.Db.Where("id = ?", claims.Issuer).First(&account)
 
-	// TODO: make sure that when returning the account we
-	// keep the account data until log out via the pages
 	fmt.Println("you are logged into the following account: ")
 	fmt.Println(account)
 	return c.JSON(account)
