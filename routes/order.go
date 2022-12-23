@@ -41,7 +41,6 @@ func CreateOrder(c *fiber.Ctx) error {
 	database.Database.Db.Create(&order)
 
 	responseUser := CreateResponseUser(user)
-
 	responseProduct := CreateResponseProduct(product)
 	responseOrder := CreateResponseOrder(order, responseUser, responseProduct)
 

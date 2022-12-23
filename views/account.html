@@ -16,7 +16,49 @@
     <p>
         Time of creation: {{.CreatedAt}}
     </p>
+
+
+    <h1>
+        The current session:
+    </h1>
+
+
+<!--    <br>-->
+<!--    <p>-->
+<!--        Session ID: {{.SID}}-->
+<!--    </p>-->
+
+<!--    <p>-->
+<!--        IP Of creation: {{.IP}}-->
+<!--    </p>-->
+
+<!--    <p>-->
+<!--        Time of creation: {{.LoginCreatedAt}}-->
+<!--    </p>-->
+
+<!--&lt;!&ndash;    LoginExpiresAt&ndash;&gt;-->
+
+<!--    <p>-->
+<!--        Time of expiration: {{.LoginExpiresAt}}-->
+<!--    </p>-->
+
+
+<!--    <p>-->
+<!--        User agent: {{.UserAgent}}-->
+<!--    </p>-->
+
+
+
+
 </div>
+
+{{range .Session}}
+<p>Session ID: {{.ID}}</p>
+<p>IP Of creation: {{.IP}}</p>
+<p>Time of creation: {{.CreatedAt}}</p>
+<p>Cookie: {{.Cookie}}</p>
+<p>UserAgent:{{.UserAgent}}</p>
+{{end}}
 
 
 {{template "partials/account" .}}

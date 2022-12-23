@@ -4,6 +4,7 @@ import (
 	"fiberWebApi/database"
 	"fiberWebApi/models"
 	"fiberWebApi/routes"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -75,7 +76,7 @@ func login(c *fiber.Ctx) error {
 	})
 }
 
-func account(c *fiber.Ctx) error {
+func accountHandle(c *fiber.Ctx) error {
 
 	cookie := c.Cookies("jwt")
 
@@ -92,8 +93,14 @@ func account(c *fiber.Ctx) error {
 	claims := token.Claims.(*jwt.StandardClaims)
 
 	var account models.Account
+	var session []models.Session
+
+	fmt.Println("claims issuer: ", claims.Issuer)
 
 	database.Database.Db.Where("id = ?", claims.Issuer).First(&account)
+	database.Database.Db.Where("email = ?", account.Email).Find(&session)
+
+	fmt.Println("sessions found are: ", session)
 
 	//user := c.UserContext()
 
@@ -112,6 +119,7 @@ func account(c *fiber.Ctx) error {
 			"Email":     account.Email,
 			"CreatedAt": account.CreatedAt,
 			"Name":      account.Name,
+			"Session":   session,
 		})
 	} else {
 		// there is no cookie lets redirect to the login page
@@ -134,7 +142,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api", welcome)
 	app.Get("/", welcomeHome)
 	app.Get("/login", login)
-	app.Get("/account", account)
+	app.Get("/account", accountHandle)
 	app.Get("/register", register)
 	// same thing for both
 
