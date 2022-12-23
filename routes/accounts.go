@@ -4,11 +4,12 @@ import (
 	"fiberWebApi/database"
 	"fiberWebApi/models"
 	"fmt"
+	"strconv"
+	"time"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
-	"strconv"
-	"time"
 )
 
 type Account struct {
@@ -140,9 +141,27 @@ func GetLogin(c *fiber.Ctx) error {
 		HTTPOnly: true,
 	}
 
+	// create a session as login was successful
+
 	// TODO: add input validation
 
 	c.Cookie(&cookie)
+
+	// log the data we have on the user when a login is made - all the info from the header etc
+
+	session := models.Session{
+		Browser:   c.Get("User-Agent"),
+		UserAgent: c.Get("User-Agent"),
+		Cookie:    cookie.Value,
+		Email:     account.Email,
+		IP:        c.IP(),
+	}
+
+	database.Database.Db.Create(&session)
+	// saved in the database
+
+	fmt.Println(session)
+
 	fmt.Println("successful login")
 	return c.JSON(fiber.Map{
 		"message": "success",
