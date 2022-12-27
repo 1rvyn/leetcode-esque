@@ -5,11 +5,12 @@ import (
 	"fiberWebApi/models"
 	"fiberWebApi/routes"
 	"fmt"
+	"log"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"
-	"log"
 )
 
 const SecretKey = "secret"
@@ -34,6 +35,7 @@ var pages = []Page{
 // array of pages to show in the header if they are logged in
 var pages2 = []Page{
 	{Title: "Home", URL: "/"},
+	{Title: "Code", URL: "/code"},
 	{Title: "Account", URL: "/account"},
 	{Title: "Logout", URL: "/api/logout"},
 }
@@ -98,7 +100,9 @@ func accountHandle(c *fiber.Ctx) error {
 	fmt.Println("claims issuer: ", claims.Issuer)
 
 	database.Database.Db.Where("id = ?", claims.Issuer).First(&account)
-	database.Database.Db.Where("email = ?", account.Email).Find(&session)
+	database.Database.Db.Where("email = ?", account.Email).Last(&session)
+
+	// show the last session only
 
 	fmt.Println("sessions found are: ", session)
 
@@ -127,6 +131,18 @@ func accountHandle(c *fiber.Ctx) error {
 	}
 }
 
+func Code(c *fiber.Ctx) error {
+	activeURL := c.Path()
+
+	return c.Render("code", fiber.Map{
+		"Pages":        pages2,
+		"ActiveURL":    activeURL,
+		"Question":     "Can you write some code here which can print 'hello world' to the console?",
+		"Codetemplate": "print('hello world')", // this is the code which gets pre-loaded into the code editor
+		"Code":         "This is the code page",
+	})
+}
+
 func register(c *fiber.Ctx) error {
 
 	activeURL := c.Path()
@@ -145,6 +161,8 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/account", accountHandle)
 	app.Get("/register", register)
 	// same thing for both
+
+	app.Get("/code", Code) // code submission testing page
 
 	// user endpoints
 	app.Post("/api/users", routes.CreateUser)

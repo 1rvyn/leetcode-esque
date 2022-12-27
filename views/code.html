@@ -1,0 +1,92 @@
+{{template "partials/header" .}}
+<script src="js/code.js"></script>
+
+   <div>
+    <p>
+        What is the page?: {{.Code}}
+    </p>
+    <style>
+        /* Container for the code editor */
+        .code-editor {
+          display: flex;
+          height: 100%;
+        }
+      
+        /* Left side with the question problem */
+        .code-editor .question {
+          width: 50%;
+          height: 100%;
+          overflow-y: scroll;
+          background-color: #eee;
+        }
+      
+        /* Right side with the textarea and terminal output */
+        .code-editor .editor-container {
+          width: 50%;
+          height: 100%;
+          overflow-y: scroll;
+          display: flex;
+          flex-direction: column;
+        }
+      
+        /* Textarea for the code editor */
+        .code-editor .editor-container textarea {
+            flex: 1;
+            font-family: monospace;
+            font-size: 16px;
+            border: 1px solid #ccc;  /* Add a border */
+            border-radius: 4px;  /* Add rounded corners */
+            outline: none;
+            padding: 20px;
+            resize: none;
+        }
+      
+        /* Terminal output */
+        .code-editor .editor-container .terminal {
+          flex: 1;
+          font-family: monospace;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          outline: none;
+          padding: 20px;
+          overflow-y: scroll;
+        }
+
+      </style>
+    
+
+
+    <form id="submit-form">
+        <!-- Code editor container -->
+        <div class="code-editor">
+          <!-- Left side with the question problem -->
+          <div class="question">
+            <!-- Add your question problem here -->
+            {{.Question}}
+          </div>
+      
+          <!-- Right side with the textarea and terminal output -->
+          <div class="editor-container">
+            <!-- Textarea for the code editor -->
+            <textarea id="code" name="code">
+                {{.Codetemplate}}}
+            </textarea>
+      
+            <!-- Terminal output -->
+            <div class="terminal" id="output">
+                This is the terminal - will most likely be a websocket with the server - submit button / run button etc
+            </div>
+          </div>
+        </div>
+      
+        <!-- Submit button -->
+        <button type="submit">Submit</button>
+      </form>
+      
+
+      
+
+</div>
+
+
+{{template "partials/footer" .}}

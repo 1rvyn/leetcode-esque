@@ -47,19 +47,15 @@
 <!--        User agent: {{.UserAgent}}-->
 <!--    </p>-->
 
-
-
+    {{range .Session}}
+    <p>Session ID: {{.ID}}</p>
+    <p>IP Of creation: {{.IP}}</p>
+    <p>Time of creation: {{.CreatedAt}}</p>
+    <p>Cookie: {{.Cookie}}</p>
+    <p>UserAgent:{{.UserAgent}}</p>
+    {{end}}
 
 </div>
-
-{{range .Session}}
-<p>Session ID: {{.ID}}</p>
-<p>IP Of creation: {{.IP}}</p>
-<p>Time of creation: {{.CreatedAt}}</p>
-<p>Cookie: {{.Cookie}}</p>
-<p>UserAgent:{{.UserAgent}}</p>
-{{end}}
-
 
 {{template "partials/account" .}}
 {{template "partials/footer" .}}
