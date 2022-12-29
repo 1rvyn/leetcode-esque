@@ -131,7 +131,7 @@ func accountHandle(c *fiber.Ctx) error {
 	}
 }
 
-func Code(c *fiber.Ctx) error {
+func code(c *fiber.Ctx) error {
 	activeURL := c.Path()
 
 	return c.Render("code", fiber.Map{
@@ -162,7 +162,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/register", register)
 	// same thing for both
 
-	app.Get("/code", Code) // code submission testing page
+	app.Get("/code", code) // code submission testing page
 
 	// user endpoints
 	app.Post("/api/users", routes.CreateUser)
