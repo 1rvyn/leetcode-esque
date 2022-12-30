@@ -6,6 +6,7 @@ import (
 	"fiberWebApi/routes"
 	"fmt"
 	"log"
+	"os/exec"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
@@ -113,7 +114,7 @@ func accountHandle(c *fiber.Ctx) error {
 	currCookie := c.Cookies("jwt")
 
 	if currCookie != "" {
-		// there is a cookie so lets show the header pages for logged in users
+		// there is a cookie so lets show the header pages for logged-in users
 		// & show the current account data :)
 		return c.Render("account", fiber.Map{
 			"Pages":     pages2,
@@ -145,6 +146,8 @@ func code(c *fiber.Ctx) error {
 
 func register(c *fiber.Ctx) error {
 
+	fmt.Print("register was page was accessed :)")
+
 	activeURL := c.Path()
 
 	return c.Render("register", fiber.Map{
@@ -153,6 +156,52 @@ func register(c *fiber.Ctx) error {
 		"Register":  "this is the register page",
 	})
 }
+
+func pythonCode(c *fiber.Ctx) error {
+	// console log the body of the request
+	var data map[string]string
+
+	if err := c.BodyParser(&data); err != nil {
+		return err
+	}
+
+	// fmtprint the payloadItem from the data
+
+	fmt.Println("payloadItem: ", data["payloadItem"])
+
+	// parse the data into a .py file under the code folder
+
+	// TODO: take the error message and send it back to the client
+
+	//file, err := os.Create("/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer file.Close()
+	//
+	//_, err = file.WriteString(data["payloadItem"])
+	//if err != nil {
+	//	panic(err)
+	//}
+
+	// run the python code
+
+	cmd := exec.Command("python", "/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
+
+	output, err := cmd.Output()
+
+	if err != nil {
+		fmt.Println(err.Error())
+		panic(err)
+	}
+
+	fmt.Print(string(output))
+	// run the .py file
+
+	// return okay status and the body
+	return c.Status(200).JSON(c.Body())
+}
+
 func setupRoutes(app *fiber.App) {
 	// welcome endpoint
 	app.Get("/api", welcome)
@@ -189,6 +238,7 @@ func setupRoutes(app *fiber.App) {
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	app.Get("/api/logout", routes.Logout)      // removes the cookie
+	app.Post("/api/code", pythonCode)          // get python code from textarea
 
 }
 
