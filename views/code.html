@@ -1,57 +1,25 @@
 {{template "partials/header" .}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js/code.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.22.0/prism.min.js"></script>
 
-<!--<link rel="stylesheet" href="css/prism.css">-->
-<link rel="stylesheet" href="css/prismhighlight.css">
+<link rel="stylesheet" href="css/code.css">
 
-<!--<script src="js/prism.js"></script>-->
-<script src="js/highlightscript.js"></script>
-
-   <div>
-    <p>
-        What is the page?: {{.Code}}
-    </p>
+<div class="leetcode-editor">
+    <div class="question">
+        {{.Question}}
+        <!-- Insert question text here -->
+    </div>
+    <div class="editor-and-output">
 
 
+            <textarea class="code-editor">
+                {{.Codetemplate}}
+            </textarea>
+        <div class="terminal">
+            epic button
+            <!-- Code output will be displayed here -->
+            <button class="submitcodebutton" type="submit">submit</button>
 
-        <!-- Code editor container -->
-        <div class="code-editor">
-          <!-- Left side with the question problem -->
-          <div class="question">
-            <!-- Add your question problem here -->
-            {{.Question}}
-          </div>
-      
-          <!-- Right side with the textarea and terminal output -->
-            <!-- Textarea for the code editor -->
-              <form id="submit-form" class="codeform1">
-
-                                <textarea id="code">
-                                  </textarea>
-
-
-              </form>
-<!--              <textarea id="code" name="code">-->
-<!--                {{.Codetemplate}}-->
-<!--                </textarea>-->
-
-      
-            <!-- Terminal output -->
-            <div class="terminal" id="output">
-                This is the terminal - will most likely be a websocket with the server - submit button / run button etc
-            </div>
-          </div>
         </div>
-
-        <!-- Submit button -->
-        <button id ="submit-code" type="submit">Submit</button>
-
-
-      
-
+    </div>
 </div>
-
-
-{{template "partials/footer" .}}

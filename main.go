@@ -165,7 +165,7 @@ func pythonCode(c *fiber.Ctx) error {
 		return err
 	}
 
-	// fmtprint the payloadItem from the data
+	fmt.Println("code was submitted: ", data)
 
 	fmt.Println("payloadItem: ", data["payloadItem"])
 
