@@ -1,20 +1,25 @@
 {{template "partials/header" .}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="js/code.js"></script>
+<script src="js/ace.js"></script>
+
 
 <link rel="stylesheet" href="css/code.css">
 
+
 <div class="leetcode-editor">
+
+
     <div class="question">
         {{.Question}}
         <!-- Insert question text here -->
     </div>
     <div class="editor-and-output">
 
+        <div class="code-editor" id="code-editor-ace">
+            {{.Codetemplate}}
+        </div>
 
-            <textarea class="code-editor">
-                {{.Codetemplate}}
-            </textarea>
         <div class="terminal">
             epic button
             <!-- Code output will be displayed here -->
@@ -23,3 +28,15 @@
         </div>
     </div>
 </div>
+
+<!--this code has to be after the code editor is rendered-->
+<script>
+    // Initialize the code editor
+    var editor = ace.edit('code-editor-ace');
+
+    // Set the theme
+    editor.setTheme('ace/theme/monokai');
+
+    // Set the mode
+    editor.session.setMode('ace/mode/python');
+</script>

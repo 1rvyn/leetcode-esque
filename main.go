@@ -6,6 +6,7 @@ import (
 	"fiberWebApi/routes"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 
 	"github.com/dgrijalva/jwt-go"
@@ -159,30 +160,33 @@ func register(c *fiber.Ctx) error {
 
 func pythonCode(c *fiber.Ctx) error {
 	// console log the body of the request
+
+	fmt.Println("code was submitted")
+
 	var data map[string]string
 
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
 
-	fmt.Println("code was submitted: ", data)
+	fmt.Println("the body of the data is: ", data)
 
-	fmt.Println("payloadItem: ", data["payloadItem"])
+	fmt.Println("payloadItem: ", data["codeitem"])
 
 	// parse the data into a .py file under the code folder
 
 	// TODO: take the error message and send it back to the client
 
-	//file, err := os.Create("/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
-	//if err != nil {
-	//	panic(err)
-	//}
-	//defer file.Close()
-	//
-	//_, err = file.WriteString(data["payloadItem"])
-	//if err != nil {
-	//	panic(err)
-	//}
+	file, err := os.Create("/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(data["codeitem"])
+	if err != nil {
+		panic(err)
+	}
 
 	// run the python code
 

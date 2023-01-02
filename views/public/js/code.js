@@ -1,31 +1,34 @@
 $(document).ready(function() {
 
-    // const form = document.querySelector(".codeform1");
-    // const texted = document.querySelector(".code-editor").val();
-
-
-    const codeItem = $(".code-editor").val(); // get the code as text/string from the textarea
-
-
-    console.log("CODE ITEM is: ", codeItem)
+    let editor = ace.edit('code-editor-ace');
 
     // const editor = $("#code").val();
 
-    $(".submitcodebutton").click(function (event) {
-        event.preventDefault()
-
+    $(".submitcodebutton").click(async function (event) {
+        let codeitem = editor.getValue();
+        event.preventDefault();
         console.log("clicked submit code button")
-        $.ajax({
-            type: "POST",
-            url: "/api/code",
-            async: true,
-            data: {
-                code: codeItem
-            },
-            success: function(response) {
-                console.log(response);
+        try {
+            const res = await fetch("/api/code", {
+                method: "POST",
+                headers: {"Content-Type": "application/json",
+                    "Accept": "application/json"},
+                body: JSON.stringify({
+                    codeitem
+                }),
+            });
+            const content = await res.json();
+            console.log(content);
+            console.log(res.status);
+            if (res.status === 400 || res.status === 401) {
+                console.log("there was an issue")
             }
-        });
+            else if (res.status === 200){
+                console.log("the login has a success response code good job :)")
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
     })
 })
 
