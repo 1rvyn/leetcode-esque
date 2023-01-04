@@ -51,48 +51,6 @@ func CreateAccount(c *fiber.Ctx) error {
 	return c.JSON(account)
 }
 
-//func GetAccounts(c *fiber.Ctx) error {
-//	accounts := []models.Account{}
-//
-//	database.Database.Db.Find(&accounts)
-//	responseAccounts := []Account{}
-//
-//	for _, Account := range accounts {
-//		responseAccount := CreateResponseAccount(Account)
-//		responseAccounts = append(responseAccounts, responseAccount)
-//	}
-//	return c.Status(200).JSON(responseAccounts)
-//}
-//
-//func FindLogin(id int, account *models.Account) error {
-//	database.Database.Db.Find(&account, "id = ?", id)
-//
-//	if account.ID == 0 {
-//		return errors.New("user does not exist")
-//	}
-//	return nil
-//
-//}
-//
-//func GetLogin(c *fiber.Ctx) error {
-//	id, err := c.ParamsInt("id")
-//
-//	var account models.Account
-//
-//	if err != nil {
-//		return c.Status(400).JSON("There doesn't seem to be an account that matches your input")
-//	}
-//
-//	// call the helper function to find the account
-//	if err := FindLogin(id, &account); err != nil {
-//		return c.Status(400).JSON(err.Error())
-//	}
-//
-//	responseAccount := CreateResponseAccount(account)
-//
-//	return c.Status(200).JSON(responseAccount)
-//}
-
 func GetLogin(c *fiber.Ctx) error {
 
 	var data map[string]string

@@ -5,14 +5,11 @@ import (
 	"fiberWebApi/models"
 	"fiberWebApi/routes"
 	"fmt"
-	"log"
-	"os"
-	"os/exec"
-
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"
+	"log"
 )
 
 const SecretKey = "secret"
@@ -133,18 +130,6 @@ func accountHandle(c *fiber.Ctx) error {
 	}
 }
 
-func code(c *fiber.Ctx) error {
-	activeURL := c.Path()
-
-	return c.Render("code", fiber.Map{
-		"Pages":        pages2,
-		"ActiveURL":    activeURL,
-		"Question":     "Can you write some code here which can print 'hello world' to the console?",
-		"Codetemplate": "print('hello world')", // this is the code which gets pre-loaded into the code editor
-		"Code":         "This is the code page",
-	})
-}
-
 func register(c *fiber.Ctx) error {
 
 	fmt.Print("register was page was accessed :)")
@@ -158,54 +143,6 @@ func register(c *fiber.Ctx) error {
 	})
 }
 
-func pythonCode(c *fiber.Ctx) error {
-	// console log the body of the request
-
-	fmt.Println("code was submitted")
-
-	var data map[string]string
-
-	if err := c.BodyParser(&data); err != nil {
-		return err
-	}
-
-	fmt.Println("the body of the data is: ", data)
-
-	fmt.Println("payloadItem: ", data["codeitem"])
-
-	// parse the data into a .py file under the code folder
-
-	// TODO: take the error message and send it back to the client
-
-	file, err := os.Create("/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
-	_, err = file.WriteString(data["codeitem"])
-	if err != nil {
-		panic(err)
-	}
-
-	// run the python code
-
-	cmd := exec.Command("python", "/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
-
-	output, err := cmd.Output()
-
-	if err != nil {
-		fmt.Println(err.Error())
-		panic(err)
-	}
-
-	fmt.Print(string(output))
-	// run the .py file
-
-	// return okay status and the body
-	return c.Status(200).JSON(c.Body())
-}
-
 func setupRoutes(app *fiber.App) {
 	// welcome endpoint
 	app.Get("/api", welcome)
@@ -215,7 +152,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/register", register)
 	// same thing for both
 
-	app.Get("/code", code) // code submission testing page
+	app.Get("/code", routes.CodePage) // code submission testing page
 
 	// user endpoints
 	app.Post("/api/users", routes.CreateUser)
@@ -242,7 +179,7 @@ func setupRoutes(app *fiber.App) {
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	app.Get("/api/logout", routes.Logout)      // removes the cookie
-	app.Post("/api/code", pythonCode)          // get python code from textarea
+	app.Post("/api/code", routes.PythonCode)   // get python code from textarea
 
 }
 
