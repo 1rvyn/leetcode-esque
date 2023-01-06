@@ -2,6 +2,8 @@ package routes
 
 import (
 	"bytes"
+	"fiberWebApi/database"
+	"fiberWebApi/models"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"os"
@@ -60,6 +62,8 @@ func PythonCode(c *fiber.Ctx) error {
 	// console log the body of the request
 
 	// print the cookie that was sent with the request
+
+	//TODO: make the code a byte array ?
 	fmt.Println(c.Cookies("jwt"))
 
 	fmt.Println("code was submitted")
@@ -69,14 +73,6 @@ func PythonCode(c *fiber.Ctx) error {
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
-
-	// save the code to the database
-
-	//fmt.Println("the body of the data is: ", data)
-	//
-	//fmt.Println("payloadItem: ", data["codeitem"])
-
-	// TODO: send error messages properly if code doesn't execute
 
 	file, err := os.Create("/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
 	if err != nil {
@@ -113,6 +109,22 @@ func PythonCode(c *fiber.Ctx) error {
 
 	// send the output back to the client along with setting the status code
 
+	// save the output to the database
+	submission := models.Submission{
+		Code:       data["codeitem"],
+		Cookie:     c.Cookies("jwt"),
+		Email:      c.Cookies("email"),
+		IP:         c.IP(),
+		Successout: output,
+		Errorout:   errorOutput,
+	}
+
+	// create a submission object and save it to the database
+	database.Database.Db.Create(&submission)
+
+	//TODO: right now this saves a submission if the code is unique -
+	// but it should save a submission if tests it passes are unique
+
 	return c.JSON(fiber.Map{
 		"status":  "success",
 		"message": "code was submitted",
@@ -121,12 +133,4 @@ func PythonCode(c *fiber.Ctx) error {
 	})
 	// since we have sent the response here we should save the code to the database
 
-	//submission := models.Submission{
-	//	Code:       data["codeitem"],
-	//	Cookie:     c.Cookies("jwt"),
-	//	Email:      c.Cookies("email"),
-	//	IP:         c.IP(),
-	//	Successout: string(output),
-	//	Errorout:   string(errorOutput),
-	//}
 }

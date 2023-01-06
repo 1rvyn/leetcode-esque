@@ -101,8 +101,6 @@ func GetLogin(c *fiber.Ctx) error {
 
 	// create a session as login was successful
 
-	// TODO: add input validation
-
 	c.Cookie(&cookie)
 
 	// log the data we have on the user when a login is made - all the info from the header etc
