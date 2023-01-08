@@ -4,10 +4,10 @@ import (
 	"fiberWebApi/database"
 	"fiberWebApi/models"
 	"fmt"
+	"github.com/golang-jwt/jwt"
 	"strconv"
 	"time"
-
-	"github.com/dgrijalva/jwt-go"
+	//"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
