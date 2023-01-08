@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"
+	"github.com/gofiber/websocket/v2"
 	"log"
 )
 
@@ -152,6 +153,9 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/register", register)
 	// same thing for both
 
+	// misc
+	//app.Get("/ws", websocketF)
+
 	app.Get("/code", routes.CodePage) // code submission testing page
 
 	// user endpoints
@@ -192,6 +196,31 @@ func main() {
 		Views: engine,
 		//ViewsLayout: "layouts/layout",
 	})
+
+	app.Use("/ws", func(c *fiber.Ctx) error {
+		if c.Get("host") == "localhost:3000" {
+			c.Locals("Host", "Localhost:3000")
+			return c.Next()
+		}
+		return c.Status(403).SendString("Request origin not allowed")
+	})
+
+	app.Get("/ws", websocket.New(func(c *websocket.Conn) {
+		fmt.Println(c.Locals("Host")) // "Localhost:3000"
+		for {
+			mt, msg, err := c.ReadMessage()
+			if err != nil {
+				log.Println("read:", err)
+				break
+			}
+			log.Printf("recieved the message : %s", msg)
+			err = c.WriteMessage(mt, []byte("hello from irvyn's backend go server"))
+			if err != nil {
+				log.Println("write:", err)
+				break
+			}
+		}
+	}))
 
 	// prevent the app from using cache / caching my main .css file
 
