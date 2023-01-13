@@ -21,7 +21,6 @@ func ConnectDb() {
 	if err != nil {
 		log.Fatal("failed to connect to the database \n", err.Error())
 		os.Exit(2)
-
 	}
 
 	log.Println("there was a successful connection to the Database")
@@ -29,7 +28,7 @@ func ConnectDb() {
 	log.Println("Running Migrations")
 	// TODO: add migrations
 
-	db.AutoMigrate(&models.User{}, &models.Product{}, &models.Order{}, &models.Account{}, &models.Session{}, &models.Submission{})
+	db.AutoMigrate(&models.Account{}, &models.Session{}, &models.Submission{})
 
 	Database = Dbinstance{Db: db}
 

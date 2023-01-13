@@ -29,6 +29,7 @@ type Page struct {
 var pages2 = []Page{
 	{Title: "Home", URL: "/"},
 	{Title: "Code", URL: "/code"},
+	{Title: "Problems", URL: "/problems"},
 	{Title: "Account", URL: "/account"},
 	{Title: "Logout", URL: "/api/logout"},
 }

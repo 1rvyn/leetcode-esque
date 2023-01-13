@@ -9,6 +9,7 @@
     position: absolute;
     width: 99%;
     bottom: 0;
+    /* why does bottom: 0 do what it does when the page is full ?? */
 }
 
 .main-title{

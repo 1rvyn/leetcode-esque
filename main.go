@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fiberWebApi/database"
 	"fiberWebApi/models"
 	"fiberWebApi/routes"
@@ -11,6 +12,7 @@ import (
 	"github.com/gofiber/template/html"
 	"github.com/gofiber/websocket/v2"
 	"log"
+	"os"
 )
 
 const SecretKey = "secret"
@@ -30,12 +32,14 @@ var pages = []Page{
 	{Title: "Login", URL: "/login"},
 	{Title: "Register", URL: "/register"},
 	{Title: "Account", URL: "/account"},
+	{Title: "Problems", URL: "/problems"},
 }
 
 // array of pages to show in the header if they are logged in
 var pages2 = []Page{
 	{Title: "Home", URL: "/"},
 	{Title: "Code", URL: "/code"},
+	{Title: "Problems", URL: "/problems"},
 	{Title: "Account", URL: "/account"},
 	{Title: "Logout", URL: "/api/logout"},
 }
@@ -133,7 +137,7 @@ func accountHandle(c *fiber.Ctx) error {
 
 func register(c *fiber.Ctx) error {
 
-	fmt.Print("register was page was accessed :)")
+	fmt.Println("register was page was accessed :)")
 
 	activeURL := c.Path()
 
@@ -144,6 +148,61 @@ func register(c *fiber.Ctx) error {
 	})
 }
 
+func problems(c *fiber.Ctx) error {
+	//fmt.Println("the problems page was accessed and the cookie is \n : ", c.Cookies("jwt"))
+
+	// TODO: look into benchmarking the differences between using a txt file and a DB to store the questions
+	// - we also need to look into linking the question names to some kind of way to access them
+	activeURL := c.Path()
+
+	// read the problems from the list.txt file inside the questions folder
+
+	// Users/irvyn/go/src/fiberWebApi/questions/q-1/list.txt
+
+	code, err := os.Open("/Users/irvyn/go/src/fiberWebApi/questions/q-1/list.txt")
+
+	if err != nil {
+		fmt.Println("error reading question list file: ", err)
+	}
+
+	defer code.Close()
+
+	var lines []string
+
+	scanner := bufio.NewScanner(code)
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("error reading question list file: ", err)
+	}
+
+	//for _, v := range lines {
+	//	fmt.Println("v is : ", v)
+	//}
+
+	//fmt.Println("lines of code are : ", lines)
+
+	currCookie := c.Cookies("jwt")
+
+	if currCookie == "" {
+		return c.Render("problems", fiber.Map{
+			"Pages":       pages,
+			"ActiveURL":   activeURL,
+			"ProblemList": lines,
+		})
+	} else {
+		return c.Render("problems", fiber.Map{
+			"Pages":       pages2,
+			"ActiveURL":   activeURL,
+			"ProblemList": lines,
+		})
+	}
+
+}
+
 func setupRoutes(app *fiber.App) {
 	// welcome endpoint
 	app.Get("/api", welcome)
@@ -151,31 +210,13 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/login", login)
 	app.Get("/account", accountHandle)
 	app.Get("/register", register)
+	app.Get("/problems", problems)
 	// same thing for both
 
 	// misc
 	//app.Get("/ws", websocketF)
 
 	app.Get("/code", routes.CodePage) // code submission testing page
-
-	// user endpoints
-	app.Post("/api/users", routes.CreateUser)
-	app.Get("/api/users", routes.GetUsers)
-	app.Get("/api/users/:id", routes.GetUser)
-	app.Put("/api/users/:id", routes.UpdateUser)
-	app.Delete("/api/users/:id", routes.DeleteUser)
-
-	// product endpoints
-	app.Post("/api/products", routes.CreateProduct)
-	app.Get("/api/products", routes.GetProducts)
-	app.Get("/api/products/:id", routes.GetProduct)
-	app.Put("/api/products/:id", routes.UpdateProduct)
-	app.Delete("/api/products/:id", routes.DeleteProduct)
-
-	// order endpoints
-	app.Post("/api/orders", routes.CreateOrder)
-	app.Get("/api/orders", routes.GetOrders)
-	app.Get("/api/orders/:id", routes.GetOrder)
 
 	// account system
 	app.Post("/api/register", routes.CreateAccount) // store creds in the database

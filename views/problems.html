@@ -1,0 +1,16 @@
+{{template "partials/header" .}}
+
+<p>
+    This is the problems page here is a list of all the problems.
+</p>
+<br>
+    {{range .ProblemList}}
+        <div class="problem">
+
+            <p>{{.}}</p>
+        </div>
+        <br>
+    {{end}}
+
+
+{{template "partials/footer" .}}
