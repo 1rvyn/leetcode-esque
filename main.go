@@ -6,13 +6,14 @@ import (
 	"fiberWebApi/models"
 	"fiberWebApi/routes"
 	"fmt"
+	"log"
+	"os"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"
 	"github.com/gofiber/websocket/v2"
-	"log"
-	"os"
 )
 
 const SecretKey = "secret"
@@ -78,7 +79,7 @@ func login(c *fiber.Ctx) error {
 		"ActiveURL": activeURL,
 		"User":      "Irvyn Hall",
 		"Email":     "irvynhall@gmail.com",
-		"Status":    "logging-in",
+		"Status":    "logging--in",
 	})
 }
 
