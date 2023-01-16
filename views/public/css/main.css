@@ -6,7 +6,7 @@
     outline-style: auto;
     outline-offset: -2px;
     background: indianred;
-    position: absolute;
+    position: page; /* come back to this */
     width: 99%;
     bottom: 0;
     /* why does bottom: 0 do what it does when the page is full ?? */
