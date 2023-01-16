@@ -1,0 +1,12 @@
+.idea/vcs.xml
+tmp/air_errors.log
+tmp/main
+.idea/inspectionProfiles/Project_Default.xml
+*.log
+.idea
+views/public/js/jquery.min.js
+views/public/js/code-persistence.js
+Users/irvyn/go/src/fiberWebApi/views/public/js/ace.js
+views/public/js/mode-python.js
+views/public/js/theme-monokai.js
+views/public/js/ace.js
