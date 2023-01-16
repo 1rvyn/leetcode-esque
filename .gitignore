@@ -6,8 +6,6 @@ tmp/main
 .idea
 views/public/js/jquery.min.js
 views/public/js/code-persistence.js
-Users/irvyn/go/src/fiberWebApi/views/public/js/ace.js
 views/public/js/mode-python.js
 views/public/js/theme-monokai.js
-./views/public/js/*
 views/public/js/ace.js
