@@ -5,9 +5,10 @@ import (
 	"fiberWebApi/database"
 	"fiberWebApi/models"
 	"fmt"
-	"github.com/gofiber/fiber/v2"
 	"os"
 	"os/exec"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 type Submission struct {
@@ -38,6 +39,10 @@ func CodePage(c *fiber.Ctx) error {
 	activeURL := c.Path()
 
 	code, err := os.ReadFile("/Users/irvyn/go/src/fiberWebApi/questions/q-1/TwoSum.py")
+
+	if err != nil {
+		fmt.Print(err)
+	}
 
 	question, err := os.ReadFile("/Users/irvyn/go/src/fiberWebApi/questions/q-1/TwoSum.txt")
 

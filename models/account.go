@@ -8,5 +8,5 @@ type Account struct {
 	Name      string `json:"name"`
 	Email     string `json:"email" gorm:"unique"`
 	Password  []byte `json:"-"`
-	UserRole  int    `gorm:"required"`
+	UserRole  int    `gorm:"default:1"`
 }
