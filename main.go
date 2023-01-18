@@ -214,6 +214,11 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/problems", problems)
 	// same thing for both
 
+	// userRole auth routes/pages
+	admin := app.Group("/admin", adminMiddleware)
+
+	admin.Get("/", routes.Dashboard)
+
 	// misc
 	//app.Get("/ws", websocketF)
 
@@ -283,3 +288,55 @@ func main() {
 
 	log.Fatal(app.Listen("127.0.0.1:3000"))
 }
+
+func adminMiddleware(c *fiber.Ctx) error {
+	// user := getUserFromSession(c)
+
+	fmt.Println("the current context is : ", c)
+	cookie := c.Cookies("jwt")
+
+	if cookie == "" {
+		return c.Status(401).JSON(fiber.Map{
+			"message": "Unauthorized",
+		})
+	}
+
+	// get the session from the cookie
+	var session []models.Session
+	database.Database.Db.Where("cookie = ?", cookie).Last(&session)
+
+	// print the users email from the session we have found
+	// fmt.Println("session email: ", session[0].Email)
+
+	// get the user from the session
+	var user []models.Account
+	database.Database.Db.Where("email = ?", session[0].Email).Last(&user)
+
+	// print the user we found
+	fmt.Println("This users role is : ", user[0].UserRole)
+
+	if user[0].UserRole == 2 {
+		fmt.Println("the user is an admin")
+		return c.Next()
+	}
+
+	// if the user is not an admin
+	return c.Status(401).JSON(fiber.Map{
+		"message": "Unauthorized",
+	})
+}
+
+// func getUserFromSession(c *fiber.Ctx) string {
+// 	// get the session cookie
+// 	cookie := c.Cookies("session_id")
+
+// 	// if the cookie is not empty
+// 	if cookie != "" {
+// 		// if the user exists in the redis store
+// 		if user, err := database.RedisClient.Get(cookie).Result(); err == nil {
+// 			return user
+// 		}
+// 	}
+
+// 	return ""
+// }
