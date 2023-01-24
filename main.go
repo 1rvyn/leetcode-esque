@@ -48,7 +48,7 @@ var pages2 = []Page{
 func welcomeHome(c *fiber.Ctx) error {
 	//  templating here
 
-	//fmt.Println(c.GetReqHeaders())
+	fmt.Println(c.GetReqHeaders())
 	cookie := c.Cookies("jwt")
 
 	activeURL := c.Path()
@@ -225,8 +225,8 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/code", routes.CodePage) // code submission testing page
 
 	// account system
-	app.Post("/api/register", routes.CreateAccount) // store creds in the database
-	app.Post("/api/login", routes.GetLogin)         // checks the creds against the stored db creds
+	// app.Post("/api/register", routes.CreateAccount) // store creds in the database
+	// app.Post("/api/login", routes.GetLogin)         // checks the creds against the stored db creds
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	app.Get("/api/logout", routes.Logout)      // removes the cookie
@@ -235,7 +235,7 @@ func setupRoutes(app *fiber.App) {
 }
 
 func main() {
-	database.ConnectDb()
+	// database.ConnectDb() MICROSERVICES :_)
 
 	engine := html.New("./views", ".html")
 
@@ -286,7 +286,7 @@ func main() {
 
 	setupRoutes(app)
 
-	log.Fatal(app.Listen("127.0.0.1:3000"))
+	log.Fatal(app.Listen(":3000"))
 }
 
 func adminMiddleware(c *fiber.Ctx) error {

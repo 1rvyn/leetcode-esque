@@ -12,7 +12,7 @@ $(document).ready(function(){
         // display.textContent = "";
         console.log(password.value + email.value)
         try {
-            const res = await fetch("/api/login", {
+            const res = await fetch("https://irvyn.dev/api/login", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
                             "Accept": "application/json"},
@@ -26,10 +26,15 @@ $(document).ready(function(){
             console.log(res.status);
             if (res.status === 400 || res.status === 401) {
                 console.log("there was an issue")
+                // append message to page
             }
             else if (res.status === 200){
                 console.log("the login has a success response code good job :)")
-                window.location.href = "/account";
+                // print out the cookie 
+                // console.log(document.cookie)
+                // console.log(res, content)
+                window.location.href = "/";
+
             }
         } catch (err) {
             console.log(err.message);

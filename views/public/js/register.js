@@ -1,6 +1,5 @@
 console.log("this should print on the register page")
 
-
 $(document).ready(function(){
     const form = document.querySelector(".register-form");
     const email = document.querySelector("#email");
@@ -12,7 +11,7 @@ $(document).ready(function(){
         // display.textContent = "";
         console.log(password.value + email.value + name.value)
         try {
-            const res = await fetch("/api/register", {
+            const res = await fetch("https://irvyn.dev/api/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
                     "Accept": "application/json"},
@@ -29,8 +28,9 @@ $(document).ready(function(){
                 console.log("there was an issue")
             }
             else if (res.status === 200){
+
                 console.log("the login has a success response code good job :)")
-                window.location.href = "/login";
+                // window.location.href = "/login";
             }
         } catch (err) {
             console.log(err.message);
