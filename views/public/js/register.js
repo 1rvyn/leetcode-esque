@@ -11,7 +11,8 @@ $(document).ready(function(){
         // display.textContent = "";
         console.log(password.value + email.value + name.value)
         try {
-            const res = await fetch("https://irvyn.dev/api/register", {
+            // const res = await fetch("https://irvyn.dev/api/register", {
+                const res = await fetch("/api/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
                     "Accept": "application/json"},

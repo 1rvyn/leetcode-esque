@@ -160,7 +160,7 @@ func problems(c *fiber.Ctx) error {
 
 	// Users/irvyn/go/src/fiberWebApi/questions/q-1/list.txt
 
-	code, err := os.Open("/Users/irvyn/go/src/fiberWebApi/questions/q-1/list.txt")
+	code, err := os.Open("/Users/irvyn/GolandProjects/leetcode-esque/questions/q-1/list.txt")
 
 	if err != nil {
 		fmt.Println("error reading question list file: ", err)
@@ -225,8 +225,8 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/code", routes.CodePage) // code submission testing page
 
 	// account system
-	// app.Post("/api/register", routes.CreateAccount) // store creds in the database
-	// app.Post("/api/login", routes.GetLogin)         // checks the creds against the stored db creds
+	app.Post("/api/register", routes.CreateAccount) // store creds in the database
+	app.Post("/api/login", routes.GetLogin)         // checks the creds against the stored db creds
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	app.Get("/api/logout", routes.Logout)      // removes the cookie
@@ -235,7 +235,7 @@ func setupRoutes(app *fiber.App) {
 }
 
 func main() {
-	// database.ConnectDb() MICROSERVICES :_)
+	database.ConnectDb() // MICROSERVICES :_)
 
 	engine := html.New("./views", ".html")
 

@@ -12,7 +12,8 @@ $(document).ready(function(){
         // display.textContent = "";
         console.log(password.value + email.value)
         try {
-            const res = await fetch("https://irvyn.dev/api/login", {
+            // const res = await fetch("https://irvyn.dev/api/login", {
+                const res = await fetch("/api/login", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
                             "Accept": "application/json"},

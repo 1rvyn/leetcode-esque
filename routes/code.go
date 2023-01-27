@@ -38,13 +38,13 @@ var pages2 = []Page{
 func CodePage(c *fiber.Ctx) error {
 	activeURL := c.Path()
 
-	code, err := os.ReadFile("/Users/irvyn/go/src/fiberWebApi/questions/q-1/TwoSum.py")
+	code, err := os.ReadFile("/Users/irvyn/GolandProjects/leetcode-esque/questions/q-1/TwoSum.py")
 
 	if err != nil {
 		fmt.Print(err)
 	}
 
-	question, err := os.ReadFile("/Users/irvyn/go/src/fiberWebApi/questions/q-1/TwoSum.txt")
+	question, err := os.ReadFile("/Users/irvyn/GolandProjects/leetcode-esque/questions/q-1/TwoSum.txt")
 
 	if err != nil {
 		fmt.Print(err)
@@ -86,7 +86,7 @@ func PythonCode(c *fiber.Ctx) error {
 		return err
 	}
 
-	file, err := os.Create("/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
+	file, err := os.Create("/Users/irvyn/GolandProjects/leetcode-esque/remotecode/code.py")
 	if err != nil {
 		panic(err)
 	}
@@ -99,7 +99,7 @@ func PythonCode(c *fiber.Ctx) error {
 
 	// run the python code
 
-	cmd := exec.Command("python", "/Users/irvyn/go/src/fiberWebApi/remotecode/code.py")
+	cmd := exec.Command("python", "/Users/irvyn/GolandProjects/leetcode-esque/remotecode/code.py")
 
 	var outBuf, errBuf bytes.Buffer
 
