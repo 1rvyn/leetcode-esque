@@ -38,13 +38,13 @@ var pages2 = []Page{
 func CodePage(c *fiber.Ctx) error {
 	activeURL := c.Path()
 
-	code, err := os.ReadFile("/Users/irvyn/GolandProjects/leetcode-esque/questions/q-1/TwoSum.py")
+	code, err := os.ReadFile("./questions/q-1/TwoSum.py")
 
 	if err != nil {
 		fmt.Print(err)
 	}
 
-	question, err := os.ReadFile("/Users/irvyn/GolandProjects/leetcode-esque/questions/q-1/TwoSum.txt")
+	question, err := os.ReadFile("./questions/q-1/TwoSum.txt")
 
 	if err != nil {
 		fmt.Print(err)
