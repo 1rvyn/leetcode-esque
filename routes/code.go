@@ -86,7 +86,7 @@ func PythonCode(c *fiber.Ctx) error {
 		return err
 	}
 
-	file, err := os.Create("/Users/irvyn/GolandProjects/leetcode-esque/remotecode/code.py")
+	file, err := os.Create("./remotecode/code.py")
 	if err != nil {
 		panic(err)
 	}
@@ -99,7 +99,7 @@ func PythonCode(c *fiber.Ctx) error {
 
 	// run the python code
 
-	cmd := exec.Command("python", "/Users/irvyn/GolandProjects/leetcode-esque/remotecode/code.py")
+	cmd := exec.Command("python", "./remotecode/code.py")
 
 	var outBuf, errBuf bytes.Buffer
 

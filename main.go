@@ -160,8 +160,8 @@ func problems(c *fiber.Ctx) error {
 
 	// Users/irvyn/go/src/fiberWebApi/questions/q-1/list.txt
 
-	code, err := os.Open("/Users/irvyn/GolandProjects/leetcode-esque/questions/q-1/list.txt")
-
+	code, err := os.Open("./questions/q-1/list.txt")
+	// fmt.Println("code is : ", code)
 	if err != nil {
 		fmt.Println("error reading question list file: ", err)
 	}
