@@ -11,8 +11,8 @@ $(document).ready(function(){
         // display.textContent = "";
         console.log(password.value + email.value + name.value)
         try {
-            // const res = await fetch("https://irvyn.dev/api/register", {
-                const res = await fetch("/api/register", {
+            const res = await fetch("https://irvyn.dev/api/register", {
+                // const res = await fetch("/api/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
                     "Accept": "application/json"},
@@ -29,6 +29,7 @@ $(document).ready(function(){
                 console.log("there was an issue")
             }
             else if (res.status === 200){
+                console.log("content inside is:", content)
 
                 console.log("the login has a success response code good job :)")
                 // window.location.href = "/login";
