@@ -21,6 +21,7 @@ $(document).ready(function(){
                     email: email.value,
                     password: password.value,
                 }),
+                credentials: "include",
             });
             const content = await res.json();
             console.log(content);
