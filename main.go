@@ -241,6 +241,7 @@ func main() {
 
 	app := fiber.New(fiber.Config{
 		Views: engine,
+
 		//ViewsLayout: "layouts/layout",
 	})
 
@@ -280,6 +281,7 @@ func main() {
 
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
+		AllowOrigins:     "https://irvyn.dev, https://irvyn.dev/api/login",
 	}))
 
 	app.Static("/", "./views/public")
@@ -325,18 +327,3 @@ func adminMiddleware(c *fiber.Ctx) error {
 		"message": "Unauthorized",
 	})
 }
-
-// func getUserFromSession(c *fiber.Ctx) string {
-// 	// get the session cookie
-// 	cookie := c.Cookies("session_id")
-
-// 	// if the cookie is not empty
-// 	if cookie != "" {
-// 		// if the user exists in the redis store
-// 		if user, err := database.RedisClient.Get(cookie).Result(); err == nil {
-// 			return user
-// 		}
-// 	}
-
-// 	return ""
-// }
