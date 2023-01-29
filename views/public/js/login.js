@@ -21,7 +21,7 @@ $(document).ready(function(){
                     email: email.value,
                     password: password.value,
                 }),
-                credentials: "same-origin",
+                credentials: "include",
             });
             const content = await res.json();
             console.log(content);
