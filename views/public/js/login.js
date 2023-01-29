@@ -32,9 +32,9 @@ $(document).ready(function(){
             else if (res.status === 200){
                 console.log("the login has a success response code good job :)")
                 // print out the cookie 
-                // console.log("cookie is: ", document.cookie)
-                // console.log(res, content)
-                window.location.href = "/";
+                console.log("cookie is: ", document.cookie)
+                console.log(res, content)
+                // window.location.href = "/";
 
             }
         } catch (err) {
