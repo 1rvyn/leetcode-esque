@@ -276,6 +276,8 @@ func main() {
 		c.Set("Cache-Control", "no-cache, no-store, must-revalidate")
 		c.Set("Pragma", "no-cache")
 		c.Set("Expires", "0")
+		c.Response().Header.Set("Access-Control-Allow-Origin", "irvyn.dev")
+		c.Set("Access-Control-Allow-Credentials", "true")
 		return c.Next()
 	})
 
