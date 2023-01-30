@@ -283,7 +283,6 @@ func main() {
 
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
-		AllowOrigins:     "http://127.0.0.1:8080 https://irvyn.dev 159.65.210.156",
 	}))
 
 	app.Use(func(c *fiber.Ctx) error {
@@ -293,7 +292,7 @@ func main() {
 		c.Set("Expires", "0")
 		c.Response().Header.Set("Access-Control-Allow-Origin", "irvyn.dev")
 		c.Response().Header.Set("Access-Control-Allow-Credentials", "true")
-		// c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		// c.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, Authorization")
 		// c.Set("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Credentials")
 		// c.Set("Access-Control-Max-Age", "86400")
