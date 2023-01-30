@@ -1,37 +1,49 @@
-// Get form values
-const form = $(".register-form");
-const email = $("#email").val();
-const name = $("#name").val();
-const password = $("#password").val();
+$(document).ready(function(){
+    // Get and set element 'form'
+    const form = document.querySelector(".login-form");
+// Get and set element 'email'
+    const email = document.querySelector("#email");
+// Get and set element 'password'
+    const password = document.querySelector("#password");
+    const name = document.querySelector("#name");
+// Add an event listener to the login button and use the api to process login event
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        // display.textContent = "";
+        console.log(password.value + email.value)
+        try {
+            const res = await fetch("https://irvyn.dev/api/register", {
+                // const res = await fetch("/api/login", {
+                method: "POST",
+                headers: {"Content-Type": "application/json",
+                            "Accept": "application/json"},
+                body: JSON.stringify({
+                    email: email.value,
+                    password: password.value,
+                    name: name.value,
+                }),
+                xhrFields: {
+                    withCredentials: true
+                },
+                credentials: "include",
+            });
+            const content = await res.json();
+            console.log(content);
+            console.log(res.status);
+            if (res.status === 400 || res.status === 401) {
+                console.log("there was an issue")
+                // append message to page
+            }
+            else if (res.status === 200){
+                console.log("the login has a success response code good job :)")
+                // print out the cookie 
+                console.log("cookie is: ", document.cookie)
+                console.log(res, content)
+                // window.location.href = "/";
 
-// Set up request body
-const requestBody = {
-  email: email,
-  name: name,
-  password: password
-};
-
-// Set up headers
-const headers = {
-  "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "*"
-};
-
-// Send POST request to API
-$.ajax({
-  type: "POST",
-  url: "https://irvyn.dev/api/register",
-  headers: headers,
-  data: JSON.stringify(requestBody),
-  success: function(data) {
-    console.log(data);
-  },
-  error: function(error) {
-    console.error("There was a problem with the request:", error);
-  }
-});
-
-// Prevent form from refreshing the page
-form.submit(function(event) {
-  event.preventDefault();
-});
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    });
+})
