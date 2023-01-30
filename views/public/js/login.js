@@ -21,6 +21,9 @@ $(document).ready(function(){
                     email: email.value,
                     password: password.value,
                 }),
+                xhrFields: {
+                    withCredentials: true
+                },
                 credentials: "include",
             });
             const content = await res.json();

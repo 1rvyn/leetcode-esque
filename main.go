@@ -225,8 +225,8 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/code", routes.CodePage) // code submission testing page
 
 	// account system
-	app.Post("/api/register", routes.CreateAccount) // store creds in the database
-	app.Post("/api/login", routes.GetLogin)         // checks the creds against the stored db creds
+	// app.Post("/api/register", routes.CreateAccount) // store creds in the database
+	// app.Post("/api/login", routes.GetLogin)         // checks the creds against the stored db creds
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	app.Get("/api/logout", routes.Logout)      // removes the cookie
@@ -235,7 +235,7 @@ func setupRoutes(app *fiber.App) {
 }
 
 func main() {
-	database.ConnectDb() // MICROSERVICES :_)
+	// database.ConnectDb() // MICROSERVICES :_)
 
 	engine := html.New("./views", ".html")
 
@@ -281,7 +281,7 @@ func main() {
 
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
-		AllowOrigins:     "https://irvyn.dev, https://irvyn.dev/api/login",
+		AllowOrigins:     "http://127.0.0.1:8080 https://irvyn.dev 159.65.210.156",
 	}))
 
 	app.Static("/", "./views/public")
