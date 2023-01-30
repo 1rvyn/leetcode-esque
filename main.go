@@ -288,6 +288,9 @@ func main() {
 
 	app.Use(func(c *fiber.Ctx) error {
 
+		c.Set("Cache-Control", "no-cache, no-store, must-revalidate")
+		c.Set("Pragma", "no-cache")
+		c.Set("Expires", "0")
 		c.Response().Header.Set("Access-Control-Allow-Origin", "irvyn.dev")
 		c.Response().Header.Set("Access-Control-Allow-Credentials", "true")
 		// c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
