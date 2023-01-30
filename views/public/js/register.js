@@ -16,7 +16,7 @@
                     method: "POST",
                     headers: {"Content-Type": "application/json",
                         "Accept": "application/json",
-                   "Access-Control-Allow-Origin": "irvyn.dev"
+                   "Access-Control-Allow-Origin": "irvyn.xyz"
                  },
                     body: JSON.stringify({
                         name: name.value,
