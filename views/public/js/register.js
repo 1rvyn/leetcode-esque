@@ -17,7 +17,7 @@ $(document).ready(function(){
                 method: "POST",
                 headers: {"Content-Type": "application/json",
                             "Accept": "application/json",
-                            "Access-Control-Allow-Origin": "*"
+                            "Access-Control-Allow-Origin": "irvyn.xyz"
                         },
                 body: JSON.stringify({
                     email: email.value,
