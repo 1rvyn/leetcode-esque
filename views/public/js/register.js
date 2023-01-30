@@ -16,7 +16,9 @@ $(document).ready(function(){
                 // const res = await fetch("/api/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
-                            "Accept": "application/json"},
+                            "Accept": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        },
                 body: JSON.stringify({
                     email: email.value,
                     password: password.value,
