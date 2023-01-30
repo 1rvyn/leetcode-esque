@@ -2,11 +2,14 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/json"
 	"fiberWebApi/database"
 	"fiberWebApi/models"
 	"fiberWebApi/routes"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/dgrijalva/jwt-go"
@@ -270,6 +273,8 @@ func main() {
 		}
 	}))
 
+	go sendPostReq(app)
+
 	// prevent the app from using cache / caching my main .css file
 
 	// app.Use(func(c *fiber.Ctx) error {
@@ -305,6 +310,31 @@ func main() {
 	setupRoutes(app)
 
 	log.Fatal(app.Listen(":3000"))
+}
+
+func sendPostReq(app *fiber.App) {
+	type RequestBody struct {
+		User     string `json:"user"`
+		Password string `json:"password"`
+		Email    string `json:"email"`
+	}
+	body := RequestBody{
+		User:     "testingfrontend_box",
+		Password: "password123",
+		Email:    "testererere",
+	}
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Send POST request
+	_, err = http.Post("https://irvyn.dev/api/register", "application/json", bytes.NewBuffer(jsonBody))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("POST request sent successfully")
 }
 
 func adminMiddleware(c *fiber.Ctx) error {
