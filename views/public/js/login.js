@@ -38,7 +38,7 @@ $(document).ready(function(){
                 // print out the cookie 
                 console.log("cookie is: ", document.cookie)
                 console.log(res, content)
-                // window.location.href = "/";
+                window.location.href = "/";
 
             }
         } catch (err) {
