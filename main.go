@@ -51,6 +51,8 @@ var pages2 = []Page{
 func welcomeHome(c *fiber.Ctx) error {
 	//  templating here
 
+	// print the users cookies
+
 	fmt.Println(c.GetReqHeaders())
 	cookie := c.Cookies("jwt")
 
@@ -297,6 +299,10 @@ func main() {
 		c.Set("Expires", "0")
 		c.Response().Header.Set("Access-Control-Allow-Origin", "irvyn.dev")
 		c.Response().Header.Set("Access-Control-Allow-Credentials", "true")
+		c.Response().Header.Set("Access-Control-Allow-Headers", "Cookie, Set-Cookie, Content-Type")
+
+		// allow the cookies to be set
+
 		c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		// c.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, Authorization")
 		// c.Set("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Credentials")
