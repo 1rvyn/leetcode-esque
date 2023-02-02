@@ -231,8 +231,8 @@ func setupRoutes(app *fiber.App) {
 	// app.Post("/api/login", routes.GetLogin)         // checks the creds against the stored db creds
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
-	app.Get("/api/logout", routes.Logout)      // removes the cookie
-	app.Post("/api/code", routes.PythonCode)   // get python code from textarea
+	// app.Get("/api/logout", routes.Logout)      // removes the cookie
+	app.Post("/api/code", routes.PythonCode) // get python code from textarea
 
 }
 

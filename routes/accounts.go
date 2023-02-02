@@ -151,25 +151,3 @@ func GetAccount(c *fiber.Ctx) error {
 	fmt.Println(account)
 	return c.JSON(account)
 }
-
-func Logout(c *fiber.Ctx) error {
-
-	// print the current cookie
-
-	fmt.Println(c.Cookies("jwt"))
-
-	// set the cookie to expired
-	cookie := fiber.Cookie{
-		Name:     "jwt",
-		Value:    "",
-		Expires:  time.Now().Add(-time.Hour),
-		HTTPOnly: true,
-	}
-
-	// update the current cookie :)
-	c.Cookie(&cookie)
-
-	// return to home page
-
-	return c.Redirect("/")
-}
