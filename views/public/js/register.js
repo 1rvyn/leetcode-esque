@@ -12,7 +12,7 @@ $(document).ready(function(){
         // display.textContent = "";
         console.log(password.value + email.value)
         try {
-            const res = await fetch("https://api.irvyn.xyz/api/register", {
+            const res = await fetch("https://api.irvyn.xyz/register", {
                 // const res = await fetch("/api/register", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
