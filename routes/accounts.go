@@ -154,6 +154,10 @@ func GetAccount(c *fiber.Ctx) error {
 
 func Logout(c *fiber.Ctx) error {
 
+	// print the current cookie
+
+	fmt.Println(c.Cookies("jwt"))
+
 	// set the cookie to expired
 	cookie := fiber.Cookie{
 		Name:     "jwt",

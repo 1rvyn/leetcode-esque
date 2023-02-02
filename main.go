@@ -274,36 +274,18 @@ func main() {
 
 	// go sendPostReq(app)
 
-	// prevent the app from using cache / caching my main .css file
-
-	// app.Use(func(c *fiber.Ctx) error {
-	// 	c.Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	// 	c.Set("Pragma", "no-cache")
-	// 	c.Set("Expires", "0")
-	// 	c.Response().Header.Set("Access-Control-Allow-Origin", "irvyn.dev")
-	// 	c.Set("Access-Control-Allow-Credentials", "true")
-	// 	return c.Next()
-	// })
-
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
 	}))
 
+	// prevent the app from caching
 	app.Use(func(c *fiber.Ctx) error {
 
 		c.Set("Cache-Control", "no-cache, no-store, must-revalidate")
 		c.Set("Pragma", "no-cache")
 		c.Set("Expires", "0")
-		c.Response().Header.Set("Access-Control-Allow-Origin", "irvyn.dev")
 		c.Response().Header.Set("Access-Control-Allow-Credentials", "true")
 		c.Response().Header.Set("Access-Control-Allow-Headers", "Cookie, Set-Cookie, Content-Type")
-
-		// allow the cookies to be set
-
-		c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		// c.Set("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, Authorization")
-		// c.Set("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Credentials")
-		// c.Set("Access-Control-Max-Age", "86400")
 
 		return c.Next()
 	})
@@ -314,6 +296,8 @@ func main() {
 
 	log.Fatal(app.Listen(":3000"))
 }
+
+// TODO: revist this for a test case to test the api
 
 // func sendPostReq(app *fiber.App) {
 // 	type RequestBody struct {
