@@ -42,7 +42,7 @@ var pages2 = []Page{
 	{Title: "Code", URL: "/code"},
 	{Title: "Problems", URL: "/problems"},
 	{Title: "Account", URL: "/account"},
-	{Title: "Logout", URL: "/api/logout"},
+	{Title: "Logout", URL: "/logout"},
 }
 
 func welcomeHome(c *fiber.Ctx) error {

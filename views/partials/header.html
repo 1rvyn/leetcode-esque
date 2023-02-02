@@ -10,7 +10,9 @@
         <ul id="header-ul">
             {{ range $page := .Pages }}
             <li id="header-links">
-                {{ if eq $page.URL $.ActiveURL }}
+                {{ if eq $page.URL "/logout" }}
+                <a href="#" onclick="logout()">{{ $page.Title }}</a>
+                {{ else if eq $page.URL $.ActiveURL }}
                 <a href="{{ $page.URL }}" class="active">{{ $page.Title }}</a>
                 {{ else }}
                 <a href="{{ $page.URL }}">{{ $page.Title }}</a>
