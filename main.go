@@ -284,8 +284,9 @@ func main() {
 		c.Set("Cache-Control", "no-cache, no-store, must-revalidate")
 		c.Set("Pragma", "no-cache")
 		c.Set("Expires", "0")
+		c.Response().Header.Set("Access-Control-Allow-Origin", "api.irvyn.xyz")
 		c.Response().Header.Set("Access-Control-Allow-Credentials", "true")
-		c.Response().Header.Set("Access-Control-Allow-Headers", "Cookie, Set-Cookie, Content-Type")
+		c.Response().Header.Set("Access-Control-Allow-Headers", "Content-Type, Set-Cookie, Cookie")
 
 		return c.Next()
 	})
