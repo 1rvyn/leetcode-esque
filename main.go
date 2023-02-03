@@ -75,6 +75,9 @@ func login(c *fiber.Ctx) error {
 
 	activeURL := c.Path()
 
+	fmt.Println("\n the ip here is:", c.IP())
+	fmt.Println("\n The x-forwarded-for header is: ", c.Get("x-forwarded-for"))
+
 	return c.Render("nice", fiber.Map{
 		"Pages":     pages,
 		"ActiveURL": activeURL,
