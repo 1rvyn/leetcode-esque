@@ -49,7 +49,7 @@ func welcomeHome(c *fiber.Ctx) error {
 
 	// print the users cookies
 
-	fmt.Println(c.GetReqHeaders())
+	// fmt.Println(c.GetReqHeaders())
 	cookie := c.Cookies("jwt")
 
 	activeURL := c.Path()
