@@ -9,7 +9,7 @@ $(document).ready(function() {
         event.preventDefault();
         console.log("clicked submit code button")
         try {
-            const res = await fetch("/api/code", {
+            const res = await fetch("https://api.irvyn.xyz/code", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
                     "Accept": "application/json"},
