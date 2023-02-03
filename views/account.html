@@ -1,60 +1,9 @@
 {{template "partials/header" .}}
 {{.item}}
-<div>
+<div id="account-page">
     <p>
-        Account ID: {{.ID}}
+        Below you should see your account details:
     </p>
-
-    <p>
-        Email Address: {{.Email}}
-    </p>
-
-    <p>
-        Username: {{.Name}}
-    </p>
-
-    <p>
-        Time of creation: {{.CreatedAt}}
-    </p>
-
-
-    <h1>
-        The current session:
-    </h1>
-
-
-<!--    <br>-->
-<!--    <p>-->
-<!--        Session ID: {{.SID}}-->
-<!--    </p>-->
-
-<!--    <p>-->
-<!--        IP Of creation: {{.IP}}-->
-<!--    </p>-->
-
-<!--    <p>-->
-<!--        Time of creation: {{.LoginCreatedAt}}-->
-<!--    </p>-->
-
-<!--&lt;!&ndash;    LoginExpiresAt&ndash;&gt;-->
-
-<!--    <p>-->
-<!--        Time of expiration: {{.LoginExpiresAt}}-->
-<!--    </p>-->
-
-
-<!--    <p>-->
-<!--        User agent: {{.UserAgent}}-->
-<!--    </p>-->
-
-    {{range .Session}}
-    <p>Session ID: {{.ID}}</p>
-    <p>IP Of creation: {{.IP}}</p>
-    <p>Time of creation: {{.CreatedAt}}</p>
-    <p>Cookie: {{.Cookie}}</p>
-    <p>UserAgent:{{.UserAgent}}</p>
-    {{end}}
-
 </div>
 
 {{template "partials/account" .}}

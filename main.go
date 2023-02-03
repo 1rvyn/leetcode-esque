@@ -9,7 +9,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"
@@ -87,34 +86,6 @@ func login(c *fiber.Ctx) error {
 
 func accountHandle(c *fiber.Ctx) error {
 
-	cookie := c.Cookies("jwt")
-
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(SecretKey), nil
-	})
-
-	// user isnt logged in
-	if err != nil {
-		c.Status(fiber.StatusUnauthorized)
-		return c.Redirect("/login")
-	}
-
-	claims := token.Claims.(*jwt.StandardClaims)
-
-	var account models.Account
-	var session []models.Session
-
-	fmt.Println("claims issuer: ", claims.Issuer)
-
-	database.Database.Db.Where("id = ?", claims.Issuer).First(&account)
-	database.Database.Db.Where("email = ?", account.Email).Last(&session)
-
-	// show the last session only
-
-	fmt.Println("sessions found are: ", session)
-
-	//user := c.UserContext()
-
 	activeURL := c.Path()
 
 	currCookie := c.Cookies("jwt")
@@ -126,11 +97,6 @@ func accountHandle(c *fiber.Ctx) error {
 			"Pages":     pages2,
 			"ActiveURL": activeURL,
 			"Item":      "this is the 'account' page ;) ",
-			"ID":        account.ID,
-			"Email":     account.Email,
-			"CreatedAt": account.CreatedAt,
-			"Name":      account.Name,
-			"Session":   session,
 		})
 	} else {
 		// there is no cookie lets redirect to the login page
