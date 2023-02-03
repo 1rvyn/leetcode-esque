@@ -12,7 +12,7 @@
             <li id="header-links">
                 {{ if eq $page.URL "/logout" }}
                 <a href="#" onclick="logout()">{{ $page.Title }}</a>
-                {{ if eq $page.URL "/account" }}
+                {{ else if eq $page.URL "/account" }}
                 <a href="/account" onclick="account()">{{ $page.Title }}</a>
                 {{ else if eq $page.URL $.ActiveURL }}
                 <a href="{{ $page.URL }}" class="active">{{ $page.Title }}</a>
