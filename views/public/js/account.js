@@ -14,31 +14,37 @@ console.log("this should print if we are on the account page");
 // }
 
 
-const request = new XMLHttpRequest();
-const url = 'https://api.irvyn.xyz/account';
-const div = document.querySelector('.account-info');
-
-request.open('POST', url, true);
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) {
-    const data = JSON.parse(request.responseText);
-    const content = `
-      <p><b>ID:</b> ${data.id}</p>
-      <p><b>Name:</b> ${data.name}</p>
-      <p><b>Email:</b> ${data.email}</p>
-      <p><b>Created At:</b> ${data.created_at}</p>
-      <p><b>User Role:</b> ${data.UserRole}</p>
-    `;
-
-    div.innerHTML = content;
-    div.style.backgroundColor = '#f2f2f2';
-    div.style.padding = '20px';
-    div.style.borderRadius = '5px';
-  } else {
-    console.error('Error retrieving data from API');
-  }
-};
-
-request.send();
-
+window.onload = async function() {
+    try {
+    const res = await fetch("https://api.irvyn.xyz/account", {
+    method: "POST",
+    headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+    },
+    xhrFields: {
+    withCredentials: true
+    },
+    credentials: "include"
+    });
+    const content = await res.json();
+    console.log(content);
+    console.log(res.status);
+    if (res.status === 200) {
+    const accountInfoDiv = document.querySelector(".account-info");
+    let accountInfoHtml = "";
+    accountInfoHtml += "<p>ID: " + content.id + "</p>";
+    accountInfoHtml += "<p>Name: " + content.name + "</p>";
+    accountInfoHtml += "<p>Email: " + content.email + "</p>";
+    accountInfoHtml += "<p>Password: " + content.password + "</p>";
+    accountInfoHtml += "<p>Created At: " + content.created_at + "</p>";
+    accountInfoHtml += "<p>User Role: " + content.UserRole + "</p>";
+    accountInfoDiv.innerHTML = accountInfoHtml;
+    } else {
+    console.log("There was an error retrieving data from the API");
+    }
+    } catch (err) {
+    console.log(err.message);
+    }
+    };
 
