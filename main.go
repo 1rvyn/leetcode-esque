@@ -182,12 +182,6 @@ func problems(c *fiber.Ctx) error {
 		fmt.Println("error reading question list file: ", err)
 	}
 
-	//for _, v := range lines {
-	//	fmt.Println("v is : ", v)
-	//}
-
-	//fmt.Println("lines of code are : ", lines)
-
 	currCookie := c.Cookies("jwt")
 
 	if currCookie == "" {

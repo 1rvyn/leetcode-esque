@@ -6,11 +6,37 @@
     outline-style: auto;
     outline-offset: -2px;
     background: indianred;
-    position: page; /* come back to this */
+    position: fixed; /* come back to this */
     width: 99%;
     bottom: 0;
-    /* why does bottom: 0 do what it does when the page is full ?? */
 }
+
+/* .main-footer {
+    text-align: center;
+    padding: 20px 0;
+    background: indianred;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  } */
+
+  /* .main-footer {
+    text-align: center;
+    padding: 20px 0;
+    background: indianred;
+    position: fixed;
+    width: 100%;
+    bottom: -100%;
+    left: 0;
+    transition: bottom 0.5s ease-in-out;
+  }
+  
+  body.show-footer .main-footer {
+    bottom: 0;
+  } */
+  
+  
 
 .main-title{
     text-align: center;
