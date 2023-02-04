@@ -123,8 +123,6 @@ func register(c *fiber.Ctx) error {
 func problems(c *fiber.Ctx) error {
 	//fmt.Println("the problems page was accessed and the cookie is \n : ", c.Cookies("jwt"))
 
-	// TODO: look into benchmarking the differences between using a txt file and a DB to store the questions
-	// - we also need to look into linking the question names to some kind of way to access them
 	activeURL := c.Path()
 
 	// read the problems from the list.txt file inside the questions folder
@@ -166,7 +164,6 @@ func problems(c *fiber.Ctx) error {
 			"ProblemList": lines,
 		})
 	}
-
 }
 
 func setupRoutes(app *fiber.App) {
@@ -247,7 +244,7 @@ func main() {
 		c.Set("Cache-Control", "no-cache, no-store, must-revalidate")
 		c.Set("Pragma", "no-cache")
 		c.Set("Expires", "0")
-		c.Response().Header.Set("Access-Control-Allow-Origin", "api.irvyn.xyz")
+		c.Response().Header.Set("Access-Control-Allow-Origin", "https://irvyn.xyz")
 		c.Response().Header.Set("Access-Control-Allow-Credentials", "true")
 		c.Response().Header.Set("Access-Control-Allow-Headers", "Content-Type, Set-Cookie, Cookie")
 
