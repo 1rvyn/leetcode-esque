@@ -15,6 +15,10 @@ $(document).ready(function(){
                 body: JSON.stringify({
                     codeitem
                 }),
+                xhrFields: {
+                    withCredentials: true
+                },
+                credentials: "include",
             });
             const content = await res.json();
             console.log(content);
