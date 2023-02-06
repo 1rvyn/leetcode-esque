@@ -1,72 +1,44 @@
-$(document).ready(function() {
+async function postRequest() {
+    const codeitem = ace.edit('code-editor-ace').getValue();
+    const res = await fetch("https://api.irvyn.xyz/code", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Cookie": "jwt=" + getCookie("jwt")
+        },
+        body: JSON.stringify({
+            codeitem
+        }),
+        credentials: "include"
+    });
+    const content = await res.json();
+    console.log(content);
+    console.log(res.status);
+    if (res.status === 400 || res.status === 401) {
+        console.log("There was an issue");
+    } else if (res.status === 200) {
+        console.log("The request was successful");
+        // take the content and put it inside the terminal div in the HTML
+        document.querySelector(".terminal").innerHTML += content.output;
+        document.querySelector(".terminal").innerHTML += content.error;
+    }
+}
 
-    let editor = ace.edit('code-editor-ace');
-
-    // const editor = $("#code").val();
-
-    $(".submitcodebutton").click(async function (event) {
-        let codeitem = editor.getValue();
-        event.preventDefault();
-        console.log("clicked submit code button")
-        try {
-            const res = await fetch("https://api.irvyn.xyz/code", {
-                method: "POST",
-                headers: {"Content-Type": "application/json",
-                    "Accept": "application/json"},
-                body: JSON.stringify({
-                    codeitem
-                }),
-            });
-            const content = await res.json();
-            console.log(content);
-            // take the content and put it inside the terminal div in the html
-            $(".terminal").append(content.output); // ehh
-            $(".terminal").append(content.error); // ehh
-
-            console.log(res.status);
-            if (res.status === 400 || res.status === 401) {
-                console.log("there was an issue")
-            }
-            else if (res.status === 200){
-                console.log("the login has a success response code good job :)")
-            }
-        } catch (err) {
-            console.log(err.message);
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
         }
-    })
-})
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
-
-
-// Add an event listener to the login button and use the api to process login event
-//     submitcodebutton.addEventListener("submit", async (e) => {
-//         e.preventDefault();
-//
-//         // log the code to the console
-//         // console.log(editor);
-//
-//         try {
-//             const res = await fetch("/api/code", {
-//                 method: "POST",
-//                 headers: {"Content-Type": "application/json",
-//                             "Accept": "application/json"},
-//                 body: JSON.stringify({
-//                     payloadItem: texted.value,
-//                 }),
-//             });
-//             const content = await res.json();
-//             console.log(content);
-//             console.log(res.status);
-//             if (res.status >= 200 && res.status < 300 && res.headers.get("Content-Type") === "application/json") {
-//                 const content = await res.json();
-//                 console.log(content);
-//                 console.log(res.status);
-//             } else {
-//                 console.log(res.status + ": " + await res.text());
-//             }
-//         } catch (err) {
-//             console.log(err);
-//         }
-//     });
-//
-// });
+document.querySelector(".submitcodebutton").addEventListener("click", postRequest);
