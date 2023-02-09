@@ -48,12 +48,7 @@ window.onload = async function() {
     }
     };
 
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("getSubmissions").addEventListener("click", function() {
-          console.log("Button was clicked!");
-          getSubmissions();
-        });
-      });
+    
       
     async function getSubmissions() {
         console.log("clicked get submissions button");

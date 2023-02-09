@@ -7,6 +7,15 @@
 
     <button id="getSubmissions">Click me!</button>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("getSubmissions").addEventListener("click", function() {
+          console.log("Button was clicked!");
+          getSubmissions();
+        });
+      });
+    </script>
+
 </div>
 
 {{template "partials/account" .}}
