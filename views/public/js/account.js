@@ -49,7 +49,7 @@ window.onload = async function() {
     };
 
     document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("myButton").addEventListener("click", function() {
+        document.getElementById("getSubmissions").addEventListener("click", function() {
           console.log("Button was clicked!");
           getSubmissions();
         });
