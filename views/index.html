@@ -1,14 +1,86 @@
-{{ template "partials/header" . }}
-<body>
-    <h1>{{ .Title }}</h1>
+<!--<body class="flex flex-col min-h-screen">-->
+<!--<header>-->
+<!--    {{ template "partials/header" . }}-->
+<!--</header>-->
 
+<!--<main class="flex-1">-->
+<!--    <h1 class="text-3xl font-bold underline">{{ .Title }}</h1>-->
+<!--    <p>-->
+<!--        There might be some content here we don't know yet :)-->
+<!--    </p>-->
+<!--</main>-->
 
-    <p>
-        There might be some content here we don't know yet :)
-    </p>
+<!--<footer>-->
+<!--    {{ template "partials/footer" . }}-->
+<!--</footer>-->
+<!--</body>-->
 
-    {{ template "partials/footer" . }}
+<body class="flex flex-col min-h-screen">
+<div id="app">
+    <header-component :pages="pages" :active-url="activeURL"></header-component>
+
+    <main-content :title="title"></main-content>
+</div>
+
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+    const HeaderComponent = Vue.createApp({
+        template: `
+            <header>
+                <nav class="bg-gray-800 py-3">
+                    <ul id="header-ul" class="flex justify-between items-center max-w-4xl mx-auto">
+                        <li v-for="page in pages" class="mr-6">
+                            <a :href="page.URL" class="text-white hover:text-gray-300"
+                               :class="{ 'font-bold': page.URL === activeURL }">{{ page.Title }}</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+        `,
+        props: {
+            pages: {
+                type: Array,
+                required: true,
+            },
+            activeURL: {
+                type: String,
+                required: true,
+            },
+        },
+    })
+
+    const MainContentComponent = Vue.createApp({
+        template: `
+        <main class="flex-1">
+          <h1 class="text-3xl font-bold underline">{{ title }}</h1>
+          <p>
+              There might be some content here we don't know yet :)
+          </p>
+        </main>
+      `,
+        props: {
+            title: {
+                type: String,
+                required: true,
+            },
+        },
+    })
+
+    const app = Vue.createApp({})
+    app.component('header-component', HeaderComponent)
+    app.component('main-content', MainContentComponent)
+    app.mount('#app', {
+        data: {
+            pages: [
+                { Title: "Page 1", URL: "/page1" },
+                { Title: "Page 2", URL: "/page2" },
+                { Title: "Page 3", URL: "/page3" },
+            ],
+            activeURL: "/page1",
+            title: "Welcome to the Home Page",
+        },
+    })
+</script>
 </body>
 
-</html>
 
