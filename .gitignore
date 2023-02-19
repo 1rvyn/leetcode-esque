@@ -11,3 +11,4 @@ views/public/js/theme-monokai.js
 views/public/js/ace.js
 bin/air
 views/public/js/jquery-3.5.1.min.js
+node_modules

@@ -1,59 +1,19 @@
 {{template "partials/header" .}}
-<style type="text/css">
-    .problem{
-        border: 1px solid black;
-        padding: 10px;
-        border-radius: 5px;
-    }
-    .main-footer {
-    text-align: center;
-    padding: 20px 0;
-    background: indianred;
-    position: fixed;
-    width: 100%;
-    bottom: -100%;
-    left: 0;
-    transition: bottom 0.5s ease-in-out;
-    }
-
-    body.show-footer {
-    padding-bottom: 160px; /* Add a padding-bottom that matches the height of the footer */
-    }
-
-    body.show-footer .main-footer {
-    bottom: 0;
-    }
-
-
-</style>
-
-<script type="text/javascript">
-    window.onscroll = function() {
-  var body = document.body,
-    html = document.documentElement;
-
-  var height = Math.max(body.scrollHeight, body.offsetHeight,
-    html.clientHeight, html.scrollHeight, html.offsetHeight);
-
-  if (window.scrollY + window.innerHeight >= height) {
-    body.classList.add("show-footer");
-  } else {
-    body.classList.remove("show-footer");
-  }
-};
-</script>
-
+<div class = "flex flex-col justify-center items-center">
+    <h1 class="text-3xl font-bold underline">{{ .Title }}</h1>
 <p>
     This is the problems page here is a list of all the problems.
 </p>
 <br>
     {{range .ProblemList}}
-        <div class="problem">
+        <div class="">
 
             <p>{{.}}</p>
         </div>
         <br>
     {{end}}
+</div>
 
-
-{{template "partials/footer" .}}
+<footer>
+    {{ template "partials/footer" . }}
+</footer>

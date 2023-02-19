@@ -1,12 +1,19 @@
 {{template "partials/header" .}}
-{{.item}}
 <div>
+
+
+</div>
+<main class="flex-1">
     <p>
         What is the page?: {{.Register}}
     </p>
+    <h1 class="text-3xl font-bold underline">{{ .Title }}</h1>
+    <p>
+        {{template "partials/register" .}}    </p>
+</main>
 
-</div>
 
 
-{{template "partials/register" .}}
-{{template "partials/footer" .}}
+<footer>
+    {{ template "partials/footer" . }}
+</footer>

@@ -78,12 +78,9 @@ func login(c *fiber.Ctx) error {
 	fmt.Println("\n the ip here is:", c.IP())
 	fmt.Println("\n The x-forwarded-for header is: ", c.Get("x-forwarded-for"))
 
-	return c.Render("nice", fiber.Map{
+	return c.Render("login", fiber.Map{
 		"Pages":     pages,
 		"ActiveURL": activeURL,
-		"User":      "Irvyn Hall",
-		"Email":     "irvynhall@gmail.com",
-		"Status":    "logging--in",
 	})
 }
 
@@ -174,6 +171,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/account", accountHandle)
 	app.Get("/register", register)
 	app.Get("/problems", problems)
+
 	// same thing for both
 
 	// userRole auth routes/pages

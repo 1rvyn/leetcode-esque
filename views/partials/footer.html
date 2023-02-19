@@ -1,5 +1,23 @@
-    <footer class="main-footer">
-        <p> this is the footer</p>
-        <a href="https://github.com/1rvyn">GitHub</a>
-        <p>Copyright 2021 Irvyn Hall</p>
-    </footer>
+<body class="flex flex-col min-h-screen">
+<!-- Your content goes here -->
+<footer class="bg-gray-800 text-white py-4 text-center">
+    <p class="mb-2">This is the footer</p>
+    <a href="https://github.com/1rvyn" class="underline hover:text-gray-300">GitHub</a>
+    <p class="mt-2">Copyright 2021 Irvyn Hall</p>
+</footer>
+</body>
+
+<style>
+    .flex-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .min-h-screen {
+        min-height: 100vh;
+    }
+
+    footer {
+        flex-shrink: 0;
+    }
+</style>

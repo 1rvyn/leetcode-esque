@@ -1,5 +1,9 @@
 {{template "partials/header" .}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<!--This is a templated page - it loads most of the basic pages that are defined.-->
 {{template "partials/login" .}}
-{{template "partials/footer" .}}
+
+
+<footer>
+    {{ template "partials/footer" . }}
+</footer>
