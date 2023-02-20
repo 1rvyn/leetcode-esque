@@ -1,17 +1,63 @@
-<body class="flex flex-col min-h-screen">
-<header>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+<header class="bg-white shadow-sm">
     {{ template "partials/header" . }}
 </header>
+<style>
+    /*prevent scroll bar from showing mid animation*/
+    body {
+        overflow-x: hidden;
+        font-family: Inconsolata, monospace;
+    }
+    #tailor-made {
+        font-weight: bolder;
+    }
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
 
-<main class="flex-1">
-    <h1 class="text-3xl font-bold underline">{{ .Title }}</h1>
-    <p>
-        There might be some content here we don't know yet :)
-    </p>
+    @keyframes slideInLeft {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+</style>
+
+<main class="flex-1 px-4 py-8">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <section class="text-center">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Coding Problems</h1>
+                    <p class="text-gray-600 mb-8">Practice your coding skills with our interactive problems.</p>
+                    <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">Start Coding</a>
+                </section>
+                <div class="md:text-right">
+                    <section class="my-8 max-w-md" style="display: flex; flex-direction: column; align-items: flex-end; margin-left: auto; animation: slideInRight 1s forwards;">
+                        <h2 class="text-2xl font-bold mb-4">A Way to Learn Programming</h2>
+                        <p class="text-l" style="margin-top: -1rem; text-align: left;">Learning a new language or your first can be hard, and many people learn in different ways. That's why we have <span id="tailor-made">tailor-made</span> tools for different learning styles.</p>
+                    </section>
+                </div>
+                <div class="md:w-1/2">
+                    <section class="my-8 max-w-md" style="display: flex; flex-direction: column; align-items: flex-start; margin-right: auto; animation: slideInLeft 1s forwards;">
+                        <h2 class="text-2xl font-bold mb-4">Practice makes perfect</h2>
+                        <p class="text-l" style="margin-top: -1rem;">You can practice data structures and functions you already know to master them.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
+
 
 <footer>
     {{ template "partials/footer" . }}
 </footer>
 </body>
-
