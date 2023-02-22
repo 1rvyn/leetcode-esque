@@ -1,6 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+/*https://irvyn.xyz/css/tailwindcss/base*/
 
 /*!* send footer to the bottom but keep the padding*!*/
 /*.main-footer{*/
@@ -14,6 +15,13 @@
 /*    bottom: 0;*/
 /*}*/
 /*  */
+
+/*.problem-container {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    margin: 0 -2rem;*/
+/*}*/
+
 
 #header-ul li {
     padding: 0 10px;
@@ -48,7 +56,7 @@ footer a {
 footer i {
     font-size: 18px;
     margin-right: 8px;
-    color: red;
+    color: black;
 }
 .footer-content {
     display: none;

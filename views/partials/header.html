@@ -1,3 +1,5 @@
+<title>{{ .Title }}</title>
+
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YSHZ5T6GVZ"></script>
     <script>
@@ -22,7 +24,7 @@
     <link href="css/output.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css" type="text/css">
 
-    <nav class="bg-red-800 py-3">
+    <nav class="bg-red-700 py-3">
         <ul id="header-ul" class="flex justify-between items-center max-w-4xl mx-auto">
             {{ range $page := .Pages }}
             <li class="mr-6">

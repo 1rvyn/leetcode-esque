@@ -1,5 +1,10 @@
-{{template "partials/header" .}}
-{{.item}}
+<body class="bg-gray-100 flex flex-col min-h-screen">
+  <header class="bg-white shadow-sm">
+      {{ template "partials/header" . }}
+  </header>
+  
+  
+  {{.item}}
 <div id="account-page">
     <p>
         Below you should see your account details:

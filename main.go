@@ -56,13 +56,13 @@ func welcomeHome(c *fiber.Ctx) error {
 
 	if cookie == "" {
 		return c.Render("index", fiber.Map{
-			"Title":     "Home page WITHOUT cookie",
+			"Title":     "Home",
 			"Pages":     pages,
 			"ActiveURL": activeURL,
 		})
 	} else {
 		return c.Render("index", fiber.Map{
-			"Title":     "Home page WITH cookie",
+			"Title":     "Home (C)",
 			"Pages":     pages2,
 			"ActiveURL": activeURL,
 		})

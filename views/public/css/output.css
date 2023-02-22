@@ -513,40 +513,6 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.container {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-  }
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -627,14 +593,19 @@ video {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
-.bg-red-800 {
+.bg-red-700 {
   --tw-bg-opacity: 1;
-  background-color: rgb(153 27 27 / var(--tw-bg-opacity));
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
 
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .px-4 {
@@ -705,6 +676,8 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+/*https://irvyn.xyz/css/tailwindcss/base*/
+
 /*!* send footer to the bottom but keep the padding*!*/
 
 /*.main-footer{*/
@@ -728,6 +701,16 @@ video {
 /*}*/
 
 /*  */
+
+/*.problem-container {*/
+
+/*    display: flex;*/
+
+/*    justify-content: space-between;*/
+
+/*    margin: 0 -2rem;*/
+
+/*}*/
 
 #header-ul li {
   padding: 0 10px;
@@ -763,7 +746,7 @@ footer a {
 footer i {
   font-size: 18px;
   margin-right: 8px;
-  color: red;
+  color: black;
 }
 
 .footer-content {
@@ -843,9 +826,5 @@ footer i {
 @media (min-width: 768px) {
   .md\:w-1\/2 {
     width: 50%;
-  }
-
-  .md\:text-right {
-    text-align: right;
   }
 }

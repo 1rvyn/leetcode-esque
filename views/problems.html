@@ -1,12 +1,17 @@
-{{template "partials/header" .}}
-<div class = "flex flex-col justify-center items-center">
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <header class="bg-white shadow-sm">
+        {{ template "partials/header" . }}
+    </header>
+    
+    
+    <div class = "flex flex-col justify-center items-center">
     <h1 class="text-3xl font-bold underline">{{ .Title }}</h1>
 <p>
     This is the problems page here is a list of all the problems.
 </p>
 <br>
     {{range .ProblemList}}
-        <div class="">
+        <div class="problems">
 
             <p>{{.}}</p>
         </div>
