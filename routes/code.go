@@ -55,19 +55,18 @@ func CodePage(c *fiber.Ctx) error {
 
 	fmt.Print("the parsed code as a string is: \n", codetemplate)
 
-	currCookie := c.Cookies("jwt")
+	// currCookie := c.Cookies("jwt")
 
-	if currCookie == "" {
-		return c.Redirect("/login")
-	} else {
-		return c.Render("code", fiber.Map{
-			"Pages":        pages2,
-			"ActiveURL":    activeURL,
-			"Question":     questiontemplate,
-			"Codetemplate": codetemplate, // this is the code which gets pre-loaded into the code editor
-			"Code":         "This is the code page",
-		})
-	}
+	// if currCookie == "" {
+	// 	return c.Redirect("/login")
+	// } else {
+	return c.Render("code", fiber.Map{
+		"Pages":        pages2,
+		"ActiveURL":    activeURL,
+		"Question":     questiontemplate,
+		"Codetemplate": codetemplate, // this is the code which gets pre-loaded into the code editor
+		"Code":         "This is the code page",
+	})
 }
 
 func PythonCode(c *fiber.Ctx) error {

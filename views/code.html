@@ -1,42 +1,154 @@
-{{template "partials/header" .}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js/code.js"></script>
-<script src="js/ace-local.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/ace.js" 
-integrity="sha512-WYlXqL7GPpZL2ImDErTX0RMKy5hR17vGW5yY04p9Z+YhYFJcUUFRT31N29euNB4sLNNf/s0XQXZfzg3uKSoOdA=="
- crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <header class="bg-white shadow-sm">
+        {{ template "partials/header" . }}
+    </header>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/code.js"></script>
+    <script src="js/ace-local.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/ace.js"
+        integrity="sha512-WYlXqL7GPpZL2ImDErTX0RMKy5hR17vGW5yY04p9Z+YhYFJcUUFRT31N29euNB4sLNNf/s0XQXZfzg3uKSoOdA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="css/code.css">
+    <style>
+        .flex-1 {
+          display: flex;
+          flex: 1;
+        }
+      
+        .box-1 {
+          position: relative;
+          flex-basis: 33.33%;
+          background-color: red;
+        }
+      
+        .box-2 {
+          position: relative; /* add this to enable absolute positioning */
+          display: flex;
+          flex-direction: column;
+          flex-basis: 66.66%;
+        }
+      
+        .box-2-top {
+          flex: 1;
+          background-color: blue;
+        }
+      
+        .box-2-bottom {
+          flex: 1;
+          background-color: green;
+        }
+      
+        /* draggable bar styles */
+        .bar {
+        position: absolute;
+        top: 0;
+        right: -3px;
+        width: 20px;
+        height: 100%;
+        background-color: #e6e6e6;
+        cursor: col-resize;
+        }
 
+        .bar:hover {
+        background-color: #bfbfbf;
+        }
 
-<link rel="stylesheet" href="css/code.css">
+        .bar svg {
+        fill: #a6a6a6;
+        transition: all 0.3s ease;
+        }
 
+        .bar:hover svg {
+        fill: #fff;
+        }
 
-<div class="leetcode-editor">
-
-
-    <div class="question">
-        {{.Question}}
-        <!-- Insert question text here -->
-    </div>
-    <div class="editor-and-output">
-
-        <div class="code-editor" id="code-editor-ace">{{.Codetemplate}}</div>
-
-
-        <div class="terminal">
-            <button class="submitcodebutton" type="submit">submit</button>
-            <!-- Code output will be displayed here -->
+      
+        .no-select {
+          user-select: none;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+        }
+      
+      </style>
+      
+      <div class="flex-1 flex">
+        <div class="box-1">
+          <span>box 1 question</span>
+          <div class="bar"></div> <!-- add the vertical splitter bar here -->
         </div>
+        <div class="box-2">
+          <div class="box-2-top">
+            <span>box 2 code editor</span>
+        </div>
+        <div class="bar-vertical"></div>
+        <div class="box-2-bottom">
+          <span>box 2 terminal</span>
+        </div>
+      </div>
     </div>
-</div>
+    
+    
+    <!--this code has to be after the code editor is rendered-->
+    <script>
+      // Initialize the code editor
+      var editor = ace.edit('code-editor-ace');
+    
+      // Set the theme
+      editor.setTheme('ace/theme/monokai');
+    
+      // Set the mode
+      editor.session.setMode('ace/mode/python');
+    </script>
 
-<!--this code has to be after the code editor is rendered-->
 <script>
-    // Initialize the code editor
-    var editor = ace.edit('code-editor-ace');
+$(function() {
+var $splitter = $('.bar');
+var $left = $('.box-1');
+var $right = $('.box-2');
+var $split = $('<div>').addClass('split');
+var isDragging = false;
 
-    // Set the theme
-    editor.setTheme('ace/theme/monokai');
+// Set the initial width of the left and right elements
+$left.css('flex-basis', '33.33%');
+$right.css('flex-basis', '66.66%');
 
-    // Set the mode
-    editor.session.setMode('ace/mode/python');
+// Register the drag event on the split bar
+$splitter.on('mousedown', function(e) {
+  e.preventDefault();
+  $split.css('left', 0);
+  $split.css('top', e.pageY - $splitter.offset().top);
+  $split.css('height', $left.height());
+  $left.addClass('no-select');
+  $right.addClass('no-select');
+  $left.append($split);
+  isDragging = true;
+});
+
+$(document).on('mousemove', function(e) {
+  if (isDragging) {
+    window.requestAnimationFrame(function() {
+      var x = e.pageX - $left.offset().left;
+      var w = $left.width();
+      var leftWidth = x / w * 100 + '%';
+      var rightWidth = (w - x) / w * 100 + '%';
+      $left.css('flex-basis', leftWidth);
+      $right.css('flex-basis', rightWidth);
+      $split.css('left', x);
+    });
+  }
+}).on('mouseup', function(e) {
+  isDragging = false;
+  $split.remove();
+  $left.removeClass('no-select');
+  $right.removeClass('no-select');
+});
+});
+
+// Add the will-change property to the box-1 and box-2 elements
+$('.box-1, .box-2').css('will-change', 'width');
+
 </script>
+
+
+
+</body>
