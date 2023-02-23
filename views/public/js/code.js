@@ -3,7 +3,7 @@ $(document).ready(function(){
 
     // const editor = $("#code").val();
 
-    $(".submitcodebutton").click(async function (event) {
+    $("#submitcodebutton").click(async function (event) {
         let codeitem = editor.getValue();
         event.preventDefault();
         console.log("clicked submit code button")
