@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    let editor = ace.edit('code-editor-ace');
+    let editor = ace.edit('box-2-top');
 
     // const editor = $("#code").val();
 
