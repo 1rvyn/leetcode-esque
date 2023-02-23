@@ -23,8 +23,8 @@ $(document).ready(function(){
             const content = await res.json();
             console.log(content);
             // take the content and put it inside the terminal div in the html
-            $(".terminal").append(content.output); // ehh
-            $(".terminal").append(content.error); // ehh
+            $(".widget").append(content.output); // ehh
+            $(".widget").append(content.error); // ehh
 
             console.log(res.status);
             if (res.status === 400 || res.status === 401) {
