@@ -3,8 +3,11 @@
       {{ template "partials/header" . }}
   </header>
   
-  
-  {{.item}}
+  <script src="js/account.js"></script>
+
+  <div class="account-info">
+   
+  </div>
 <div id="account-page flex flex-col justify-center items-center">
     <p>
         Below you should see your account details:
@@ -20,10 +23,8 @@
         });
       });
     </script>
-
 </div>
 
-{{template "partials/account" .}}
 <footer>
     {{ template "partials/footer" . }}
 </footer>
