@@ -36,7 +36,6 @@ window.onload = async function() {
     accountInfoHtml += "<p>ID: " + content.id + "</p>";
     accountInfoHtml += "<p>Name: " + content.name + "</p>";
     accountInfoHtml += "<p>Email: " + content.email + "</p>";
-    accountInfoHtml += "<p>Password: " + content.password + "</p>";
     accountInfoHtml += "<p>Created At: " + content.created_at + "</p>";
     accountInfoHtml += "<p>User Role: " + content.UserRole + "</p>";
     accountInfoDiv.innerHTML = accountInfoHtml;
