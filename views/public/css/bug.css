@@ -1,0 +1,31 @@
+  /* Styles for the modal */
+  #bug-report-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 24px;
+  }
+
+  /* Styles for the input and submit button */
+  #bug-report-modal input,
+  #bug-report-modal button {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+
+  /* Styles for the submit button */
+  #bug-report-modal button {
+    background-color: #4CAF50;
+    color: white;
+  }

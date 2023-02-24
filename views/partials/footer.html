@@ -1,9 +1,9 @@
 <footer class="footer-content" style="width:80%; display: flex; justify-content: space-between; align-items: center; border-top: 3px dotted #e53e3e;">
     <span style="margin-left: 24px;">&#169; irvyn</span>
     <div style="display: flex;">
-        <a href="/bugreport" style="margin-right: 24px;" title="Tell me about the bugs (be kind)">
+        <a href="#" id="bug-report-icon" style="margin-right: 24px;" title="Tell me about the bugs (be kind)">
             <i class="fa-solid fa-bug"></i>
-        </a>
+          </a>
         <a href="/suggestions" style="margin-right: 24px;" title="Give me suggestions!">
             <i class="fa-solid fa-lightbulb"></i>
         </a>
@@ -20,4 +20,51 @@
             <i class="fa fa-envelope"></i>
         </a>
     </div>
+    <link rel="stylesheet" href="css/bug.css" type="text/css">
+
+    
+    <div id="bug-report-modal">
+        <i class="fa-solid fa-times exit-button cursor-pointer"></i>
+        <form>
+            <label for="bug-title">Title</label>
+            <input type="text" name="bugtitle" id="bug-title" placeholder="Enter a title for the bug">
+            <textarea name="bugreport" placeholder="Describe the bug..."></textarea>
+            <button class="submit-bug" type="submit">Submit</button>
+        </form>
+      </div>
+
+      <script src="js/bugreport.js"></script>
+      
+      <script>
+      const form = document.querySelector("#bug-report-modal form");
+      const bugReportIcon = document.getElementById("bug-report-icon");
+      const bugReportModal = document.getElementById("bug-report-modal");
+      const exitButton = bugReportModal.querySelector(".exit-button");
+      const submitBug = bugReportModal.querySelector(".submit-bug");
+
+        
+
+      
+        bugReportIcon.addEventListener("click", (event) => {
+          event.preventDefault();
+          bugReportModal.style.display = "block";
+        });
+
+        submitBug.addEventListener("click", (event) => {
+          event.preventDefault();
+          const bugreport = form.querySelector("textarea[name='bugreport']").value;
+          const title = form.querySelector("#bug-title").value;
+          console.log("submit clicked")
+          handleBugReport(title, bugreport);
+        });
+
+
+      
+        exitButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          bugReportModal.style.display = "none";
+        });
+      </script>
+      
+
 </footer>
