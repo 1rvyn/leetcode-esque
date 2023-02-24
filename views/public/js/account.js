@@ -1,19 +1,5 @@
 console.log("this should print if we are on the account page");
 
-// send get request to api.irvyn.xyz/account
-// display the account information
-
-// example response from my postman testing
-// {
-//     "id": 27,
-//     "name": "irvyn",
-//     "email": "gg@crypto.com",
-//     "password": "mYu96jgcvsA5A+MqEy8iMv/dksFiW2uCjvMH9ZQErbs=",
-//     "created_at": "2023-01-29T14:03:07.115309Z",
-//     "UserRole": 1
-// }
-
-
 window.onload = async function() {
     try {
     const res = await fetch("https://api.irvyn.xyz/account", {
