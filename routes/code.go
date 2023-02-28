@@ -36,24 +36,42 @@ var pages2 = []Page{
 }
 
 func CodePage(c *fiber.Ctx) error {
-	activeURL := c.Path()
 
-	code, err := os.ReadFile("./questions/q-1/TwoSum.py")
+	// code, err := os.ReadFile("./questions/q-1/TwoSum.py")
 
-	if err != nil {
-		fmt.Print(err)
-	}
+	// if err != nil {
+	// 	fmt.Print(err)
+	// }
 
-	question, err := os.ReadFile("./questions/q-1/TwoSum.txt")
+	// question, err := os.ReadFile("./questions/q-1/TwoSum.txt")
 
-	if err != nil {
-		fmt.Print(err)
-	}
+	// if err != nil {
+	// 	fmt.Print(err)
+	// }
 
-	codetemplate := string(code)
-	questiontemplate := string(question)
+	// codetemplate := string(code)
+	// questiontemplate := string(question)
 
-	fmt.Print("the parsed code as a string is: \n", codetemplate)
+	// fmt.Print("the parsed code as a string is: \n", codetemplate)
+
+	// TODO: Pull these in from the API based on an ID in the URL
+
+	problem := `Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+	You may assume that each input would have exactly one solution, 
+	and you may not use the same element twice.`
+
+	codetemplate := `def twoSum(nums, target):
+		# your code here
+		answer = []
+		return answer`
+
+	exampleInput := "nums = [2,7,11,15]"
+
+	inputType := "DynamicProgramming"
+
+	exampleAnswer := "[0,1]"
+
+	difficulty := "Easy"
 
 	// currCookie := c.Cookies("jwt")
 
@@ -61,11 +79,13 @@ func CodePage(c *fiber.Ctx) error {
 	// 	return c.Redirect("/login")
 	// } else {
 	return c.Render("code", fiber.Map{
-		"Pages":        pages2,
-		"ActiveURL":    activeURL,
-		"Question":     questiontemplate,
-		"Codetemplate": codetemplate, // this is the code which gets pre-loaded into the code editor
-		"Code":         "This is the code page",
+		"Pages":             pages2,
+		"Question":          problem,
+		"ExampleInput":      exampleInput,
+		"ExampleAnswer":     exampleAnswer,
+		"Codetemplate":      codetemplate,
+		"ProblemType":       inputType,
+		"ProblemDifficulty": difficulty,
 	})
 }
 

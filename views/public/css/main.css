@@ -22,7 +22,10 @@
 /*    margin: 0 -2rem;*/
 /*}*/
 
+header {
+    font-family: Inconsolata, monospace;
 
+}
 #header-ul li {
     padding: 0 10px;
 }

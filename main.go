@@ -2,8 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fiberWebApi/database"
-	"fiberWebApi/models"
 	"fiberWebApi/routes"
 	"fmt"
 	"log"
@@ -309,35 +307,36 @@ func main() {
 // }
 
 func adminMiddleware(c *fiber.Ctx) error {
+	fmt.Println("admin middleware called", c.Path())
 	// user := getUserFromSession(c)
 
-	fmt.Println("the current context is : ", c)
-	cookie := c.Cookies("jwt")
-
-	if cookie == "" {
-		return c.Status(401).JSON(fiber.Map{
-			"message": "Unauthorized",
-		})
-	}
-
-	// get the session from the cookie
-	var session []models.Session
-	database.Database.Db.Where("cookie = ?", cookie).Last(&session)
-
-	// print the users email from the session we have found
-	// fmt.Println("session email: ", session[0].Email)
-
-	// get the user from the session
-	var user []models.Account
-	database.Database.Db.Where("email = ?", session[0].Email).Last(&user)
-
-	// print the user we found
-	fmt.Println("This users role is : ", user[0].UserRole)
-
-	if user[0].UserRole == 2 {
-		fmt.Println("the user is an admin")
-		return c.Next()
-	}
+	//fmt.Println("the current context is : ", c)
+	//cookie := c.Cookies("jwt")
+	//
+	//if cookie == "" {
+	//	return c.Status(401).JSON(fiber.Map{
+	//		"message": "Unauthorized",
+	//	})
+	//}
+	//
+	//// get the session from the cookie
+	//var session []models.Session
+	//database.Database.Db.Where("cookie = ?", cookie).Last(&session)
+	//
+	//// print the users email from the session we have found
+	//// fmt.Println("session email: ", session[0].Email)
+	//
+	//// get the user from the session
+	//var user []models.Account
+	//database.Database.Db.Where("email = ?", session[0].Email).Last(&user)
+	//
+	//// print the user we found
+	//fmt.Println("This users role is : ", user[0].UserRole)
+	//
+	//if user[0].UserRole == 2 {
+	//	fmt.Println("the user is an admin")
+	//	return c.Next()
+	//}
 
 	// if the user is not an admin
 	return c.Status(401).JSON(fiber.Map{

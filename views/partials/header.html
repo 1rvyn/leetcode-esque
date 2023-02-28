@@ -27,18 +27,24 @@
     <nav class="bg-red-700 py-3">
         <ul id="header-ul" class="flex justify-between items-center max-w-4xl mx-auto">
             {{ range $page := .Pages }}
-            <li class="mr-6">
-                {{ if eq $page.URL "/logout" }}
-                <a href="#" onclick="logout()" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
-                {{ else if eq $page.URL "/account" }}
-                <a href="/account" onclick="account()" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
-                {{ else if eq $page.URL $.ActiveURL }}
-                <a href="{{ $page.URL }}" class="text-white hover:text-gray-300 font-bold">{{ $page.Title }}</a>
-                {{ else }}
+            <li class="mr-6{{ if eq $page.URL $.ActiveURL }} font-bold{{ end }}">
                 <a href="{{ $page.URL }}" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
-                {{ end }}
             </li>
             {{ end }}
         </ul>
+
+        <script>
+            // Get the current URL path
+            var currentPath = window.location.pathname;
+
+            // Find the link that matches the current path and add the "font-bold" class to it
+            var links = document.querySelectorAll("#header-ul li a");
+            links.forEach(function(link) {
+                if (link.getAttribute("href") === currentPath) {
+                    link.classList.add("font-bold");
+                }
+            });
+        </script>
     </nav>
+
 </header>
