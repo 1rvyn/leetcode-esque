@@ -51,19 +51,15 @@ func welcomeHome(c *fiber.Ctx) error {
 	// fmt.Println(c.GetReqHeaders())
 	cookie := c.Cookies("jwt")
 
-	activeURL := c.Path()
-
 	if cookie == "" {
 		return c.Render("index", fiber.Map{
-			"Title":     "Home",
-			"Pages":     pages,
-			"ActiveURL": activeURL,
+			"Title": "Home",
+			"Pages": pages,
 		})
 	} else {
 		return c.Render("index", fiber.Map{
-			"Title":     "Home (C)",
-			"Pages":     pages2,
-			"ActiveURL": activeURL,
+			"Title": "Home (C)",
+			"Pages": pages2,
 		})
 	}
 }
@@ -72,14 +68,12 @@ func login(c *fiber.Ctx) error {
 	// do some kind of check to see if the user is already logged in
 	//- similar to how we do it with /account
 
-	activeURL := c.Path()
-
 	fmt.Println("\n the ip here is:", c.IP())
 	fmt.Println("\n The x-forwarded-for header is: ", c.Get("x-forwarded-for"))
 
 	return c.Render("login", fiber.Map{
-		"Pages":     pages,
-		"ActiveURL": activeURL,
+		"Title": "Login",
+		"Pages": pages,
 	})
 }
 

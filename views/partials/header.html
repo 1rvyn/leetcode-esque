@@ -27,7 +27,7 @@
     <nav class="bg-red-700 py-3">
         <ul id="header-ul" class="flex justify-between items-center max-w-4xl mx-auto">
             {{ range $page := .Pages }}
-            <li class="mr-6{{ if eq $page.URL $.ActiveURL }} font-bold{{ end }}">
+            <li class="mr-6">
                 <a href="{{ $page.URL }}" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
             </li>
             {{ end }}
@@ -36,15 +36,16 @@
         <script>
             // Get the current URL path
             var currentPath = window.location.pathname;
-
+            console.log("current path is:", currentPath)
             // Find the link that matches the current path and add the "font-bold" class to it
             var links = document.querySelectorAll("#header-ul li a");
             links.forEach(function(link) {
-                if (link.getAttribute("href") === currentPath) {
-                    link.classList.add("font-bold");
+                if (link.getAttribute("href").endsWith(currentPath) || (link.getAttribute("href") === "/" && currentPath === "/")) {
+                    link.classList.add("current-page");
                 }
             });
         </script>
     </nav>
+
 
 </header>

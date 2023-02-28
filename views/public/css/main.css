@@ -42,7 +42,10 @@ header {
 main {
     flex: 1;
 }
-
+.current-page{
+    font-weight: bolder;
+    font-style: italic;
+}
  footer {
      display: flex;
      justify-content: center;
