@@ -8,9 +8,39 @@
 
 <main class="flex-1">
     <h1 class="text-3xl font-bold underline">Login</h1>
-    <p> {{template "partials/login" .}} </p>
+
+    <form class="login-form text-center">
+
+        <div class="login-input">
+            <label for="email">email</label>
+            <input
+                    type="text"
+                    placeholder="Email"
+                    id="email"
+                    name="email"
+                    required
+            />
+            <label for="password">Password</label>
+            <input
+                    type="password"
+                    placeholder="Password"
+                    id="password"
+                    name="password"
+                    required
+            />
+        </div>
+        <button class="primary-btn" type="submit" value="login">Login</button>
+    </form>
 </main>
 
+
+<div class="login-message text-center">
+    <p id="login-error"></p>
+</div>
+
+
+
+<script src="/js/login.js"></script> <!-- This has to be here so that it can find and append to the element above -->
 
 <footer>
     {{ template "partials/footer" . }}

@@ -4,11 +4,15 @@ const message = urlParams.get('message');
 
 // If a message was sent, append it to the page
 if (message) {
-    const messageElement = document.createElement('p');
+    const messageElement = document.createElement('div');
     messageElement.innerText = message;
     messageElement.classList.add('bg-green-100', 'border', 'border-green-400', 'text-green-700', 'px-4', 'py-3', 'rounded', 'mb-4');
-    document.querySelector('.flex-1').insertBefore(messageElement, document.querySelector('h1'));
+    const mainElement = document.querySelector('.login-message');
+    if (mainElement) {
+        mainElement.appendChild(messageElement);
+    }
 }
+
 
 $(document).ready(function(){
     // Get and set element 'form'
