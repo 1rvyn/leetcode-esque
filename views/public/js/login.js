@@ -1,3 +1,15 @@
+// Get the value of the message query parameter from the URL
+const urlParams = new URLSearchParams(window.location.search);
+const message = urlParams.get('message');
+
+// If a message was sent, append it to the page
+if (message) {
+    const messageElement = document.createElement('p');
+    messageElement.innerText = message;
+    messageElement.classList.add('bg-green-100', 'border', 'border-green-400', 'text-green-700', 'px-4', 'py-3', 'rounded', 'mb-4');
+    document.querySelector('.flex-1').insertBefore(messageElement, document.querySelector('h1'));
+}
+
 $(document).ready(function(){
     // Get and set element 'form'
     const form = document.querySelector(".login-form");
