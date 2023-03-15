@@ -3,11 +3,13 @@
         {{ template "partials/header" . }}
     </header>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/code.js"></script>
+    <!-- <script src="js/code.js"></script> -->
     <!-- <script src="js/ace-local.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.14.0/ace.js"
         integrity="sha512-WYlXqL7GPpZL2ImDErTX0RMKy5hR17vGW5yY04p9Z+YhYFJcUUFRT31N29euNB4sLNNf/s0XQXZfzg3uKSoOdA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
     <!-- <link rel="stylesheet" href="css/code.css"> -->
     <style>
         .flex-1 {
@@ -101,7 +103,10 @@
       }
       </style>
       <div class="flex-1 flex">
+        
         <div class="box-1">
+          
+          
           <p style="padding-right: 0.5rem;padding-left: 0.5rem;">{{.Question}}</p>
 
           <p>{{.ExampleInput}}</p>
@@ -119,6 +124,14 @@
           <div class="box-2-bottom" style="padding-left: 0.3rem;">
             <div class="widget rounded-md">
                 <!-- For the output of the code that gets RAN!!! -->
+                <div class="language-selector" style="padding-left: 0.3rem;">
+                  <select id="language-select">
+                    <option value="python" selected>Python</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="go">Go</option>
+                    <!-- Add more languages here -->
+                  </select>
+                </div>
               </div>
             <button id="submitcodebutton" class="submitcodebutton bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded-lg" type="submit">submit</button>
           </div>
@@ -157,80 +170,9 @@
   
   </style>
   
-<script>
-    $(function() {
-      var $splitter = $('.bar');
-      var $left = $('.box-1');
-      var $right = $('.box-2');
-      var isDragging1 = false;
-  
-      // Set the initial width of the left and right elements
-      $left.css('flex-basis', '33.00%');
-      $right.css('flex-basis', '67.00%');
-  
-      // Register the drag event on the first split bar
-      $splitter.on('mousedown', function(e) {
-        e.preventDefault();
-        isDragging1 = true;
-      });
-  
-      $(document).on('mousemove', function(e) {
-        if (isDragging1) {
-          window.requestAnimationFrame(function() {
-            var totalWidth = $left.width() + $right.width();
-            var x = e.pageX - $left.offset().left - $splitter.width() / 2;
-            var leftWidth = x / totalWidth * 100 + '%';
-            var rightWidth = (totalWidth - x) / totalWidth * 100 + '%';
-  
-            // Check to limit the change in width
-            if (x >= 0 && x <= totalWidth) {
-              $left.css('flex-basis', leftWidth);
-              $right.css('flex-basis', rightWidth);
-            }
-          });
-        }
-      }).on('mouseup', function(e) {
-        isDragging1 = false;
-      });
-    });
-  
-    $(function() {
-      var $splitter2 = $('.bar-2');
-      var $top = $('.box-2-top');
-      var $bottom = $('.box-2-bottom');
-      var isDragging2 = false;
-  
-      // Set the initial height of the top and bottom elements
-      $top.css('flex-basis', '50.00%');
-      $bottom.css('flex-basis', '50.00%');
-  
-      // Register the drag event on the second split bar
-      $splitter2.on('mousedown', function(e) {
-        e.preventDefault();
-        console.log("pressed")
-        isDragging2 = true;
-      });
-  
-      $(document).on('mousemove', function(e) {
-        if (isDragging2) {
-          window.requestAnimationFrame(function() {
-            var totalHeight = $top.height() + $bottom.height();
-            var y = e.pageY - $top.offset().top - $splitter2.height() / 2;
-            var topHeight = y / totalHeight * 100 + '%';
-            var bottomHeight = (totalHeight - y) / totalHeight * 100 + '%';
-  
-            // Check to limit the change in height
-            if (y >= 0 && y <= totalHeight) {
-              $top.css('flex-basis', topHeight);
-              $bottom.css('flex-basis', bottomHeight);
-            }
-          });
-        }
-      }).on('mouseup', function(e) {
-        isDragging2 = false;
-      });
-    });
+  <!-- has to be here -->
+<script src="js/editorfunction.js"></script>
+<script src="js/code.js"></script>
 
-        </script>
-
+    
 </body>

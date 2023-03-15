@@ -165,3 +165,46 @@ func PythonCode(c *fiber.Ctx) error {
 	// since we have sent the response here we should save the code to the database
 
 }
+
+func GetCodeTemplate(c *fiber.Ctx) error {
+	language := c.Query("language")
+
+	fmt.Println("sending new language is: ", language)
+	// TODO: Make it so that it will take the question ID and get the code template for that question
+	// question := c.Query("question")
+
+	var codeTemplate string
+
+	switch language {
+	case "python":
+		// get the python code template
+		codeTemplate = `def twoSum(nums, target):
+		# your code here
+		answer = []
+		return answer`
+
+	case "javascript":
+		// get the javascript code template
+		codeTemplate = `var twoSum = function(nums, target) {
+		// your code here
+		answer = []
+		return answer
+	};`
+
+	case "go":
+		// get the go code template
+		codeTemplate = `func twoSum(nums []int, target int) []int {
+		// your code here
+		answer := []int{}
+		return answer
+	}`
+
+	default:
+		codeTemplate = "Error: No code template found"
+	}
+
+	fmt.Println("the code template is: ", codeTemplate)
+	return c.JSON(fiber.Map{
+		"Codetemplate": codeTemplate,
+	})
+}

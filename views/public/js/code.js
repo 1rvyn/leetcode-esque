@@ -38,3 +38,51 @@ $(document).ready(function(){
         }
     })
 })
+
+
+// send the request to get the new template code
+async function updateCodeTemplate(language) {
+    try {
+      const response = await fetch(`/codetemplate?language=${language}`);
+      const data = await response.json();
+      console.log(data)
+      const codeTemplate = data.Codetemplate;
+  
+      editor.setValue(codeTemplate);
+    } catch (error) {
+      console.error("Error fetching code template:", error);
+    }
+  }
+
+
+function setEditorLanguage(mode) {
+    switch (mode) {
+      case 'python':
+        editor.session.setMode('ace/mode/python');
+        break;
+      case 'javascript':
+        editor.session.setMode('ace/mode/javascript');
+        break;
+      case 'go':
+        editor.session.setMode('ace/mode/golang');
+        break;
+      // Add more languages here
+      default:
+        editor.session.setMode('ace/mode/python');
+    }
+  }
+
+  // Get the dropdown element
+var languageSelect = document.getElementById('language-select');
+
+// Set the initial mode based on the selected language
+setEditorLanguage(languageSelect.value);
+
+// Listen for changes in the dropdown and update the editor's mode
+languageSelect.addEventListener('change', function () {
+  setEditorLanguage(this.value);
+  console.log(this.value);
+  console.log("changed language");
+  updateCodeTemplate(this.value);
+
+});

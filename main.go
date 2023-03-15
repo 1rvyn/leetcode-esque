@@ -200,6 +200,7 @@ func setupRoutes(app *fiber.App) {
 	//app.Get("/ws", websocketF)
 
 	app.Get("/code", routes.CodePage) // code submission testing page
+	app.Get("/codetemplate", routes.GetCodeTemplate)
 
 	// account system
 	// app.Post("/api/register", routes.CreateAccount) // store creds in the database
@@ -218,8 +219,6 @@ func main() {
 
 	app := fiber.New(fiber.Config{
 		Views: engine,
-
-		//ViewsLayout: "layouts/layout",
 	})
 
 	app.Use("/ws", func(c *fiber.Ctx) error {
