@@ -7,13 +7,16 @@ $(document).ready(function(){
         let codeitem = editor.getValue();
         event.preventDefault();
         console.log("clicked submit code button")
+        let language = $("#language-select").val()
+        console.log("language is:", $("#language-select").val())
         try {
             const res = await fetch("https://api.irvyn.xyz/code", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
                     "Accept": "application/json"},
                 body: JSON.stringify({
-                    codeitem
+                    code: codeitem,
+                    language: language
                 }),
                 xhrFields: {
                     withCredentials: true

@@ -1,0 +1,90 @@
+<body class="bg-gray-100 flex flex-col min-h-screen">
+<header class="bg-white shadow-sm">
+    {{ template "partials/header" . }}
+</header>
+
+<main class="flex-1 justify-center items-center">
+    <main class="flex-1 justify-center items-center">
+        <div class="w-full max-w-md mx-auto mt-10">
+            <h2 class="text-center text-2xl font-bold mb-4">Create a New Question</h2>
+            <form action="/submit_question" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="problem">
+                        Problem
+                    </label>
+                    <textarea id="problem" name="problem" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="example_answer">
+                        Example Answer
+                    </label>
+                    <input id="example_answer" name="example_answer" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="example_input">
+                        Example Input
+                    </label>
+                    <input id="example_input" name="example_input" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" required>
+                </div>
+
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="problem_type">
+                        Problem Type
+                    </label>
+                    <select id="problem_type" name="problem_type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <option value="HashMap">HashMap</option>
+                        <option value="Array">Array</option>
+                        <option value="Sorting">Sorting</option>
+                        <option value="Search">Search</option>
+                        <option value="Dynamic Programming">Dynamic Programming</option>
+                        <option value="Misc">Misc</option>
+                    </select>
+                </div>
+
+
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="problem_difficulty">
+                        Problem Difficulty
+                    </label>
+                    <select id="problem_difficulty" name="problem_difficulty" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="template_code_python">
+                        Python Template Code
+                    </label>
+                    <textarea id="template_code_python" name="template_code[python]" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="template_code_javascript">
+                        JavaScript Template Code
+                    </label>
+                <textarea id="template_code_javascript" name="template_code[javascript]" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="template_code_go">
+                        Go Template Code
+                    </label>
+                    <textarea id="template_code_go" name="template_code[go]" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+</main>
+
+<footer>
+    {{ template "partials/footer" . }}
+</footer>

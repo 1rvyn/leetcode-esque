@@ -45,9 +45,12 @@ $(document).ready(function(){
             const content = await res.json();
             console.log(content);
             console.log(res.status);
-            if (res.status === 400 || res.status === 401) {
+            if (res.status === 400 || res.status === 401 || res.status === 404) {
                 console.log("there was an issue")
-                // append message to page
+                // append message to "login-message" div
+
+                document.getElementById("login-error").innerHTML = content.message;
+
             }
             else if (res.status === 200){
                 console.log("the login has a success response code good job :)")

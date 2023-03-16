@@ -37,23 +37,6 @@ var pages2 = []Page{
 
 func CodePage(c *fiber.Ctx) error {
 
-	// code, err := os.ReadFile("./questions/q-1/TwoSum.py")
-
-	// if err != nil {
-	// 	fmt.Print(err)
-	// }
-
-	// question, err := os.ReadFile("./questions/q-1/TwoSum.txt")
-
-	// if err != nil {
-	// 	fmt.Print(err)
-	// }
-
-	// codetemplate := string(code)
-	// questiontemplate := string(question)
-
-	// fmt.Print("the parsed code as a string is: \n", codetemplate)
-
 	// TODO: Pull these in from the API based on an ID in the URL
 
 	problem := `Given an array of integers, return indices of the two numbers such that they add up to a specific target.

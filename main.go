@@ -100,6 +100,12 @@ func questions(c *fiber.Ctx) error {
 
 }
 
+func createQuestion(c *fiber.Ctx) error {
+	return c.Render("createQuestion", fiber.Map{
+		"Title": "Create Question",
+	})
+}
+
 func accountHandle(c *fiber.Ctx) error {
 
 	activeURL := c.Path()
@@ -188,6 +194,8 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/register", register)
 	app.Get("/problems", problems)
 	app.Get("/questions/:id", questions)
+
+	app.Get("/newQuestion", createQuestion)
 
 	// same thing for both
 
