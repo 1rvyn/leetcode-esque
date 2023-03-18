@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(requestData),
+                body: JSON.stringify({item: requestData}),
                 credentials: 'include'
             });
             const content = await res.json();
