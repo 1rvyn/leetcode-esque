@@ -195,7 +195,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/problems", problems)
 	app.Get("/questions/:id", questions)
 
-	app.Get("/newQuestion", createQuestion)
+	app.Get("/new_question", createQuestion)
 
 	// same thing for both
 

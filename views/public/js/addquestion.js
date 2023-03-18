@@ -76,7 +76,7 @@ $(document).ready(function(){
         // display.textContent = "";
         console.log(problem.value + answer.value)
         try {
-            const res = await fetch("https://api.irvyn.xyz/new", {
+            const res = await fetch("https://api.irvyn.xyz/new_question", {
                 // const res = await fetch("/api/login", {
                 method: "POST",
                 headers: {"Content-Type": "application/json",
