@@ -39,7 +39,7 @@ window.onload = async function() {
         console.log("clicked get submissions button");
         try{
             const res = await fetch("https://api.irvyn.xyz/submissions", {
-                method: "POST",
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json"

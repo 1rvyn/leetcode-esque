@@ -28,12 +28,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({item: requestData}),
                 credentials: 'include'
             });
+
+
+            if (!res.ok) {
+                throw new Error(`Cannot POST /add: ${res.status} ${res.statusText}`);
+            }
+
             const content = await res.json();
 
             if (res.status === 400 || res.status === 401) {
                 console.log("There was an issue");
             } else if (res.status === 200) {
                 console.log("The form submission has a success response code, good job :)");
+                console.log(content);
             }
 
             // Handle the response content here
