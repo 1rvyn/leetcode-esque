@@ -90,7 +90,9 @@ $(document).ready(function(){
                 },
                 credentials: "include",
             });
-            const content = await res.json();
+            const responseText = await res.text();
+            console.log("Response Text: ", responseText);
+            const content = JSON.parse(responseText);
             console.log(content);
             console.log(res.status);
             if (res.status === 400 || res.status === 401 || res.status === 404) {
