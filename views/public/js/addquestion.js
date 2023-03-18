@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         console.log(requestData);
         try {
-            const res = await fetch('https://api.irvyn.xyz/new', {
+            const res = await fetch('https://api.irvyn.xyz/new_question', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
