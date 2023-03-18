@@ -85,9 +85,6 @@ $(document).ready(function(){
                     problem: problem.value,
                     example_answer: answer.value,
                 }),
-                xhrFields: {
-                    withCredentials: true
-                },
                 credentials: "include",
             });
             const responseText = await res.text();
