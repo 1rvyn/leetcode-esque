@@ -20,13 +20,16 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(requestData);
         try {
             const res = await fetch('https://api.irvyn.xyz/newquestion', {
-                method: 'POST',
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify(requestData),
-                credentials: 'include'
+                xhrFields: {
+                    withCredentials: true
+            },
+            credentials: "include",
             });
 
 
