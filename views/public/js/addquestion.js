@@ -82,8 +82,8 @@ $(document).ready(function(){
                 headers: {"Content-Type": "application/json",
                     "Accept": "application/json"},
                 body: JSON.stringify({
-                    email: problem,
-                    password: answer,
+                    problem: "TwoSumWhatup!!!",
+                    example_answer: "nums=[1,2]",
                 }),
                 xhrFields: {
                     withCredentials: true
