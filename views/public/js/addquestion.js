@@ -82,8 +82,8 @@ $(document).ready(function(){
                 headers: {"Content-Type": "application/json",
                     "Accept": "application/json"},
                 body: JSON.stringify({
-                    problem: "TwoSumWhatup!!!",
-                    example_answer: "nums=[1,2]",
+                    problem: problem.value,
+                    example_answer: answer.value,
                 }),
                 xhrFields: {
                     withCredentials: true
