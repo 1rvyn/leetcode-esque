@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({item: requestData}),
+                body: JSON.stringify(requestData),
                 credentials: 'include'
             });
 
