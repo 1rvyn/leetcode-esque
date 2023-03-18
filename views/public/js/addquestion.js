@@ -97,11 +97,11 @@ $(document).ready(function(){
                 console.log("there was an issue")
                 // append message to "login-message" div
 
-                document.getElementById("login-error").innerHTML = content.message;
+                document.getElementById("question-error").innerHTML = content.message;
 
             }
             else if (res.status === 200){
-                console.log("the login has a success response code good job :)")
+                console.log("the question submit has a success response code good job :)")
                 // // print out the cookie
                 // console.log("cookie is: ", document.cookie)
                 // console.log(res, content)
