@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         console.log(requestData);
         try {
-            const res = await fetch('https://api.irvyn.xyz/newquestion', {
+            const res = await fetch('http://api.irvyn.xyz/newquestion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             if (!res.ok) {
-                throw new Error(`Cannot POST /add: ${res.status} ${res.statusText}`);
+                throw new Error(`Cannot POST /newquestion: ${res.status} ${res.statusText}`);
             }
 
             const content = await res.json();
