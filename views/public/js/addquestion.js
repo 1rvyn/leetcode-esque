@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         console.log(requestData);
         try {
-            const res = await fetch('https://api.irvyn.xyz/add', {
+            const res = await fetch('https://api.irvyn.xyz/newquestion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
