@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const requestData = {
             problem: formData.get('problem'),
+            title: formData.get('title'),
             example_answer: formData.get('example_answer'),
             example_input: formData.get('example_input'),
             problem_type: formData.get('problem_type'),

@@ -146,8 +146,6 @@ func problems(c *fiber.Ctx) error {
 
 	// read the problems from the list.txt file inside the questions folder
 
-	// Users/irvyn/go/src/fiberWebApi/questions/q-1/list.txt
-
 	code, err := os.Open("./questions/q-1/list.txt")
 	// fmt.Println("code is : ", code)
 	if err != nil {

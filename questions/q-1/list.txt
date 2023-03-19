@@ -1,13 +1,4 @@
 1. Two Sum
-2. Best Time To Buy And Sell Stock
-3. Contains Duplicate
-4. Product Of Array Except Self
-5. Maximum Subarray
-6. Maximum Product Subarray
-7. Find Minimum In Rotated Sorted Array
-8. Search In Rotated Sorted Array
-9. Two Sum II
-10. Container With Most Water
-11. Roman To Integer
-12. aa
-13. adasdas
+2. Contains Duplicate
+3. Maximum Subarray
+4. Roman To Integer
