@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bufio"
+	"encoding/json"
 	"fiberWebApi/routes"
 	"fmt"
+	"github.com/go-resty/resty/v2"
 	"log"
-	"os"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -140,45 +140,35 @@ func register(c *fiber.Ctx) error {
 }
 
 func problems(c *fiber.Ctx) error {
-	//fmt.Println("the problems page was accessed and the cookie is \n : ", c.Cookies("jwt"))
-
 	activeURL := c.Path()
 
-	// read the problems from the list.txt file inside the questions folder
+	// Fetch the list of questions from the API
+	client := resty.New()
+	resp, err := client.R().Get("http://api.irvyn.xyz/questions")
 
-	code, err := os.Open("./questions/q-1/list.txt")
-	// fmt.Println("code is : ", code)
 	if err != nil {
-		fmt.Println("error reading question list file: ", err)
+		return c.Status(500).SendString("Error fetching data from API")
 	}
 
-	defer code.Close()
-
-	var lines []string
-
-	scanner := bufio.NewScanner(code)
-
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	if err := scanner.Err(); err != nil {
-		fmt.Println("error reading question list file: ", err)
+	var questionList []map[string]interface{}
+	err = json.Unmarshal(resp.Body(), &questionList)
+	if err != nil {
+		return c.Status(500).SendString("Error parsing API response")
 	}
 
 	currCookie := c.Cookies("jwt")
 
 	if currCookie == "" {
 		return c.Render("problems", fiber.Map{
-			"Pages":       pages,
-			"ActiveURL":   activeURL,
-			"ProblemList": lines,
+			"Pages":        pages,
+			"ActiveURL":    activeURL,
+			"QuestionList": questionList,
 		})
 	} else {
 		return c.Render("problems", fiber.Map{
-			"Pages":       pages2,
-			"ActiveURL":   activeURL,
-			"ProblemList": lines,
+			"Pages":        pages2,
+			"ActiveURL":    activeURL,
+			"QuestionList": questionList,
 		})
 	}
 }

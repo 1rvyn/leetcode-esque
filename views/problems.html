@@ -1,25 +1,24 @@
 <body class="bg-gray-100 flex flex-col min-h-screen">
-    <header class="bg-white shadow-sm">
-        {{ template "partials/header" . }}
-    </header>
-    
-    <main class="flex-1 justify-center items-center">
+<header class="bg-white shadow-sm">
+    {{ template "partials/header" . }}
+</header>
+
+<main class="flex-1 justify-center items-center">
 
     <div class = "flex flex-col justify-center items-center">
-    <h1 class="text-3xl font-bold underline">{{ .Title }}</h1>
-<p>
-    This is the problems page here is a list of all the problems.
-</p>
-<br>
-    {{range .ProblemList}}
+        <h1 class="text-3xl font-bold underline">{{ .Title }}</h1>
+        <p>
+            This is the problems page here is a list of all the problems.
+        </p>
+        <br>
+        {{range .QuestionList}}
         <div class="problems">
-
-            <p>{{.}}</p>
+            <p><a href="/code/{{.id}}">{{.title}}</a></p>
         </div>
         <br>
-    {{end}}
-</div>
-    </main>
+        {{end}}
+    </div>
+</main>
 
 <footer>
     {{ template "partials/footer" . }}
