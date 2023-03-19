@@ -205,7 +205,7 @@ func setupRoutes(app *fiber.App) {
 	// misc
 	//app.Get("/ws", websocketF)
 
-	app.Get("/code", routes.CodePage) // code submission testing page
+	app.Get("/code/:id", routes.CodePage) // code submission testing page
 	app.Get("/codetemplate", routes.GetCodeTemplate)
 
 	// account system

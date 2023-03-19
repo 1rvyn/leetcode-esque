@@ -2,9 +2,11 @@ package routes
 
 import (
 	"bytes"
+	"encoding/json"
 	"fiberWebApi/database"
 	"fiberWebApi/models"
 	"fmt"
+	"github.com/go-resty/resty/v2"
 	"os"
 	"os/exec"
 
@@ -36,39 +38,33 @@ var pages2 = []Page{
 }
 
 func CodePage(c *fiber.Ctx) error {
+	questionID := c.Params("id")
 
-	// TODO: Pull these in from the API based on an ID in the URL
+	client := resty.New()
+	resp, err := client.R().
+		SetQueryParam("id", questionID).
+		Get("https://api.irvyn.xyz/question/" + questionID)
 
-	problem := `Given an array of integers, return indices of the two numbers such that they add up to a specific target.
-	You may assume that each input would have exactly one solution, 
-	and you may not use the same element twice.`
+	fmt.Println("response from the backend was \n", resp)
 
-	codetemplate := `def twoSum(nums, target):
-		# your code here
-		answer = []
-		return answer`
+	if err != nil {
+		return c.Status(500).SendString("Error fetching data from API")
+	}
 
-	exampleInput := "nums = [2,7,11,15]"
+	var questionData map[string]interface{}
+	err = json.Unmarshal(resp.Body(), &questionData)
+	if err != nil {
+		return c.Status(500).SendString("Error parsing API response")
+	}
 
-	inputType := "DynamicProgramming"
-
-	exampleAnswer := "[0,1]"
-
-	difficulty := "Easy"
-
-	// currCookie := c.Cookies("jwt")
-
-	// if currCookie == "" {
-	// 	return c.Redirect("/login")
-	// } else {
 	return c.Render("code", fiber.Map{
 		"Pages":             pages2,
-		"Question":          problem,
-		"ExampleInput":      exampleInput,
-		"ExampleAnswer":     exampleAnswer,
-		"Codetemplate":      codetemplate,
-		"ProblemType":       inputType,
-		"ProblemDifficulty": difficulty,
+		"Question":          questionData["problem"],
+		"ExampleInput":      questionData["example_input"],
+		"ExampleAnswer":     questionData["example_answer"],
+		"Codetemplate":      questionData["template_code"].(map[string]interface{})["python"], // TODO: Update based on current language (get from session?)
+		"ProblemType":       questionData["problem_type"],
+		"ProblemDifficulty": questionData["problem_difficulty"],
 	})
 }
 
