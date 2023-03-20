@@ -161,12 +161,14 @@ func problems(c *fiber.Ctx) error {
 	if currCookie == "" {
 		return c.Render("problems", fiber.Map{
 			"Pages":        pages,
+			"Title":        "Problems",
 			"ActiveURL":    activeURL,
 			"QuestionList": questionList,
 		})
 	} else {
 		return c.Render("problems", fiber.Map{
 			"Pages":        pages2,
+			"Title":        "Problems",
 			"ActiveURL":    activeURL,
 			"QuestionList": questionList,
 		})
