@@ -37,7 +37,7 @@ var pages = []Page{
 // array of pages to show in the header if they are logged in
 var pages2 = []Page{
 	{Title: "Home", URL: "/"},
-	{Title: "Code", URL: "/code"},
+	{Title: "Code", URL: "/code/1"},
 	{Title: "Problems", URL: "/problems"},
 	{Title: "Account", URL: "/account"},
 	{Title: "Logout", URL: "/logout"},
@@ -58,7 +58,7 @@ func welcomeHome(c *fiber.Ctx) error {
 		})
 	} else {
 		return c.Render("index", fiber.Map{
-			"Title": "Home (C)",
+			"Title": "Home",
 			"Pages": pages2,
 		})
 	}
@@ -200,10 +200,6 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/code/:id", routes.CodePage) // code submission testing page
 	app.Get("/codetemplate", routes.GetCodeTemplate)
 
-	// account system
-	// app.Post("/api/register", routes.CreateAccount) // store creds in the database
-	// app.Post("/api/login", routes.GetLogin)         // checks the creds against the stored db creds
-
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	// app.Get("/api/logout", routes.Logout)      // removes the cookie
 	app.Post("/api/code", routes.PythonCode) // get python code from textarea
@@ -271,31 +267,6 @@ func main() {
 }
 
 // TODO: revist this for a test case to test the api
-
-// func sendPostReq(app *fiber.App) {
-// 	type RequestBody struct {
-// 		User     string `json:"user"`
-// 		Password string `json:"password"`
-// 		Email    string `json:"email"`
-// 	}
-// 	body := RequestBody{
-// 		User:     "testingfrontend_box",
-// 		Password: "password123",
-// 		Email:    "testererere",
-// 	}
-// 	jsonBody, err := json.Marshal(body)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	// Send POST request
-// 	_, err = http.Post("https://api.irvyn.xyz/api/register", "application/json", bytes.NewBuffer(jsonBody))
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	fmt.Println("POST request sent successfully")
-// }
 
 func adminMiddleware(c *fiber.Ctx) error {
 	fmt.Println("admin middleware called", c.Path())
