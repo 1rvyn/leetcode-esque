@@ -52,9 +52,9 @@ func CodePage(c *fiber.Ctx) error {
 	}
 
 	return c.Render("code", fiber.Map{
-		"Pages": pages2,
-		"Title": questionData["title"],
-		//"QuestionID":        questionID,
+		"Pages":             pages2,
+		"Title":             questionData["title"],
+		"QuestionID":        questionID,
 		"Question":          questionData["problem"],
 		"ExampleInput":      questionData["example_input"],
 		"ExampleAnswer":     questionData["example_answer"],

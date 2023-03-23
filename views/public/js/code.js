@@ -1,12 +1,13 @@
 $(document).ready(function(){
     let editor = ace.edit('box-2-top');
+    let questionID = document.getElementById('questionID').value; // get the QuestionID value
+
 
     $("#submitcodebutton").click(async function (event) {
         let codeitem = editor.getValue();
         event.preventDefault();
         console.log("clicked submit code button");
         let language = $("#language-select").val()
-        console.log("the title is:", $("#title").val());
         console.log("language is:", $("#language-select").val());
         try {
             const res = await fetch("https://api.irvyn.xyz/code", {
@@ -15,7 +16,8 @@ $(document).ready(function(){
                     "Accept": "application/json"},
                 body: JSON.stringify({
                     code: codeitem,
-                    language: language
+                    language: language,
+                    QuestionID: questionID // include the QuestionID value in the body
                 }),
                 xhrFields: {
                     withCredentials: true

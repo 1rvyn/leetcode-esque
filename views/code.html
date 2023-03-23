@@ -9,6 +9,7 @@
         integrity="sha512-WYlXqL7GPpZL2ImDErTX0RMKy5hR17vGW5yY04p9Z+YhYFJcUUFRT31N29euNB4sLNNf/s0XQXZfzg3uKSoOdA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <input type="hidden" id="questionID" value="{{.QuestionID}}">
 
     <style>
         .flex-1 {
@@ -130,6 +131,7 @@
                     <option value="go">Go</option>
                     <!-- Add more languages here -->
                   </select>
+
                 </div>
               </div>
             <button id="submitcodebutton" class="submitcodebutton bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded-lg" type="submit">submit</button>
