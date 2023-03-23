@@ -176,7 +176,6 @@ func setupRoutes(app *fiber.App) {
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	// app.Get("/api/logout", routes.Logout)      // removes the cookie
-	app.Post("/api/code", routes.PythonCode) // get python code from textarea
 
 }
 
