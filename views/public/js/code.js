@@ -1,14 +1,13 @@
 $(document).ready(function(){
     let editor = ace.edit('box-2-top');
 
-    // const editor = $("#code").val();
-
     $("#submitcodebutton").click(async function (event) {
         let codeitem = editor.getValue();
         event.preventDefault();
-        console.log("clicked submit code button")
+        console.log("clicked submit code button");
         let language = $("#language-select").val()
-        console.log("language is:", $("#language-select").val())
+        console.log("the title is:", $("#title").val());
+        console.log("language is:", $("#language-select").val());
         try {
             const res = await fetch("https://api.irvyn.xyz/code", {
                 method: "POST",

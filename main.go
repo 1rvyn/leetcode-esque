@@ -5,13 +5,11 @@ import (
 	"fiberWebApi/routes"
 	"fmt"
 	"github.com/go-resty/resty/v2"
-	"log"
-	"strconv"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"
 	"github.com/gofiber/websocket/v2"
+	"log"
 )
 
 const SecretKey = "secret"
@@ -75,29 +73,6 @@ func login(c *fiber.Ctx) error {
 		"Title": "Login",
 		"Pages": pages,
 	})
-}
-
-func questions(c *fiber.Ctx) error {
-	// get the id from the url
-	id := c.Params("id")
-
-	if id == "" {
-		return c.SendString("no id was provided")
-	}
-
-	problems := []string{"Problem 1", "Problem 2", "Problem 3"}
-	index, err := strconv.Atoi(id)
-
-	if err != nil {
-		return c.SendString("error converting id to int")
-	}
-
-	if index > len(problems) {
-		return c.SendString("index out of range")
-	}
-
-	return c.SendString(problems[index])
-
 }
 
 func createQuestion(c *fiber.Ctx) error {
@@ -183,7 +158,6 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/account", accountHandle)
 	app.Get("/register", register)
 	app.Get("/problems", problems)
-	app.Get("/questions/:id", questions)
 
 	app.Get("/new_question", createQuestion)
 

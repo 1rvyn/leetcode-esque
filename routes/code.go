@@ -1,15 +1,9 @@
 package routes
 
 import (
-	"bytes"
 	"encoding/json"
-	"fiberWebApi/database"
-	"fiberWebApi/models"
 	"fmt"
 	"github.com/go-resty/resty/v2"
-	"os"
-	"os/exec"
-
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -58,7 +52,9 @@ func CodePage(c *fiber.Ctx) error {
 	}
 
 	return c.Render("code", fiber.Map{
-		"Pages":             pages2,
+		"Pages": pages2,
+		"Title": questionData["title"],
+		//"QuestionID":        questionID,
 		"Question":          questionData["problem"],
 		"ExampleInput":      questionData["example_input"],
 		"ExampleAnswer":     questionData["example_answer"],
@@ -66,83 +62,6 @@ func CodePage(c *fiber.Ctx) error {
 		"ProblemType":       questionData["problem_type"],
 		"ProblemDifficulty": questionData["problem_difficulty"],
 	})
-}
-
-func PythonCode(c *fiber.Ctx) error {
-	// console log the body of the request
-
-	// print the cookie that was sent with the request
-
-	//TODO: make the code a byte array ?
-	fmt.Println(c.Cookies("jwt"))
-
-	fmt.Println("code was submitted")
-
-	var data map[string]string
-
-	if err := c.BodyParser(&data); err != nil {
-		return err
-	}
-
-	file, err := os.Create("./remotecode/code.py")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
-	_, err = file.WriteString(data["codeitem"])
-	if err != nil {
-		panic(err)
-	}
-
-	// run the python code
-
-	cmd := exec.Command("python", "./remotecode/code.py")
-
-	var outBuf, errBuf bytes.Buffer
-
-	cmd.Stdout = &outBuf
-	cmd.Stderr = &errBuf
-
-	err = cmd.Run()
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	output := outBuf.String()
-	errorOutput := errBuf.String()
-
-	fmt.Print("the whole cookie is: ", c.Cookies("jwt"))
-
-	// run the .py file
-
-	// send the output back to the client along with setting the status code
-
-	// save the output to the database
-	submission := models.Submission{
-		Code:       data["codeitem"],
-		Cookie:     c.Cookies("jwt"),
-		Email:      c.Cookies("email"),
-		IP:         c.IP(),
-		Successout: output,
-		Errorout:   errorOutput,
-	}
-
-	// create a submission object and save it to the database
-	database.Database.Db.Create(&submission)
-
-	//TODO: right now this saves a submission if the code is unique -
-	// but it should save a submission if tests it passes are unique
-
-	return c.JSON(fiber.Map{
-		"status":  "success",
-		"message": "code was submitted",
-		"output":  string(output),
-		"error":   string(errorOutput),
-	})
-	// since we have sent the response here we should save the code to the database
-
 }
 
 func GetCodeTemplate(c *fiber.Ctx) error {
