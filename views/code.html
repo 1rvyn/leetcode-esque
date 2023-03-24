@@ -16,10 +16,14 @@
           display: flex;
           flex: 1;
         }
-      
+
         .box-1 {
-          position: relative;
-          flex-basis: 33.33%;
+            position: relative;
+            flex-basis: 33.33%;
+            background: #272822 !important;
+            color: #fff !important;
+            font-family: Inconsolata, monospace;
+            padding: 1rem;
         }
       
         .box-2 {
@@ -32,9 +36,10 @@
         .box-2-top {
           flex: 1;
         }
-      
+
         .box-2-bottom {
-          flex: 1;
+            background: #272822 !important;
+            color: #888 !important;
         }
       
         /* draggable bar styles */
@@ -101,22 +106,34 @@
         height: 33%;
         text-align: center;
       }
+
+        .question-details {
+            padding: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .example {
+            font-weight: bold;
+        }
+
+        .example-details {
+            margin-bottom: 0.5rem;
+        }
       </style>
-      <div class="flex-1 flex">
-        
+    <div class="flex-1 flex">
         <div class="box-1">
-          
-          
-          <p style="padding-right: 0.5rem;padding-left: 0.5rem;">{{.Question}}</p>
-
-          <p>Example input: {{.ExampleInput}}</p>
-
-          <p>Example output: {{.ExampleAnswer}}</p>
-
-          <p>Type: {{.ProblemType}}</p>
-
-          <p>Difficulty: {{.ProblemDifficulty}}</p>
-          <div class="bar" id="bar"></div>
+            <div class="question-details">
+                <p>{{.Question}}</p>
+                <div class="example-details">
+                    <span class="example">Example input:</span> {{.ExampleInput}}
+                </div>
+                <div class="example-details">
+                    <span class="example">Example output:</span> {{.ExampleAnswer}}
+                </div>
+                <p>Type: {{.ProblemType}}</p>
+                <p>Difficulty: {{.ProblemDifficulty}}</p>
+            </div>
+            <div class="bar" id="bar"></div>
         </div>
         <div class="box-2">
           <div class="box-2-top" id="box-2-top">{{.Codetemplate}}</div>
