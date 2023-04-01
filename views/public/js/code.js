@@ -12,8 +12,10 @@ $(document).ready(function(){
         try {
             const res = await fetch("https://api.irvyn.xyz/code", {
                 method: "POST",
-                headers: {"Content-Type": "application/json",
-                    "Accept": "application/json"},
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
                 body: JSON.stringify({
                     code: codeitem,
                     language: language,
@@ -32,16 +34,39 @@ $(document).ready(function(){
 
             console.log(res.status);
             if (res.status === 400 || res.status === 401) {
-                console.log("there was an issue")
-            }
-            else if (res.status === 200){
-                console.log("the login has a success response code good job :)")
+                console.log("there was an issue");
+            } else if (res.status === 200) {
+                console.log("the login has a success response code good job :)");
+                updateTestResultsLights(content.result); // Call the function to update the test result lights
             }
         } catch (err) {
             console.log(err.message);
         }
+
     })
 })
+
+// a light system based on the test results
+function updateTestResultsLights(testResults) {
+    const container = document.querySelector('.test-results-container');
+    container.innerHTML = ''; // Clear the container
+
+    testResults.forEach((result, index) => {
+        const light = document.createElement('div');
+        light.style.width = '20px';
+        light.style.height = '20px';
+        light.style.borderRadius = '50%';
+        light.style.marginRight = '10px';
+
+        if (result.hasOwnProperty('success')) {
+            light.style.backgroundColor = result.success ? 'green' : 'red';
+        } else {
+            light.style.backgroundColor = 'rgba(128, 128, 128, 0.5)'; // Transparent/grey color
+        }
+
+        container.appendChild(light);
+    });
+}
 
 
 // send the request to get the new template code
