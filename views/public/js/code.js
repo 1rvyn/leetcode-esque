@@ -56,7 +56,7 @@ function updateTestResultsLights(testResults) {
         light.style.width = '20px';
         light.style.height = '20px';
         light.style.borderRadius = '50%';
-        light.style.marginRight = '10px';
+        light.style.marginRight = '20px';
 
         if (result.hasOwnProperty('success')) {
             light.style.backgroundColor = result.success ? 'green' : 'red';

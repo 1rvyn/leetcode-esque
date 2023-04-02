@@ -12,6 +12,29 @@
     <input type="hidden" id="questionID" value="{{.QuestionID}}">
 
     <style>
+        .heading {
+            font-weight: bold;
+            font-size: 18px;
+            text-decoration: underline;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-details {
+            padding: 0.5rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .example-details {
+            margin-bottom: 0.75rem;
+        }
+
+        .example {
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
         .flex-1 {
           display: flex;
           flex: 1;
@@ -81,11 +104,11 @@
       
         .bar-2:hover svg {
           fill: #fff;
-        }  
+        }
         .submitcodebutton {
         position: absolute;
         bottom: 0;
-        left: 10;
+        left: 10px;
         margin: 0;
         margin-bottom: 0.5rem;
         }
@@ -123,18 +146,22 @@
     <div class="flex-1 flex">
         <div class="box-1">
             <div class="question-details">
+                <p class="heading">Question statement</p>
                 <p>{{.Question}}</p>
+                <br>
                 <div class="example-details">
-                    <span class="example">Example input:</span> {{.ExampleInput}}
+                    <span class="example heading">Example input</span>> {{.ExampleInput}}
                 </div>
                 <div class="example-details">
-                    <span class="example">Example output:</span> {{.ExampleAnswer}}
+                    <span class="example heading">Example output</span>> {{.ExampleAnswer}}
                 </div>
                 <p>Type: {{.ProblemType}}</p>
                 <p>Difficulty: {{.ProblemDifficulty}}</p>
             </div>
             <div class="bar" id="bar"></div>
         </div>
+        <!-- Rest of the HTML -->
+
         <div class="box-2">
           <div class="box-2-top" id="box-2-top">{{.Codetemplate}}</div>
           <div class="bar-2" id="bar-2" style="width:100%; height: 3.5px; color: #888; background-color: #fff;cursor: row-resize;"></div>
@@ -143,7 +170,7 @@
               <div class="widget rounded-md">
                 <!-- For the output of the code that gets RAN!!! -->
                 <div class="language-selector" style="padding-left: 0.3rem;">
-                  <select id="language-select">
+                  <select id="language-select" class="custom-select">
                     <option value="python" selected>Python</option>
                     <option value="javascript">JavaScript</option>
                     <option value="go">Go</option>
@@ -185,6 +212,23 @@
         background: #272822 !important;
         color: #fff !important;
         font-family: Inconsolata, monospace;
+    }
+
+    .custom-select {
+        font-family: inherit;
+        font-size: 14px;
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 3px;
+        padding: 0.3rem 1.5rem 0.3rem 0.6rem;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .custom-select:focus {
+        outline: none;
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
   
   </style>
