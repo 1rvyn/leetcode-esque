@@ -8,7 +8,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"
-	"github.com/gofiber/websocket/v2"
 	"log"
 )
 
@@ -188,31 +187,6 @@ func main() {
 		Views: engine,
 	})
 
-	app.Use("/ws", func(c *fiber.Ctx) error {
-		if c.Get("host") == "localhost:3000" {
-			c.Locals("Host", "Localhost:3000")
-			return c.Next()
-		}
-		return c.Status(403).SendString("Request origin not allowed")
-	})
-
-	app.Get("/ws", websocket.New(func(c *websocket.Conn) {
-		fmt.Println(c.Locals("Host")) // "Localhost:3000"
-		for {
-			mt, msg, err := c.ReadMessage()
-			if err != nil {
-				log.Println("read:", err)
-				break
-			}
-			log.Printf("recieved the message : %s", msg)
-			err = c.WriteMessage(mt, []byte("hello from irvyn's backend go server"))
-			if err != nil {
-				log.Println("write:", err)
-				break
-			}
-		}
-	}))
-
 	// go sendPostReq(app)
 
 	app.Use(cors.New(cors.Config{
@@ -239,42 +213,23 @@ func main() {
 	log.Fatal(app.Listen(":3000"))
 }
 
-// TODO: revist this for a test case to test the api
-
 func adminMiddleware(c *fiber.Ctx) error {
 	fmt.Println("admin middleware called", c.Path())
-	// user := getUserFromSession(c)
 
-	//fmt.Println("the current context is : ", c)
-	//cookie := c.Cookies("jwt")
-	//
-	//if cookie == "" {
-	//	return c.Status(401).JSON(fiber.Map{
-	//		"message": "Unauthorized",
-	//	})
-	//}
-	//
-	//// get the session from the cookie
-	//var session []models.Session
-	//database.Database.Db.Where("cookie = ?", cookie).Last(&session)
-	//
-	//// print the users email from the session we have found
-	//// fmt.Println("session email: ", session[0].Email)
-	//
-	//// get the user from the session
-	//var user []models.Account
-	//database.Database.Db.Where("email = ?", session[0].Email).Last(&user)
-	//
-	//// print the user we found
-	//fmt.Println("This users role is : ", user[0].UserRole)
-	//
-	//if user[0].UserRole == 2 {
-	//	fmt.Println("the user is an admin")
-	//	return c.Next()
-	//}
-
-	// if the user is not an admin
-	return c.Status(401).JSON(fiber.Map{
-		"message": "Unauthorized",
-	})
+	cookie := c.Cookies("jwt")
+	if cookie == "" {
+		return c.Redirect("/login")
+	} else {
+		// check if the user is an admin
+		client := resty.New()
+		resp, err := client.R().SetHeader("Cookie", "jwt="+cookie).Get("http://api.irvyn.xyz/admin")
+		if err != nil {
+			return c.Status(500).SendString("Error fetching data from API")
+		}
+		if resp.StatusCode() == 200 {
+			return c.Next()
+		} else {
+			return c.Redirect("/login")
+		}
+	}
 }
