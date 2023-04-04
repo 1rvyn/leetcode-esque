@@ -6,5 +6,7 @@ import (
 
 func Dashboard(c *fiber.Ctx) error {
 
-	return c.SendString("admin dashboard")
+	return c.Render("dashboard", fiber.Map{
+		"Title": "Dashboard",
+	})
 }
