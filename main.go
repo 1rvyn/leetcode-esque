@@ -217,6 +217,8 @@ func adminMiddleware(c *fiber.Ctx) error {
 	fmt.Println("admin middleware called", c.Path())
 
 	cookie := c.Cookies("jwt")
+
+	fmt.Println("cookie at admin is:", cookie)
 	if cookie == "" {
 		return c.Redirect("/login")
 	} else {
@@ -227,6 +229,7 @@ func adminMiddleware(c *fiber.Ctx) error {
 			return c.Status(500).SendString("Error fetching data from API")
 		}
 		if resp.StatusCode() == 200 {
+			fmt.Println("user is an admin")
 			return c.Next()
 		} else {
 			return c.Redirect("/login")
