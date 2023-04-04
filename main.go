@@ -228,6 +228,8 @@ func adminMiddleware(c *fiber.Ctx) error {
 		if err != nil {
 			return c.Status(500).SendString("Error fetching data from API")
 		}
+
+		fmt.Println("resp is:", resp)
 		if resp.StatusCode() == 200 {
 			fmt.Println("user is an admin")
 			return c.Next()
