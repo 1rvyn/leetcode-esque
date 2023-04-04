@@ -224,7 +224,7 @@ func adminMiddleware(c *fiber.Ctx) error {
 	} else {
 		// check if the user is an admin
 		client := resty.New()
-		resp, err := client.R().SetHeader("Authorization", "Bearer "+cookie).Get("http://api.irvyn.xyz/admin")
+		resp, err := client.R().SetHeader("Cookie", "jwt="+cookie).Get("http://api.irvyn.xyz/admin")
 		if err != nil {
 			return c.Status(500).SendString("Error fetching data from API")
 		}
