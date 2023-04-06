@@ -33,12 +33,17 @@
         <ul id="header-ul" class="flex justify-between items-center max-w-4xl mx-auto">
             {{ range $page := .Pages }}
             <li class="mr-6">
+                {{ if eq $page.Title "logout" }}
+                <a href="https://api.irvyn.xyz/logout" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
+                {{ else }}
                 <a href="{{ $page.URL }}" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
+                {{ end }}
             </li>
             {{ end }}
         </ul>
 
-        <script>
+
+    <script>
             // Get the current URL path
             var currentPath = window.location.pathname;
             console.log("current path is:", currentPath)
