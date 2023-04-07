@@ -34,7 +34,7 @@
             {{ range $page := .Pages }}
             <li class="mr-6">
                 {{ if eq $page.Title "Logout" }}
-                <a href="/logout" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
+                <a href="https://api.irvyn.xyz/logout" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
                 {{ else }}
                 <a href="{{ $page.URL }}" class="text-white hover:text-gray-300">{{ $page.Title }}</a>
                 {{ end }}
