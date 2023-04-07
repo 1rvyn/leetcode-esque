@@ -40,6 +40,14 @@ var pages2 = []Page{
 	{Title: "Logout", URL: "/logout"},
 }
 
+func Logout(c *fiber.Ctx) error {
+	// delete the cookie
+	c.ClearCookie("jwt")
+
+	// redirect to the home page
+	return c.Redirect("/")
+}
+
 func welcomeHome(c *fiber.Ctx) error {
 	//  templating here
 
@@ -174,7 +182,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/codetemplate", routes.GetCodeTemplate)
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
-	// app.Get("/api/logout", routes.Logout)      // removes the cookie
+	app.Get("/logout", Logout)                 // removes the cookie
 
 }
 
