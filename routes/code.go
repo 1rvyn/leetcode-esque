@@ -65,7 +65,7 @@ func GetCodeTemplate(c *fiber.Ctx) error {
 	switch language {
 	case "python":
 		// get the python code template
-		codeTemplate = `def twoSum(nums, target):
+		codeTemplate = `def two_sum(nums, target):
 		# your code here
 		answer = []
 		return answer`
