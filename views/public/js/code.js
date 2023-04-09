@@ -119,8 +119,9 @@ function setEditorLanguage(mode) {
   // Get the dropdown element
 var languageSelect = document.getElementById('language-select');
 
-// Set the initial mode based on the selected language
-setEditorLanguage(languageSelect.value);
+// Set the initial mode based on the selected language -- commented out as its defaulted to python
+// - changes will update it as needed
+// setEditorLanguage(languageSelect.value);
 
 // Listen for changes in the dropdown and update the editor's mode
 languageSelect.addEventListener('change', function () {
