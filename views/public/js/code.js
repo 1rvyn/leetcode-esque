@@ -50,7 +50,7 @@ function updateTestResultsLights(testResults) {
     container.innerHTML = ''; // Clear the container
 
     const isArrayOfObjects = Array.isArray(testResults) && typeof testResults[0] === 'object';
-    const isArrayOfBooleans = Array.isArray(testResults) && (typeof testResults[0] === 'boolean' || testResults[0] === 'true' || testResults[0] === 'false');
+    const isArrayOfBooleans = Array.isArray(testResults) && (typeof testResults[0] === 'boolean' || testResults[0] === 'true' || testResults[0] === 'false' || testResults[0] === true || testResults[0] === false);
 
     if (isArrayOfObjects || isArrayOfBooleans) {
         testResults.forEach((result) => {
