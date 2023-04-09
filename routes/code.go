@@ -54,12 +54,13 @@ func CodePage(c *fiber.Ctx) error {
 }
 
 func GetCodeTemplate(c *fiber.Ctx) error {
-	language := c.Query("language")
-	questionID := c.Query("QuestionID")
+	language := c.Params("language")
+	questionID := c.Params("QuestionID")
 
 	client := resty.New()
 	resp, err := client.R().
 		SetQueryParam("id", questionID).
+		SetQueryParam("language", language).
 		Get("https://api.irvyn.xyz/question/" + questionID + "/" + language) // defaults each time to python
 
 	fmt.Println("response from the backend was \n", resp)
