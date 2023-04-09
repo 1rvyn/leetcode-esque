@@ -67,9 +67,15 @@ func GetCodeTemplate(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(500).SendString("Error fetching data from API")
 	}
+	var code map[string]interface{}
+	err = json.Unmarshal(resp.Body(), &code)
+	if err != nil {
+		return c.Status(500).SendString("Error parsing API response")
+	}
 
-	fmt.Println("the code requested is: ", resp)
+	fmt.Println("the unmarshalled code requested is: ", code[language])
+
 	return c.JSON(fiber.Map{
-		"Codetemplate": resp,
+		"Codetemplate": code[language],
 	})
 }
