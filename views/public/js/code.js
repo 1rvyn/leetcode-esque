@@ -27,10 +27,8 @@ $(document).ready(function(){
                 credentials: "include",
             });
             const content = await res.json();
-            console.log(content);
-            // take the content and put it inside the terminal div in the html
-            $(".widget").append(content.output); // ehh
-            $(".widget").append(content.error); // ehh
+            console.log(content.output);// log the results of marking
+
 
             console.log(res.status);
             if (res.status === 400 || res.status === 401) {
@@ -58,15 +56,21 @@ function updateTestResultsLights(testResults) {
         light.style.borderRadius = '50%';
         light.style.marginRight = '20px';
 
-        if (result.hasOwnProperty('success')) {
+        if (typeof result === 'object') {
+            // Handle the current object structure
             light.style.backgroundColor = result.success ? 'green' : 'red';
+        } else if (typeof result === 'boolean') {
+            // Handle the new array of booleans
+            light.style.backgroundColor = result ? 'green' : 'red';
         } else {
+            // Unknown result format
             light.style.backgroundColor = 'rgba(128, 128, 128, 0.5)'; // Transparent/grey color
         }
 
         container.appendChild(light);
     });
 }
+
 
 
 // send the request to get the new template code

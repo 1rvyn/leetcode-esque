@@ -7,17 +7,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type Submission struct {
-	ID         uint   `json:"id"`
-	Code       string `json:"code"`
-	Cookie     string `json:"cookie"`
-	Email      string `json:"email"`
-	IP         string `json:"ip"`
-	successout string `json:"successout"`
-	errorout   string `json:"errorout"`
-	//MetaData string `json:"meta_data"`
-}
-
 type Page struct {
 	Title string
 	URL   string
@@ -91,7 +80,7 @@ func GetCodeTemplate(c *fiber.Ctx) error {
 
 	case "go":
 		// get the go code template
-		codeTemplate = `func twoSum(nums []int, target int) []int {
+		codeTemplate = `func two_sum(nums []int, target int) []int {
 		// your code here
 		answer := []int{}
 		return answer
