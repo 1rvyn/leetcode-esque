@@ -96,18 +96,19 @@ async function updateCodeTemplate(language, questionID) {
 
 
 function setEditorLanguage(mode) {
+    let qid = document.getElementById('questionID').value;
     switch (mode) {
       case 'python':
         editor.session.setMode('ace/mode/python');
-        updateCodeTemplate(mode).then(r => console.log("updated code template"));
+        updateCodeTemplate(mode, qid).then(r => console.log("updated code template"));
         break;
       case 'javascript':
         editor.session.setMode('ace/mode/javascript');
-        updateCodeTemplate(mode).then(r => console.log("updated code template"));
+        updateCodeTemplate(mode, qid).then(r => console.log("updated code template"));
           break;
       case 'go':
         editor.session.setMode('ace/mode/golang');
-        updateCodeTemplate(mode).then(r => console.log("updated code template"));
+        updateCodeTemplate(mode, qid).then(r => console.log("updated code template"));
 
           break;
       // Add more languages here
