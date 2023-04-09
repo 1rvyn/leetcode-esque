@@ -26,7 +26,7 @@ func CodePage(c *fiber.Ctx) error {
 	client := resty.New()
 	resp, err := client.R().
 		SetQueryParam("id", questionID).
-		Get("https://api.irvyn.xyz/question/" + questionID)
+		Get("https://api.irvyn.xyz/questionall/" + questionID) // defaults each time to python
 
 	fmt.Println("response from the backend was \n", resp)
 
@@ -55,43 +55,20 @@ func CodePage(c *fiber.Ctx) error {
 
 func GetCodeTemplate(c *fiber.Ctx) error {
 	language := c.Query("language")
+	questionID := c.Query("QuestionID")
 
-	fmt.Println("sending new language is: ", language)
-	// TODO: Make it so that it will take the question ID and get the code template for that question
-	// question := c.Query("question")
+	client := resty.New()
+	resp, err := client.R().
+		SetQueryParam("id", questionID).
+		Get("https://api.irvyn.xyz/question/" + questionID + "/" + language) // defaults each time to python
 
-	var codeTemplate string
-
-	switch language {
-	case "python":
-		// get the python code template
-		codeTemplate = `def two_sum(nums, target):
-		# your code here
-		answer = []
-		return answer`
-
-	case "javascript":
-		// get the javascript code template
-		codeTemplate = `var twoSum = function(nums, target) {
-		// your code here
-		answer = []
-		return answer
-	};`
-
-	case "go":
-		// get the go code template
-		codeTemplate = `func twoSum(nums []int, target int) []int {
-		// your code here
-		answer := []int{}
-		return answer
-	}`
-
-	default:
-		codeTemplate = "Error: No code template found"
+	fmt.Println("response from the backend was \n", resp)
+	if err != nil {
+		return c.Status(500).SendString("Error fetching data from API")
 	}
 
-	fmt.Println("the code template is: ", codeTemplate)
+	fmt.Println("the code requested is: ", resp)
 	return c.JSON(fiber.Map{
-		"Codetemplate": codeTemplate,
+		"Codetemplate": resp,
 	})
 }

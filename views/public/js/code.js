@@ -46,16 +46,11 @@ $(document).ready(function(){
 
 // a light system based on the test results
 function updateTestResultsLights(testResults) {
-    console.log('Received testResults:', testResults);
-
     const container = document.querySelector('.test-results-container');
     container.innerHTML = ''; // Clear the container
 
     const isArrayOfObjects = Array.isArray(testResults) && typeof testResults[0] === 'object';
     const isArrayOfBooleans = Array.isArray(testResults) && (typeof testResults[0] === 'boolean' || testResults[0] === 'true' || testResults[0] === 'false');
-
-    console.log('isArrayOfObjects:', isArrayOfObjects);
-    console.log('isArrayOfBooleans:', isArrayOfBooleans);
 
     if (isArrayOfObjects || isArrayOfBooleans) {
         testResults.forEach((result, index) => {
@@ -85,11 +80,10 @@ function updateTestResultsLights(testResults) {
 
 
 
-
 // send the request to get the new template code
-async function updateCodeTemplate(language) {
+async function updateCodeTemplate(language, questionID) {
     try {
-      const response = await fetch(`/codetemplate?language=${language}`);
+        const response = await fetch(`/codetemplate?language=${language}&QuestionID=${questionID}`);
       const data = await response.json();
       console.log(data)
       const codeTemplate = data.Codetemplate;
@@ -101,19 +95,19 @@ async function updateCodeTemplate(language) {
   }
 
 
-function setEditorLanguage(mode) {
+function setEditorLanguage(mode, questionID) {
     switch (mode) {
       case 'python':
         editor.session.setMode('ace/mode/python');
-        updateCodeTemplate(mode).then(r => console.log("updated code template"));
+        updateCodeTemplate(mode, questionID).then(r => console.log("updated code template"));
         break;
       case 'javascript':
         editor.session.setMode('ace/mode/javascript');
-        updateCodeTemplate(mode).then(r => console.log("updated code template"));
+        updateCodeTemplate(mode, questionID).then(r => console.log("updated code template"));
           break;
       case 'go':
         editor.session.setMode('ace/mode/golang');
-        updateCodeTemplate(mode).then(r => console.log("updated code template"));
+        updateCodeTemplate(mode, questionID).then(r => console.log("updated code template"));
 
           break;
       // Add more languages here
@@ -130,9 +124,10 @@ setEditorLanguage(languageSelect.value);
 
 // Listen for changes in the dropdown and update the editor's mode
 languageSelect.addEventListener('change', function () {
-  setEditorLanguage(this.value);
-  console.log(this.value);
-  console.log("changed language");
-  updateCodeTemplate(this.value);
+    setEditorLanguage(this.value);
+    console.log(this.value);
+    console.log("changed language");
+    let qid = document.getElementById('questionID').value;
+    updateCodeTemplate(this.value, qid).then(r => console.log("updated code template"))
 
 });
