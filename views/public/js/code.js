@@ -101,6 +101,7 @@ function updateTestResultsLights(testResults) {
     const isArrayOfObjects = Array.isArray(testResults) && typeof testResults[0] === 'object';
     const isArrayOfBooleans = Array.isArray(testResults) && (typeof testResults[0] === 'boolean' || testResults[0] === 'true' || testResults[0] === 'false' || testResults[0] === true || testResults[0] === false);
 
+    let failedTests = false;
     if (isArrayOfObjects || isArrayOfBooleans) {
         testResults.forEach((result) => {
             const light = document.createElement('div');
@@ -112,10 +113,16 @@ function updateTestResultsLights(testResults) {
             if (isArrayOfObjects) {
                 // Handle the current object structure
                 light.style.backgroundColor = result.success ? 'green' : 'red';
+                if (!result.success) {
+                    failedTests = true;
+                }
             } else {
                 // Handle the new array of booleans or strings
                 const success = result === true || result === 'true';
                 light.style.backgroundColor = success ? 'green' : 'red';
+                if (!result.success) {
+                    failedTests = true;
+                }
             }
 
             container.appendChild(light);
@@ -123,6 +130,7 @@ function updateTestResultsLights(testResults) {
     } else {
         console.error('Unknown testResults format:', testResults);
     }
+    renderHintButton(failedTests)
 }
 
 
