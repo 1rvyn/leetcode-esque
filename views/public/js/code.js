@@ -50,7 +50,7 @@ function updateTestResultsLights(testResults) {
     container.innerHTML = ''; // Clear the container
 
     const isArrayOfObjects = Array.isArray(testResults) && typeof testResults[0] === 'object';
-    const isArrayOfBooleans = Array.isArray(testResults) && typeof testResults[0] === 'boolean';
+    const isArrayOfBooleans = Array.isArray(testResults) && (typeof testResults[0] === 'boolean' || testResults[0] === 'true' || testResults[0] === 'false');
 
     if (isArrayOfObjects || isArrayOfBooleans) {
         testResults.forEach((result, index) => {
@@ -64,8 +64,9 @@ function updateTestResultsLights(testResults) {
                 // Handle the current object structure
                 light.style.backgroundColor = result.success ? 'green' : 'red';
             } else {
-                // Handle the new array of booleans
-                light.style.backgroundColor = result ? 'green' : 'red';
+                // Handle the new array of booleans or strings
+                const success = result === true || result === 'true';
+                light.style.backgroundColor = success ? 'green' : 'red';
             }
 
             container.appendChild(light);
