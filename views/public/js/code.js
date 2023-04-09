@@ -49,8 +49,8 @@ function updateTestResultsLights(testResults) {
     const container = document.querySelector('.test-results-container');
     container.innerHTML = ''; // Clear the container
 
-    const isArrayOfObjects = typeof testResults[0] === 'object';
-    const isArrayOfBooleans = typeof testResults[0] === 'boolean';
+    const isArrayOfObjects = Array.isArray(testResults) && typeof testResults[0] === 'object';
+    const isArrayOfBooleans = Array.isArray(testResults) && typeof testResults[0] === 'boolean';
 
     if (isArrayOfObjects || isArrayOfBooleans) {
         testResults.forEach((result, index) => {
@@ -74,6 +74,7 @@ function updateTestResultsLights(testResults) {
         console.error('Unknown testResults format:', testResults);
     }
 }
+
 
 
 
