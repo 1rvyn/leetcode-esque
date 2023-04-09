@@ -49,27 +49,32 @@ function updateTestResultsLights(testResults) {
     const container = document.querySelector('.test-results-container');
     container.innerHTML = ''; // Clear the container
 
-    testResults.forEach((result, index) => {
-        const light = document.createElement('div');
-        light.style.width = '20px';
-        light.style.height = '20px';
-        light.style.borderRadius = '50%';
-        light.style.marginRight = '20px';
+    const isArrayOfObjects = typeof testResults[0] === 'object';
+    const isArrayOfBooleans = typeof testResults[0] === 'boolean';
 
-        if (typeof result === 'object') {
-            // Handle the current object structure
-            light.style.backgroundColor = result.success ? 'green' : 'red';
-        } else if (typeof result === 'boolean') {
-            // Handle the new array of booleans
-            light.style.backgroundColor = result ? 'green' : 'red';
-        } else {
-            // Unknown result format
-            light.style.backgroundColor = 'rgba(128, 128, 128, 0.5)'; // Transparent/grey color
-        }
+    if (isArrayOfObjects || isArrayOfBooleans) {
+        testResults.forEach((result, index) => {
+            const light = document.createElement('div');
+            light.style.width = '20px';
+            light.style.height = '20px';
+            light.style.borderRadius = '50%';
+            light.style.marginRight = '20px';
 
-        container.appendChild(light);
-    });
+            if (isArrayOfObjects) {
+                // Handle the current object structure
+                light.style.backgroundColor = result.success ? 'green' : 'red';
+            } else {
+                // Handle the new array of booleans
+                light.style.backgroundColor = result ? 'green' : 'red';
+            }
+
+            container.appendChild(light);
+        });
+    } else {
+        console.error('Unknown testResults format:', testResults);
+    }
 }
+
 
 
 
