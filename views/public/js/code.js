@@ -50,37 +50,32 @@ function renderHintButton(failedTests) {
     container.innerHTML = ''; // Clear the container
 
     if (failedTests) {
-        const hintButton = document.createElement('button');
-        hintButton.textContent = 'Get Hints';
-        hintButton.addEventListener('click', async () => {
-            try {
-                const response = await fetch('/hints', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        code: editor.getValue(),
-                        language: $("#language-select").val(),
-                        QuestionID: questionID // include the QuestionID value in the body
-                    }),
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    credentials: 'include'
-                });
-                const hintData = await response.json();
-                console.log(hintData);
-                // Handle hint data here
-            } catch (err) {
-                console.error(err.message);
-            }
-        });
+        let hintButton = container.querySelector('#hintButton');
+        if (!hintButton) {
+            hintButton = document.createElement('button');
+            hintButton.id = 'hintButton';
+            hintButton.textContent = 'Hint';
+            hintButton.className = 'hintButton bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded-lg mb-2';
+            hintButton.type = 'button';
 
-        container.appendChild(hintButton);
+            hintButton.addEventListener('click', function() {
+                console.log("clicked hint button");
+                let codeitem = editor.getValue();
+                let language = $("#language-select").val()
+                let questionID = document.getElementById('questionID').value;
+                console.log("language is:", $("#language-select").val());
+                console.log("code is:", codeitem);
+                console.log("questionID is:", questionID);
+
+                const chatContainer = document.querySelector('.chat-container');
+                chatContainer.style.display = 'block';
+            });
+
+            container.appendChild(hintButton);
+        }
     }
 }
+
 
 
 // a light system based on the test results
