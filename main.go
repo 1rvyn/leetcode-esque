@@ -179,7 +179,7 @@ func setupRoutes(app *fiber.App) {
 	//app.Get("/ws", websocketF)
 
 	app.Get("/code/:id", routes.CodePage) // code submission testing page
-	app.Get("/codetemplate/:language/:id", routes.GetCodeTemplate)
+	app.Get("/codetemplate", routes.GetCodeTemplate)
 
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	app.Get("/logout", Logout)                 // removes the cookie

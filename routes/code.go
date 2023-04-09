@@ -54,8 +54,8 @@ func CodePage(c *fiber.Ctx) error {
 }
 
 func GetCodeTemplate(c *fiber.Ctx) error {
-	language := c.Params("language")
-	questionID := c.Params("QuestionID")
+	language := c.Query("language")
+	questionID := c.Query("QuestionID")
 
 	client := resty.New()
 	resp, err := client.R().
