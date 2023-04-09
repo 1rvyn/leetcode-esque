@@ -46,11 +46,16 @@ $(document).ready(function(){
 
 // a light system based on the test results
 function updateTestResultsLights(testResults) {
+    console.log('Received testResults:', testResults);
+
     const container = document.querySelector('.test-results-container');
     container.innerHTML = ''; // Clear the container
 
     const isArrayOfObjects = Array.isArray(testResults) && typeof testResults[0] === 'object';
     const isArrayOfBooleans = Array.isArray(testResults) && (typeof testResults[0] === 'boolean' || testResults[0] === 'true' || testResults[0] === 'false');
+
+    console.log('isArrayOfObjects:', isArrayOfObjects);
+    console.log('isArrayOfBooleans:', isArrayOfBooleans);
 
     if (isArrayOfObjects || isArrayOfBooleans) {
         testResults.forEach((result, index) => {
@@ -80,6 +85,7 @@ function updateTestResultsLights(testResults) {
 
 
 
+
 // send the request to get the new template code
 async function updateCodeTemplate(language) {
     try {
@@ -99,13 +105,17 @@ function setEditorLanguage(mode) {
     switch (mode) {
       case 'python':
         editor.session.setMode('ace/mode/python');
+        updateCodeTemplate(mode).then(r => console.log("updated code template"));
         break;
       case 'javascript':
         editor.session.setMode('ace/mode/javascript');
-        break;
+        updateCodeTemplate(mode).then(r => console.log("updated code template"));
+          break;
       case 'go':
         editor.session.setMode('ace/mode/golang');
-        break;
+        updateCodeTemplate(mode).then(r => console.log("updated code template"));
+
+          break;
       // Add more languages here
       default:
         editor.session.setMode('ace/mode/python');
