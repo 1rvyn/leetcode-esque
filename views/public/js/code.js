@@ -44,6 +44,45 @@ $(document).ready(function(){
     })
 })
 
+// a hint from the special sauce
+function renderHintButton(failedTests) {
+    const container = document.querySelector('.hint-button-container');
+    container.innerHTML = ''; // Clear the container
+
+    if (failedTests) {
+        const hintButton = document.createElement('button');
+        hintButton.textContent = 'Get Hints';
+        hintButton.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/hints', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        code: editor.getValue(),
+                        language: $("#language-select").val(),
+                        QuestionID: questionID // include the QuestionID value in the body
+                    }),
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    credentials: 'include'
+                });
+                const hintData = await response.json();
+                console.log(hintData);
+                // Handle hint data here
+            } catch (err) {
+                console.error(err.message);
+            }
+        });
+
+        container.appendChild(hintButton);
+    }
+}
+
+
 // a light system based on the test results
 function updateTestResultsLights(testResults) {
     // Check if testResults is a string and attempt to parse it as JSON

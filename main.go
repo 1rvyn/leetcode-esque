@@ -184,6 +184,8 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
 	app.Get("/logout", Logout)                 // removes the cookie
 
+	//app.Post("/hints", routes.Hints) // gets the hints for a question
+
 }
 
 func main() {
