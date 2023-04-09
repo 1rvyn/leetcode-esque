@@ -80,7 +80,7 @@ func GetCodeTemplate(c *fiber.Ctx) error {
 
 	case "go":
 		// get the go code template
-		codeTemplate = `func two_sum(nums []int, target int) []int {
+		codeTemplate = `func twoSum(nums []int, target int) []int {
 		// your code here
 		answer := []int{}
 		return answer

@@ -27,7 +27,7 @@ $(document).ready(function(){
                 credentials: "include",
             });
             const content = await res.json();
-            console.log(content.output);// log the results of marking
+            console.log(content.result);// log the results of marking
 
 
             console.log(res.status);
