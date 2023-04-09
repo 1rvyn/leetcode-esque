@@ -53,28 +53,30 @@ function updateTestResultsLights(testResults) {
     const isArrayOfBooleans = Array.isArray(testResults) && (typeof testResults[0] === 'boolean' || testResults[0] === 'true' || testResults[0] === 'false');
 
     if (isArrayOfObjects || isArrayOfBooleans) {
-        testResults.forEach((result, index) => {
+        testResults.forEach((result) => {
             const light = document.createElement('div');
             light.style.width = '20px';
             light.style.height = '20px';
             light.style.borderRadius = '50%';
             light.style.marginRight = '20px';
 
+            let success;
             if (isArrayOfObjects) {
                 // Handle the current object structure
-                light.style.backgroundColor = result.success ? 'green' : 'red';
+                success = result.success;
             } else {
                 // Handle the new array of booleans or strings
-                const success = result === true || result === 'true';
-                light.style.backgroundColor = success ? 'green' : 'red';
+                success = result === true || result === 'true';
             }
 
+            light.style.backgroundColor = success ? 'green' : 'red';
             container.appendChild(light);
         });
     } else {
         console.error('Unknown testResults format:', testResults);
     }
 }
+
 
 
 
