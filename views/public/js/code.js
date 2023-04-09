@@ -129,7 +129,7 @@ languageSelect.addEventListener('change', function () {
     setEditorLanguage(this.value);
     console.log(this.value);
     console.log("changed language");
-    let qid = document.getElementById('questionID').value;
-    updateCodeTemplate(this.value, qid).then(r => console.log("updated code template"))
+    // let qid = document.getElementById('questionID').value;
+    // updateCodeTemplate(this.value, qid).then(r => console.log("updated code template"))
 
 });
