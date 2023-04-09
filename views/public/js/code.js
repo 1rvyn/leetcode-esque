@@ -46,6 +46,16 @@ $(document).ready(function(){
 
 // a light system based on the test results
 function updateTestResultsLights(testResults) {
+    // Check if testResults is a string and attempt to parse it as JSON
+    if (typeof testResults === 'string') {
+        try {
+            testResults = JSON.parse(testResults);
+        } catch (error) {
+            console.error('Failed to parse testResults string:', testResults);
+            return;
+        }
+    }
+
     const container = document.querySelector('.test-results-container');
     container.innerHTML = ''; // Clear the container
 
@@ -60,22 +70,22 @@ function updateTestResultsLights(testResults) {
             light.style.borderRadius = '50%';
             light.style.marginRight = '20px';
 
-            let success;
             if (isArrayOfObjects) {
                 // Handle the current object structure
-                success = result.success;
+                light.style.backgroundColor = result.success ? 'green' : 'red';
             } else {
                 // Handle the new array of booleans or strings
-                success = result === true || result === 'true';
+                const success = result === true || result === 'true';
+                light.style.backgroundColor = success ? 'green' : 'red';
             }
 
-            light.style.backgroundColor = success ? 'green' : 'red';
             container.appendChild(light);
         });
     } else {
         console.error('Unknown testResults format:', testResults);
     }
 }
+
 
 
 
