@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 // a hint from the special sauce
 function renderHintButton(failedTests) {
-    const container = document.querySelector('.hint-button-container');
+    const container = document.querySelector('.box-2-bottom');
     container.innerHTML = ''; // Clear the container
 
     if (failedTests) {
@@ -54,14 +54,14 @@ function renderHintButton(failedTests) {
         if (!hintButton) {
             hintButton = document.createElement('button');
             hintButton.id = 'hintButton';
-            hintButton.textContent = 'Hint';
-            hintButton.className = 'hintButton bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded-lg mb-2';
+            hintButton.innerHTML = '<i class="fas fa-lightbulb"></i>'; // Font Awesome icon
+            hintButton.className = 'hintButton absolute top-2 left-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded-lg mb-2';
             hintButton.type = 'button';
 
             hintButton.addEventListener('click', function() {
                 console.log("clicked hint button");
                 let codeitem = editor.getValue();
-                let language = $("#language-select").val()
+                let language = $("#language-select").val();
                 let questionID = document.getElementById('questionID').value;
                 console.log("language is:", $("#language-select").val());
                 console.log("code is:", codeitem);
@@ -75,6 +75,12 @@ function renderHintButton(failedTests) {
         }
     }
 }
+
+document.querySelector('.close-button').addEventListener('click', function() {
+    const chatContainer = document.querySelector('.chat-container');
+    chatContainer.style.display = 'none';
+});
+
 
 
 
