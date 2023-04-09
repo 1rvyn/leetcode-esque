@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 // a hint from the special sauce
 function renderHintButton(failedTests) {
-    const container = document.querySelector('.hint-lang-container');
+    const container = document.querySelector('.test-results-container');
     container.innerHTML = ''; // Clear the container
 
     if (failedTests) {
@@ -75,6 +75,7 @@ function renderHintButton(failedTests) {
         }
     }
 }
+
 
 document.querySelector('.close-button').addEventListener('click', function() {
     const chatContainer = document.querySelector('.chat-container');
