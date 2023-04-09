@@ -133,6 +133,20 @@ function updateTestResultsLights(testResults) {
     renderHintButton(failedTests)
 }
 
+document.getElementById('hintButton').addEventListener('click', function() {
+    console.log("clicked hint button");
+    let codeitem = editor.getValue();
+    let language = $("#language-select").val()
+    let questionID = document.getElementById('questionID').value;
+    console.log("language is:", $("#language-select").val());
+    console.log("code is:", codeitem);
+    console.log("questionID is:", questionID);
+
+    const chatContainer = document.querySelector('.chat-container');
+    chatContainer.style.display = 'block';
+
+})
+
 
 
 
