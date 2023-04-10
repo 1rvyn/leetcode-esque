@@ -45,7 +45,7 @@ $(document).ready(function(){
 })
 
 // a hint from the special sauce
-function renderHintButton(failedTests) {
+function renderHintButton(testResults, failedTests) {
     const container = document.querySelector('.hint-lang-container');
     container.innerHTML = ''; // Clear the container
 
@@ -57,12 +57,14 @@ function renderHintButton(failedTests) {
             hintButton.innerHTML = '<i class="fas fa-lightbulb"></i>'; // Font Awesome icon
             hintButton.className = 'hintButton absolute top-2 left-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded-lg mb-2';
             hintButton.type = 'button';
+            hintButton.style = 'bottom: 0; right: 0;'
 
             hintButton.addEventListener('click', function() {
                 console.log("clicked hint button");
                 let codeitem = editor.getValue();
                 let language = $("#language-select").val();
                 let questionID = document.getElementById('questionID').value;
+                console.log("Test results:", testResults); // Log the test results
                 console.log("language is:", $("#language-select").val());
                 console.log("code is:", codeitem);
                 console.log("questionID is:", questionID);
@@ -132,7 +134,7 @@ function updateTestResultsLights(testResults) {
     } else {
         console.error('Unknown testResults format:', testResults);
     }
-    renderHintButton(failedTests)
+    renderHintButton(testResults, failedTests)
 }
 
 // document.getElementById('hintButton').addEventListener('click', function() {
