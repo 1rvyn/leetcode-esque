@@ -113,6 +113,8 @@ function updateTestResultsLights(testResults) {
             light.style.height = '20px';
             light.style.borderRadius = '50%';
             light.style.marginRight = '20px';
+            light.style.marginTop = '5px'; // Add top margin
+            light.style.marginBottom = '5px'; // Add bottom margin
 
             if (isArrayOfObjects) {
                 // Handle the current object structure
