@@ -99,6 +99,7 @@ func accountHandle(c *fiber.Ctx) error {
 		// & show the current account data :)
 		return c.Render("account", fiber.Map{
 			"Pages":     pages2,
+			"Title":     "Account",
 			"ActiveURL": activeURL,
 			"Item":      "this is the 'account' page ;) ",
 		})
@@ -116,8 +117,8 @@ func register(c *fiber.Ctx) error {
 
 	return c.Render("register", fiber.Map{
 		"Pages":     pages,
+		"Title":     "Register",
 		"ActiveURL": activeURL,
-		"Register":  "this is the register page",
 	})
 }
 

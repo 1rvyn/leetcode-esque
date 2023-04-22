@@ -2,15 +2,16 @@
 
 
 <header class="bg-white shadow-sm">
+    <link rel="stylesheet" href="./css/register.css" type="text/css">
     {{ template "partials/header" . }}
 </header>
 
 
-<main class="flex-1">
-    <h1 class="text-3xl font-bold underline">Login</h1>
+<main class="flex-1 container login-form text-center">
 
     <form class="login-form text-center">
-
+        <h1>Login with your account.</h1>
+        <br>
         <div class="login-input">
             <label for="email">email</label>
             <input
@@ -29,7 +30,8 @@
                     required
             />
         </div>
-        <button class="primary-btn" type="submit" value="login">Login</button>
+        <button class="primary-btn bg-green-500" type="submit" value="login">Login</button>
+
     </form>
 </main>
 

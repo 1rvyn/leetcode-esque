@@ -1,14 +1,10 @@
 <body class="bg-gray-100 flex flex-col min-h-screen">
 <header class="bg-white shadow-sm">
+    <link rel="stylesheet" href="./css/register.css" type="text/css">
     {{ template "partials/header" . }}
 </header>
 
-
-<main class="flex-1" >
-    <p>
-        What is the page?: {{.Register}}
-    </p>
-    <h1 class="text-3xl font-bold underline">{{ .Title }}</h1>
+<main class="flex-1 container">
     <p>
         {{template "partials/register" .}}
     </p>
@@ -16,3 +12,4 @@
 <footer>
     {{ template "partials/footer" . }}
 </footer>
+
