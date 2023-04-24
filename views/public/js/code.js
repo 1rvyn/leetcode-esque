@@ -112,7 +112,7 @@ function renderHintButton(testResults, failedTests) {
                             const line = lines[i];
                             if (line.startsWith("data: ")) {
                                 const hint = line.slice(5).trim();
-                                hintElement.textContent = hint;
+                                hintElement.textContent += hint + " ";
                             }
 
                         }
