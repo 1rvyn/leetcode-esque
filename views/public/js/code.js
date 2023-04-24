@@ -59,19 +59,55 @@ function renderHintButton(testResults, failedTests) {
             hintButton.type = 'button';
             hintButton.style = 'bottom: 0; right: 0;'
 
-            hintButton.addEventListener('click', function() {
-                console.log("clicked hint button");
+            hintButton.addEventListener("click", async function () {
                 let codeitem = editor.getValue();
                 let language = $("#language-select").val();
-                let questionID = document.getElementById('questionID').value;
-                console.log("Test results:", testResults); // Log the test results
+                let questionID = document.getElementById("questionID").value;
+                console.log("Test results:", testResults);
                 console.log("language is:", $("#language-select").val());
                 console.log("code is:", codeitem);
                 console.log("questionID is:", questionID);
 
-                const chatContainer = document.querySelector('.chat-container');
-                chatContainer.style.display = 'block';
+                const chatContainer = document.querySelector(".chat-container");
+                chatContainer.style.display = "block";
+
+                // Send a POST request to the backend
+                const response = await fetch("/hints", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        code: codeitem,
+                        language: language,
+                        questionID: questionID,
+                        testResults: JSON.stringify(testResults),
+                    }),
+                });
+
+                if (response.ok) {
+                    const eventType = "message";
+                    const eventSource = new EventSource(response.url);
+
+                    eventSource.addEventListener(eventType, (event) => {
+                        const hint = event.data;
+
+                        // Display the hint in the chat container
+                        const hintElement = document.createElement("div");
+                        hintElement.classList.add("hint");
+                        hintElement.textContent = hint;
+                        chatContainer.appendChild(hintElement);
+                    });
+
+                    eventSource.onerror = (error) => {
+                        console.error("EventSource error:", error);
+                        eventSource.close();
+                    };
+                } else {
+                    console.error("Error:", response.status, response.statusText);
+                }
             });
+
 
             container.appendChild(hintButton);
         }
