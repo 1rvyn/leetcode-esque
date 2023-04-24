@@ -107,9 +107,12 @@ function renderHintButton(testResults, failedTests) {
 
                         dataBuffer += textDecoder.decode(value, { stream: true });
 
-                        const lines = dataBuffer.split("\n");
-                        for (let i = 0; i < lines.length - 1; i++) {
-                            const line = lines[i];
+                        // Check if there's a complete line in the dataBuffer
+                        const lineEndIndex = dataBuffer.indexOf("\n");
+                        if (lineEndIndex !== -1) {
+                            const line = dataBuffer.slice(0, lineEndIndex);
+                            dataBuffer = dataBuffer.slice(lineEndIndex + 1);
+
                             if (line.startsWith("data: ")) {
                                 const hint = line.slice(5).trim();
                                 // Create a new span element for each word and append it to the hintElement
@@ -119,10 +122,8 @@ function renderHintButton(testResults, failedTests) {
                             }
                         }
 
-                        dataBuffer = lines[lines.length - 1];
                         return reader.read().then(processStream);
                     });
-
                 } else {
                     console.error("Error:", response.status, response.statusText);
                 }
