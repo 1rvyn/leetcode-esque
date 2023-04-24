@@ -28,6 +28,11 @@ func Hint(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"status": "error", "message": "Cannot parse JSON", "data": err})
 	}
 
+	fmt.Println(hintRequest.Code)
+	fmt.Println(hintRequest.Language)
+	fmt.Println(hintRequest.QuestionID)
+	fmt.Println(hintRequest.TestResults)
+
 	openaiClient := openai.NewClient(OpenAi)
 	ctx := context.Background()
 
@@ -35,8 +40,39 @@ func Hint(c *fiber.Ctx) error {
 		Model:       openai.GPT3Dot5Turbo,
 		MaxTokens:   200,
 		Temperature: 0.1,
-		Messages:    []openai.ChatCompletionMessage{
-			// ... The rest of the request as you've written above
+		Messages: []openai.ChatCompletionMessage{
+			{
+				Role: openai.ChatMessageRoleSystem,
+				Content: `You are a computer science tutor who is to act as if you are receiving an issue from a student 
+				who is attempting to solve a coding question. You must NOT give the student the answer to the question, 
+				but instead provide hints to help them fix their code.
+				The student's code' has failed test 1 & 3 but has passed test 2.
+				The tests are as follows:
+				"test_cases": [
+					{
+					  "input": {
+						"nums": [2, 7, 11, 15],
+						"target": 9
+					  },
+					  "output": [0, 1]
+					},
+					{
+					  "input": {
+						"nums": [3, 2, 4],
+						"target": 6
+					  },
+					  "output": [1, 2]
+					},
+					{
+					  "input": {
+						"nums": [3, 3],
+						"target": 6
+					  },
+					  "output": [0, 1]
+					}
+				  ]
+				Can you help direct the student to fix their code without giving any code examples?`,
+			},
 		},
 		Stream: true,
 	}
