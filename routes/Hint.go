@@ -9,7 +9,10 @@ import (
 	"github.com/sashabaranov/go-openai"
 	"io"
 	"log"
+	"os"
 )
+
+var OpenAi = os.Getenv("OPENAI_API_KEY")
 
 type HintRequest struct {
 	Code        string `json:"code"`
@@ -25,7 +28,7 @@ func Hint(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"status": "error", "message": "Cannot parse JSON", "data": err})
 	}
 
-	openaiClient := openai.NewClient("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")
+	openaiClient := openai.NewClient(OpenAi)
 	ctx := context.Background()
 
 	req := openai.ChatCompletionRequest{
