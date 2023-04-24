@@ -88,11 +88,11 @@ function renderHintButton(testResults, failedTests) {
 
                 if (response.ok) {
                     const hintContainer = document.querySelector(".hint-container");
-                    let hintElement = hintContainer.querySelector(".hint");
+                    let hintElement = hintContainer.querySelector(".hint-text");
 
                     if (!hintElement) {
-                        hintElement = document.createElement("div");
-                        hintElement.classList.add("hint");
+                        hintElement = document.createElement("p");
+                        hintElement.classList.add("hint-text");
                         hintContainer.appendChild(hintElement);
                     }
 
