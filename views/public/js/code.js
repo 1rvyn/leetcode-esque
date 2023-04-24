@@ -87,6 +87,15 @@ function renderHintButton(testResults, failedTests) {
                 });
 
                 if (response.ok) {
+                    const hintContainer = document.querySelector(".hint-container");
+                    let hintElement = hintContainer.querySelector(".hint");
+
+                    if (!hintElement) {
+                        hintElement = document.createElement("div");
+                        hintElement.classList.add("hint");
+                        hintContainer.appendChild(hintElement);
+                    }
+
                     const reader = response.body.getReader();
                     const textDecoder = new TextDecoder("utf-8");
                     let dataBuffer = "";
@@ -103,13 +112,9 @@ function renderHintButton(testResults, failedTests) {
                             const line = lines[i];
                             if (line.startsWith("data: ")) {
                                 const hint = line.slice(5).trim();
-
-                                // Display the hint in the chat container
-                                const hintElement = document.createElement("div");
-                                hintElement.classList.add("hint");
                                 hintElement.textContent = hint;
-                                chatContainer.appendChild(hintElement);
                             }
+
                         }
 
                         dataBuffer = lines[lines.length - 1];
