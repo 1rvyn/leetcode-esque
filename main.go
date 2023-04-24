@@ -206,7 +206,6 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	// prevent the app from caching
 	app.Use(func(c *fiber.Ctx) error {
 
 		c.Set("Cache-Control", "no-cache, no-store, must-revalidate")
@@ -215,9 +214,12 @@ func main() {
 		c.Response().Header.Set("Access-Control-Allow-Origin", "https://irvyn.xyz")
 		c.Response().Header.Set("Access-Control-Allow-Credentials", "true")
 		c.Response().Header.Set("Access-Control-Allow-Headers", "Content-Type, Set-Cookie, Cookie")
+		c.Response().Header.Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 
 		return c.Next()
 	})
+
+	// prevent the app from caching
 
 	app.Static("/", "./views/public")
 

@@ -83,6 +83,7 @@ func Hint(c *fiber.Ctx) error {
 	}
 	defer stream.Close()
 
+	c.Response().Header.Set("Access-Control-Expose-Headers", "Content-Type")
 	c.Response().Header.Set("Content-Type", "text/event-stream")
 	c.Response().Header.Set("Cache-Control", "no-cache")
 	c.Response().Header.Set("Connection", "keep-alive")

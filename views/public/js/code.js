@@ -76,6 +76,7 @@ function renderHintButton(testResults, failedTests) {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        "Accept": "text/event-stream",
                     },
                     body: JSON.stringify({
                         code: codeitem,
@@ -86,28 +87,38 @@ function renderHintButton(testResults, failedTests) {
                 });
 
                 if (response.ok) {
-                    const eventType = "message";
-                    const eventSource = new EventSource(response.url);
+                    const reader = response.body.getReader();
+                    const textDecoder = new TextDecoder("utf-8");
+                    let dataBuffer = "";
 
-                    eventSource.addEventListener(eventType, (event) => {
-                        const hint = event.data;
+                    reader.read().then(function processStream({ done, value }) {
+                        if (done) {
+                            return;
+                        }
 
-                        // Display the hint in the chat container
-                        const hintElement = document.createElement("div");
-                        hintElement.classList.add("hint");
-                        hintElement.textContent = hint;
-                        chatContainer.appendChild(hintElement);
+                        dataBuffer += textDecoder.decode(value);
+
+                        const lines = dataBuffer.split("\n");
+                        for (let i = 0; i < lines.length - 1; i++) {
+                            const line = lines[i];
+                            if (line.startsWith("data: ")) {
+                                const hint = line.slice(5).trim();
+
+                                // Display the hint in the chat container
+                                const hintElement = document.createElement("div");
+                                hintElement.classList.add("hint");
+                                hintElement.textContent = hint;
+                                chatContainer.appendChild(hintElement);
+                            }
+                        }
+
+                        dataBuffer = lines[lines.length - 1];
+                        return reader.read().then(processStream);
                     });
-
-                    eventSource.onerror = (error) => {
-                        console.error("EventSource error:", error);
-                        eventSource.close();
-                    };
                 } else {
                     console.error("Error:", response.status, response.statusText);
                 }
             });
-
 
             container.appendChild(hintButton);
         }
