@@ -105,21 +105,24 @@ function renderHintButton(testResults, failedTests) {
                             return;
                         }
 
-                        dataBuffer += textDecoder.decode(value);
+                        dataBuffer += textDecoder.decode(value, { stream: true });
 
                         const lines = dataBuffer.split("\n");
                         for (let i = 0; i < lines.length - 1; i++) {
                             const line = lines[i];
                             if (line.startsWith("data: ")) {
                                 const hint = line.slice(5).trim();
-                                hintElement.textContent += hint + " ";
+                                // Create a new span element for each word and append it to the hintElement
+                                const wordSpan = document.createElement("span");
+                                wordSpan.textContent = hint + " ";
+                                hintElement.appendChild(wordSpan);
                             }
-
                         }
 
                         dataBuffer = lines[lines.length - 1];
                         return reader.read().then(processStream);
                     });
+
                 } else {
                     console.error("Error:", response.status, response.statusText);
                 }
