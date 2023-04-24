@@ -108,10 +108,11 @@ function renderHintButton(testResults, failedTests) {
                         dataBuffer += textDecoder.decode(value, { stream: true });
 
                         // Check if there's a complete line in the dataBuffer
-                        const lineEndIndex = dataBuffer.indexOf("\n");
+                        const lineEndIndex = dataBuffer.lastIndexOf("\n");
                         if (lineEndIndex !== -1) {
                             const line = dataBuffer.slice(0, lineEndIndex);
                             dataBuffer = dataBuffer.slice(lineEndIndex + 1);
+
 
                             if (line.startsWith("data: ")) {
                                 const hint = line.slice(5).trim();
