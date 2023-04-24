@@ -115,7 +115,8 @@ function renderHintButton(testResults, failedTests) {
 
                             if (line.startsWith("data: ")) {
                                 const hint = line.slice(5).trim();
-                                // Create a new span element for each word and append it to the hintElement
+                                console.log(hint);
+
                                 const wordSpan = document.createElement("span");
                                 wordSpan.textContent = hint + " ";
                                 hintElement.appendChild(wordSpan);
