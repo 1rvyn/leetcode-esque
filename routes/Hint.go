@@ -10,8 +10,6 @@ import (
 	"io"
 	"log"
 	"os"
-	"strings"
-	"time"
 )
 
 var OpenAi = os.Getenv("OPENAI_API_KEY")
@@ -101,15 +99,7 @@ func Hint(c *fiber.Ctx) error {
 			return c.Status(500).JSON(fiber.Map{"status": "error", "message": "Error in chat completion stream", "data": err})
 		}
 
-		// Split the response into words
-		words := strings.Split(response.Choices[0].Delta.Content, " ")
-
-		// Send each word separately as an SSE event
-		for _, word := range words {
-			_, _ = c.Write([]byte(fmt.Sprintf("data: %s\n\n", word)))
-			// speed of the stream
-			time.Sleep(10 * time.Millisecond)
-		}
+		_, _ = c.Write([]byte(fmt.Sprintf("data: %s\n\n", response.Choices[0].Delta.Content)))
 	}
 
 	return nil
