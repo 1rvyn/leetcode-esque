@@ -134,8 +134,18 @@ function renderHintButton(testResults, failedTests) {
 document.querySelector('.close-button').addEventListener('click', function() {
     const chatContainer = document.querySelector('.chat-container');
     chatContainer.style.display = 'none';
+
+    // clear the response
+    clearHintText();
 });
 
+function clearHintText() {
+    const hintContainer = document.querySelector('.hint-container');
+    let hintElement = hintContainer.querySelector('.hint');
+    if (hintElement) {
+        hintElement.textContent = '';
+    }
+}
 
 
 
