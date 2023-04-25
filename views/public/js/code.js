@@ -127,7 +127,7 @@ async function handleStream(response) {
 
 
 document.querySelector('.close-button').addEventListener('click', function() {
-    const chatContainer = document.querySelector('.chat-container');
+    const chatContainer = document.querySelector('.hint-text');
     chatContainer.style.display = 'none';
 
     // clear the response
@@ -135,7 +135,7 @@ document.querySelector('.close-button').addEventListener('click', function() {
 });
 
 function clearHintText() {
-    const hintContainer = document.querySelector('.hint-container');
+    const hintContainer = document.querySelector('.hint-text');
     let hintElement = hintContainer.querySelector('.hint');
     if (hintElement) {
         hintElement.textContent = '';

@@ -16,6 +16,11 @@ import (
 
 var OpenAi = os.Getenv("OPENAI_API_KEY")
 
+//type TestResult struct {
+//	Success  bool   `json:"success"`
+//	TestName string `json:"test_name"`
+//}
+
 type HintRequest struct {
 	Code        string `json:"code"`
 	Language    string `json:"language"`
@@ -35,6 +40,22 @@ func Hint(c *fiber.Ctx) error {
 	fmt.Println(hintRequest.QuestionID)
 	fmt.Println(hintRequest.TestResults)
 
+	var testResults []map[string]interface{}
+	if err := json.Unmarshal([]byte(hintRequest.TestResults), &testResults); err != nil {
+		return c.Status(400).JSON(fiber.Map{"status": "error", "message": "Cannot parse test results JSON", "data": err})
+	}
+
+	failedTests := make([]string, 0)
+	for _, result := range testResults {
+		success := result["success"].(bool)
+		testName := result["test_name"].(string)
+		if !success {
+			failedTests = append(failedTests, testName)
+		}
+	}
+
+	failedTestsStr := strings.Join(failedTests, ", ")
+
 	openaiClient := openai.NewClient(OpenAi)
 	ctx := context.Background()
 
@@ -45,35 +66,15 @@ func Hint(c *fiber.Ctx) error {
 		Messages: []openai.ChatCompletionMessage{
 			{
 				Role: openai.ChatMessageRoleSystem,
-				Content: `You are a computer science tutor who is to act as if you are receiving an issue from a student 
-				who is attempting to solve a coding question. You must NOT give the student the answer to the question, 
-				but instead provide hints to help them fix their code.
-				The student's code' has failed test 1 & 3 but has passed test 2.
-				The tests are as follows:
-				"test_cases": [
-					{
-					  "input": {
-						"nums": [2, 7, 11, 15],
-						"target": 9
-					  },
-					  "output": [0, 1]
-					},
-					{
-					  "input": {
-						"nums": [3, 2, 4],
-						"target": 6
-					  },
-					  "output": [1, 2]
-					},
-					{
-					  "input": {
-						"nums": [3, 3],
-						"target": 6
-					  },
-					  "output": [0, 1]
-					}
-				  ]
-				Can you help direct the student to fix their code without giving any code examples?`,
+				Content: fmt.Sprintf(`You are a computer science tutor who is to act as if you are receiving an issue from a student 
+                who is attempting to solve a coding question. You must NOT give the student the answer to the question, 
+                but instead provide hints to help them fix their code.
+                The student's code has failed the following tests: %s
+
+                The student's code:
+                %s
+
+                Can you help direct the student to fix their code without giving any code examples?`, failedTestsStr, hintRequest.Code),
 			},
 		},
 		Stream: true,
@@ -114,3 +115,29 @@ func Hint(c *fiber.Ctx) error {
 
 	return nil
 }
+
+// The tests are as follows:
+//				"test_cases": [
+//					{
+//					  "input": {
+//						"nums": [2, 7, 11, 15],
+//						"target": 9
+//					  },
+//					  "output": [0, 1]
+//					},
+//					{
+//					  "input": {
+//						"nums": [3, 2, 4],
+//						"target": 6
+//					  },
+//					  "output": [1, 2]
+//					},
+//					{
+//					  "input": {
+//						"nums": [3, 3],
+//						"target": 6
+//					  },
+//					  "output": [0, 1]
+//					}
+//				  ]
+//				Can you help direct the student to fix their code without giving any code examples?`
