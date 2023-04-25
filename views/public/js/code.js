@@ -76,6 +76,7 @@ function renderHintButton(testResults, failedTests) {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
+                            "Accept": "text/event-stream",
                         },
                         body: JSON.stringify({
                             code: codeitem,
@@ -99,6 +100,7 @@ function renderHintButton(testResults, failedTests) {
         }
     }
 }
+
 async function handleStream(response) {
     const hintParagraph = document.querySelector(".hint-text");
     hintParagraph.textContent = "";
@@ -121,6 +123,7 @@ async function handleStream(response) {
         }
     }
 }
+
 
 
 document.querySelector('.close-button').addEventListener('click', function() {
