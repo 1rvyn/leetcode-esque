@@ -61,7 +61,7 @@ func Hint(c *fiber.Ctx) error {
 
 	req := openai.ChatCompletionRequest{
 		Model:       openai.GPT3Dot5Turbo,
-		MaxTokens:   200,
+		MaxTokens:   400,
 		Temperature: 0.1,
 		Messages: []openai.ChatCompletionMessage{
 			{

@@ -44,6 +44,9 @@ func Logout(c *fiber.Ctx) error {
 	// delete the cookie
 	c.ClearCookie("jwt")
 
+	// print the cookie at this stage
+	fmt.Println("cookie is: ", c.Cookies("jwt"))
+
 	// redirect to the home page
 	return c.Redirect("/")
 }
