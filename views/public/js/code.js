@@ -71,96 +71,55 @@ function renderHintButton(testResults, failedTests) {
                 const chatContainer = document.querySelector(".chat-container");
                 chatContainer.style.display = "block";
 
-                // Send a POST request to the backend
-                const response = await fetch("/hints", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "text/event-stream",
-                    },
-                    body: JSON.stringify({
-                        code: codeitem,
-                        language: language,
-                        questionID: questionID,
-                        testResults: JSON.stringify(testResults),
-                    }),
-                });
-
-                if (response.ok) {
+                try{
+                    const response = await fetch("/hints", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            code: codeitem,
+                            language: language,
+                            questionID: questionID,
+                            testResults: JSON.stringify(testResults),
+                        }),
+                    });
                     handleStream(response);
-                    //     const hintContainer = document.querySelector(".hint-container");
-                    //     let hintElement = hintContainer.querySelector(".hint-text");
-                    //
-                    //     if (!hintElement) {
-                    //         hintElement = document.createElement("p");
-                    //         hintElement.classList.add("hint-text");
-                    //         hintContainer.appendChild(hintElement);
-                    //     }
-                    //
-                    //     const reader = response.body.getReader();
-                    //     const textDecoder = new TextDecoder("utf-8");
-                    //     let dataBuffer = "";
-                    //
-                    //     reader.read().then(function processStream({ done, value }) {
-                    //         if (done) {
-                    //             return;
-                    //         }
-                    //
-                    //         dataBuffer += textDecoder.decode(value, { stream: true });
-                    //
-                    //         // Check if there's a complete line in the dataBuffer
-                    //         const lineEndIndex = dataBuffer.indexOf("\n\n");
-                    //         if (lineEndIndex !== -1) {
-                    //             const line = dataBuffer.slice(0, lineEndIndex);
-                    //             dataBuffer = dataBuffer.slice(lineEndIndex + 2);
-                    //
-                    //             if (line.startsWith("data: ")) {
-                    //                 const hint = line.slice(5).trim();
-                    //                 console.log(hint);
-                    //
-                    //                 const wordSpan = document.createElement("span");
-                    //                 wordSpan.textContent = hint + " ";
-                    //                 hintElement.appendChild(wordSpan);
-                    //             }
-                    //         }
-                    //
-                    //         processStream({ done: false, value: null });
-                    //
-                    //
-                    //         // return reader.read().then(processStream);
-                    //     });
+                    if (response.ok) {
                     } else {
                         console.error("Error:", response.status, response.statusText);
                     }
+                } catch (err) {
+                    console.error("Error:", err);
+                }
+
                 }
             );
-
             container.appendChild(hintButton);
         }
     }
 }
-
-function handleStream(response) {
+async function handleStream(response) {
     const hintParagraph = document.querySelector(".hint-text");
     hintParagraph.textContent = "";
 
     const reader = response.body.getReader();
-    const decoder = new TextDecoder("utf-8");
+    const textDecoder = new TextDecoder();
 
-    reader.read().then(function process({ done, value }) {
-        if (done) {
-            return;
+    while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        const chunk = textDecoder.decode(value, { stream: true });
+        const lines = chunk.split("\n");
+
+        for (const line of lines) {
+            if (line.startsWith("data:")) {
+                const word = line.slice(5).trim();
+                hintParagraph.textContent += word + " ";
+            }
         }
-
-        const decodedValue = decoder.decode(value);
-        const eventData = decodedValue.match(/data: (.+)/);
-
-        if (eventData && eventData[1]) {
-            hintParagraph.textContent += eventData[1] + " ";
-        }
-
-        return reader.read().then(process);
-    });
+    }
 }
 
 
