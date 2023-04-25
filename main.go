@@ -42,11 +42,23 @@ var pages2 = []Page{
 
 func Logout(c *fiber.Ctx) error {
 	// delete the cookie
-	c.ClearCookie("jwt")
-
 	// print the cookie at this stage
 	fmt.Println("cookie is: ", c.Cookies("jwt"))
 
+	cookie := c.Cookies("jwt")
+
+	//send a POST to http://api.irvyn.xyz/logout to delete the cookie
+	client := resty.New()
+	resp, err := client.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(`{"jwt": "` + cookie + `"}`).
+		Post("http://api.irvyn.xyz/logout")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("response Status:", resp.Status())
+	// if successful delete the cookie
+	c.ClearCookie("jwt")
 	// redirect to the home page
 	return c.Redirect("/")
 }
