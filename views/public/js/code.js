@@ -87,55 +87,80 @@ function renderHintButton(testResults, failedTests) {
                 });
 
                 if (response.ok) {
-                    const hintContainer = document.querySelector(".hint-container");
-                    let hintElement = hintContainer.querySelector(".hint-text");
-
-                    if (!hintElement) {
-                        hintElement = document.createElement("p");
-                        hintElement.classList.add("hint-text");
-                        hintContainer.appendChild(hintElement);
+                    handleStream(response);
+                    //     const hintContainer = document.querySelector(".hint-container");
+                    //     let hintElement = hintContainer.querySelector(".hint-text");
+                    //
+                    //     if (!hintElement) {
+                    //         hintElement = document.createElement("p");
+                    //         hintElement.classList.add("hint-text");
+                    //         hintContainer.appendChild(hintElement);
+                    //     }
+                    //
+                    //     const reader = response.body.getReader();
+                    //     const textDecoder = new TextDecoder("utf-8");
+                    //     let dataBuffer = "";
+                    //
+                    //     reader.read().then(function processStream({ done, value }) {
+                    //         if (done) {
+                    //             return;
+                    //         }
+                    //
+                    //         dataBuffer += textDecoder.decode(value, { stream: true });
+                    //
+                    //         // Check if there's a complete line in the dataBuffer
+                    //         const lineEndIndex = dataBuffer.indexOf("\n\n");
+                    //         if (lineEndIndex !== -1) {
+                    //             const line = dataBuffer.slice(0, lineEndIndex);
+                    //             dataBuffer = dataBuffer.slice(lineEndIndex + 2);
+                    //
+                    //             if (line.startsWith("data: ")) {
+                    //                 const hint = line.slice(5).trim();
+                    //                 console.log(hint);
+                    //
+                    //                 const wordSpan = document.createElement("span");
+                    //                 wordSpan.textContent = hint + " ";
+                    //                 hintElement.appendChild(wordSpan);
+                    //             }
+                    //         }
+                    //
+                    //         processStream({ done: false, value: null });
+                    //
+                    //
+                    //         // return reader.read().then(processStream);
+                    //     });
+                    } else {
+                        console.error("Error:", response.status, response.statusText);
                     }
-
-                    const reader = response.body.getReader();
-                    const textDecoder = new TextDecoder("utf-8");
-                    let dataBuffer = "";
-
-                    reader.read().then(function processStream({ done, value }) {
-                        if (done) {
-                            return;
-                        }
-
-                        dataBuffer += textDecoder.decode(value, { stream: true });
-
-                        // Check if there's a complete line in the dataBuffer
-                        const lineEndIndex = dataBuffer.indexOf("\n\n");
-                        if (lineEndIndex !== -1) {
-                            const line = dataBuffer.slice(0, lineEndIndex);
-                            dataBuffer = dataBuffer.slice(lineEndIndex + 2);
-
-                            if (line.startsWith("data: ")) {
-                                const hint = line.slice(5).trim();
-                                console.log(hint);
-
-                                const wordSpan = document.createElement("span");
-                                wordSpan.textContent = hint + " ";
-                                hintElement.appendChild(wordSpan);
-                            }
-                        }
-
-                        processStream({ done: false, value: null });
-
-
-                        // return reader.read().then(processStream);
-                    });
-                } else {
-                    console.error("Error:", response.status, response.statusText);
                 }
-            });
+            );
 
             container.appendChild(hintButton);
         }
     }
+}
+
+function handleStream(response) {
+    const hintParagraph = document.querySelector(".hint-text");
+    hintParagraph.textContent = "";
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+
+    reader.read().then(function process({ done, value }) {
+        if (done) {
+            return;
+        }
+
+        const decodedValue = decoder.decode(value);
+        const eventData = decodedValue.match(/data: (.+)/);
+
+        if (eventData && eventData[1]) {
+            hintParagraph.textContent += eventData[1] + " ";
+        }
+
+        return reader.read().then(process);
+    });
 }
 
 
