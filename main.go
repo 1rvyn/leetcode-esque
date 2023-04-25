@@ -64,7 +64,12 @@ func Logout(c *fiber.Ctx) error {
 		Value:    "",
 		Expires:  time.Now().Add(-time.Hour),
 		HTTPOnly: true,
+		SameSite: "None",
+		Secure:   true,
+		Path:     "/",
+		Domain:   ".irvyn.xyz",
 	})
+	// match original cookie
 
 	// redirect to the home page
 	return c.Redirect("/")
