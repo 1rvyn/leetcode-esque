@@ -144,6 +144,7 @@ function clearHintText() {
 
 
 
+
 // a light system based on the test results
 function updateTestResultsLights(testResults) {
     // Check if testResults is a string and attempt to parse it as JSON
