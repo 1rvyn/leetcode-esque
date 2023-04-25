@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/template/html"
 	"log"
+	"time"
 )
 
 const SecretKey = "secret"
@@ -57,8 +58,14 @@ func Logout(c *fiber.Ctx) error {
 		log.Fatal(err)
 	}
 	fmt.Println("response Status:", resp.Status())
-	// if successful delete the cookie
-	c.ClearCookie("jwt")
+	// if successful set the cookie to expire
+	c.Cookie(&fiber.Cookie{
+		Name:     "jwt",
+		Value:    "",
+		Expires:  time.Now().Add(-time.Hour),
+		HTTPOnly: true,
+	})
+
 	// redirect to the home page
 	return c.Redirect("/")
 }
