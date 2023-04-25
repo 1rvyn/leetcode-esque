@@ -123,7 +123,10 @@ function renderHintButton(testResults, failedTests) {
                             }
                         }
 
-                        return reader.read().then(processStream);
+                        processStream({ done: false, value: null });
+
+
+                        // return reader.read().then(processStream);
                     });
                 } else {
                     console.error("Error:", response.status, response.statusText);
