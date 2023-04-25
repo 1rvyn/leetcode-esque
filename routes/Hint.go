@@ -117,7 +117,7 @@ func Hint(c *fiber.Ctx) error {
 			// Flush the response immediately
 			respWriter.(http.Flusher).Flush()
 			// Speed of the stream
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(10 * time.Millisecond)
 		}
 	}
 
