@@ -127,7 +127,7 @@ async function handleStream(response) {
 
 
 document.querySelector('.close-button').addEventListener('click', function() {
-    const chatContainer = document.querySelector('.hint-container');
+    const chatContainer = document.querySelector('.chat-container');
     chatContainer.style.display = 'none';
 
     // clear the response
