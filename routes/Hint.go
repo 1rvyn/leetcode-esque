@@ -108,7 +108,7 @@ func Hint(c *fiber.Ctx) error {
 		for _, word := range words {
 			_, _ = c.Write([]byte(fmt.Sprintf("data: %s\n\n", word)))
 			// speed of the stream
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(10 * time.Millisecond)
 		}
 	}
 
