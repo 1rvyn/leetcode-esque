@@ -9,7 +9,6 @@ import (
 	"github.com/sashabaranov/go-openai"
 	"io"
 	"log"
-	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -91,12 +90,6 @@ func Hint(c *fiber.Ctx) error {
 	c.Response().Header.Set("Cache-Control", "no-cache")
 	c.Response().Header.Set("Connection", "keep-alive")
 
-	// Get the underlying http.ResponseWriter
-	respWriter, ok := c.Response().BodyWriter().(http.ResponseWriter)
-	if !ok {
-		return c.Status(500).JSON(fiber.Map{"status": "error", "message": "Cannot access http.ResponseWriter"})
-	}
-
 	for {
 		response, err := stream.Recv()
 		if errors.Is(err, io.EOF) {
@@ -114,10 +107,8 @@ func Hint(c *fiber.Ctx) error {
 		// Send each word separately as an SSE event
 		for _, word := range words {
 			_, _ = c.Write([]byte(fmt.Sprintf("data: %s\n\n", word)))
-			// Flush the response immediately
-			respWriter.(http.Flusher).Flush()
-			// Speed of the stream
-			time.Sleep(10 * time.Millisecond)
+			// speed of the stream
+			time.Sleep(100 * time.Millisecond)
 		}
 	}
 
