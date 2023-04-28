@@ -190,14 +190,13 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/register", register)
 	app.Get("/problems", problems)
 
-	app.Get("/new_question", createQuestion)
-
 	// same thing for both
 
 	// userRole auth routes/pages
 	admin := app.Group("/admin", adminMiddleware)
 
 	admin.Get("/", routes.Dashboard)
+	admin.Get("/new_question", createQuestion)
 
 	app.Get("/code/:id", routes.CodePage) // code submission testing page
 	app.Get("/codetemplate", routes.GetCodeTemplate)
