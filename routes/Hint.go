@@ -62,7 +62,11 @@ func Hint(c *fiber.Ctx) error {
 			{
 				Role: openai.ChatMessageRoleSystem,
 				Content: fmt.Sprintf(`You are a computer science tutor has to act as if you are receiving an issue from a student 
-                who is attempting to solve a coding question. You must NOT give the student the answer to the question, 
+                who is attempting to solve a coding question.The question has the following problem statement:
+				Given an array of integers, return indices of the two numbers such that they add up to 
+				a specific target. You may assume that each input would have exactly one solution, 
+				and you may not use the same element twice.
+				You must NOT give the student the answer to the question, 
                 but instead provide hints to help them fix their code. You must finish your reply with "Nice try!". 
 				You must also try to persuade the student to use a map as the underlying data-structure to solve the problem,
 				but you cannot explicitly tell them to use a map. 
