@@ -76,11 +76,7 @@ func Logout(c *fiber.Ctx) error {
 }
 
 func welcomeHome(c *fiber.Ctx) error {
-	//  templating here
 
-	// print the users cookies
-
-	// fmt.Println(c.GetReqHeaders())
 	cookie := c.Cookies("jwt")
 
 	if cookie == "" {
@@ -203,18 +199,12 @@ func setupRoutes(app *fiber.App) {
 
 	admin.Get("/", routes.Dashboard)
 
-	// misc
-	//app.Get("/ws", websocketF)
-
 	app.Get("/code/:id", routes.CodePage) // code submission testing page
 	app.Get("/codetemplate", routes.GetCodeTemplate)
 
-	app.Get("/api/account", routes.GetAccount) // gets the current logged in user with the cookie
-	app.Get("/logout", Logout)                 // removes the cookie
+	app.Get("/logout", Logout) // removes the cookie
 
 	app.Post("/hints", routes.Hint)
-
-	//app.Post("/hints", routes.Hints) // gets the hints for a question
 
 }
 
