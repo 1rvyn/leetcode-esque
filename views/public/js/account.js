@@ -17,7 +17,7 @@ window.onload = async function() {
         console.log(content);
         console.log(res.status);
     if (res.status === 200) {
-        let formattedCreatedAt = formatDate(content[i].created_at);
+        let formattedCreatedAt = formatDate(content.created_at);
         const accountInfoDiv = document.querySelector(".account-info");
         let accountInfoHtml = "";
         accountInfoHtml += "<p>ID: " + content.id + "</p>";
