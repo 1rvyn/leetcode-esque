@@ -71,14 +71,14 @@ function formatDate(dateString) {
                 const submissionsDiv = document.querySelector(".submissions");
                 let submissionsHtml = "";
                 for (let i = 0; i < content.length; i++) {
-                    const formattedCreatedAt = formatDate(content[i].created_at);
+                    // const formattedCreatedAt = formatDate(content[i].created_at);
 
                     submissionsHtml += `<div class='submission bg-gray-100 my-4 p-4 rounded-lg shadow-md'>`;
                     submissionsHtml += `<p class='font-bold text-gray-700'>Submission ID: <span class='font-normal'>${content[i].id}</span></p>`;
                     submissionsHtml += `<p class='font-bold text-gray-700'>Submission Code: <span class='font-normal'>${content[i].code}</span></p>`;
                     submissionsHtml += `<p class='font-bold text-gray-700'>Submission Output: <span class='font-normal'>${content[i].output}</span></p>`;
                     submissionsHtml += `<p class='font-bold text-gray-700'>Submission Error: <span class='font-normal'>${content[i].error}</span></p>`;
-                    submissionsHtml += `<p class='font-bold text-gray-700'>Submission Created At: <span class='font-normal'>${formattedCreatedAt}</span></p>`;
+                    submissionsHtml += `<p class='font-bold text-gray-700'>Submission Created At: <span class='font-normal'>${formatDate(formattedCreatedAt)}</span></p>`;
                     submissionsHtml += `</div>`;
                 }
                 submissionsDiv.innerHTML = submissionsHtml;
