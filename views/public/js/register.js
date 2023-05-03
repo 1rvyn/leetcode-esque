@@ -28,9 +28,11 @@ $(document).ready(function(){
             const content = await res.json();
             console.log(content);
             console.log(res.status);
+            if (!content.success){
+                displayErrorMessage("Error registering user. Please try again.");
+            }
             if (res.status === 400 || res.status === 401) {
                 console.log("there was an issue")
-                displayErrorMessage("Error registering user. Please try again.");
 
             }
             else if (res.status === 200){
